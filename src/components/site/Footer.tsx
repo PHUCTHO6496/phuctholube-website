@@ -18,9 +18,18 @@ export function Footer({ settings }: { settings: SiteSettingsData }) {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="flex h-10 w-10 items-center justify-center rounded-md bg-amber-500 text-lg font-bold text-white">
-                PT
-              </span>
+              {settings.logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={settings.logoUrl}
+                  alt={SITE.fullName}
+                  className="h-10 w-10 rounded-md object-contain"
+                />
+              ) : (
+                <span className="flex h-10 w-10 items-center justify-center rounded-md bg-amber-500 text-lg font-bold text-white">
+                  PT
+                </span>
+              )}
               <span className="text-base font-bold text-white">
                 {SITE.fullName}
               </span>

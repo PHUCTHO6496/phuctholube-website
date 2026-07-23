@@ -6,6 +6,7 @@ export async function getSiteSettings() {
 
   if (!settings) {
     return {
+      logoUrl: null,
       statYearsValue: "25+",
       statYearsLabel: SITE.name,
       statVolumeValue: "1M",

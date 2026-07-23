@@ -135,6 +135,7 @@ model AdminUser {
 
 model SiteSettings {
   id               Int      @id @default(1)
+  logoUrl          String?
   statYearsValue   String   @default("25+")
   statYearsLabel   String   @default("Gần 30 năm đồng hành cùng doanh nghiệp tại Hồ Chí Minh và các khu công nghiệp lân cận.")
   statVolumeValue  String   @default("1M")

@@ -19,9 +19,18 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2" onClick={() => setOpen(false)}>
-          <span className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-900 text-lg font-bold text-white">
-            PT
-          </span>
+          {settings.logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={settings.logoUrl}
+              alt={SITE.fullName}
+              className="h-10 w-10 rounded-md object-contain"
+            />
+          ) : (
+            <span className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-900 text-lg font-bold text-white">
+              PT
+            </span>
+          )}
           <span className="leading-tight">
             <span className="block text-base font-bold text-blue-900">
               {SITE.fullName}

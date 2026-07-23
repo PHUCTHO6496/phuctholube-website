@@ -6,6 +6,7 @@ import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
 const schema = z.object({
+  logoUrl: z.string().trim().optional(),
   statYearsValue: z.string().trim().min(1),
   statYearsLabel: z.string().trim().min(1),
   statVolumeValue: z.string().trim().min(1),
@@ -37,6 +38,7 @@ export async function updateSiteSettings(input: SettingsInput): Promise<Settings
 
   const data = {
     ...parsed.data,
+    logoUrl: parsed.data.logoUrl || null,
     facebookUrl: parsed.data.facebookUrl || null,
     linkedinUrl: parsed.data.linkedinUrl || null,
   };

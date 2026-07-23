@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { updateSiteSettings, type SettingsInput } from "@/lib/actions/admin-settings";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 
 export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
   const [form, setForm] = useState<SettingsInput>(initialData);
@@ -29,6 +30,19 @@ export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
 
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl space-y-6">
+      <div className="rounded-xl border border-slate-200 bg-white p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          Logo
+        </h2>
+        <div className="mt-4">
+          <ImageUploadField
+            label="Logo website (hiển thị ở đầu trang và chân trang)"
+            value={form.logoUrl ?? ""}
+            onChange={(url) => updateField("logoUrl", url)}
+          />
+        </div>
+      </div>
+
       <div className="rounded-xl border border-slate-200 bg-white p-6">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
           Số liệu trang chủ
