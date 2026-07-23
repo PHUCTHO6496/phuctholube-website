@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model ProductCategory {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?
+  sortOrder   Int       @default(0)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Industry {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+  image       String?
+  sortOrder   Int       @default(0)
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id               String             @id @default(cuid())
+  name             String
+  slug             String             @unique
+  brand            String?
+  price            Int?
+  tdsUrl           String?
+  msdsUrl          String?
+  viscosityGrade   String?
+  shortDescription String?
+  description      String?
+  useCases         Json?
+  applicationTags  Json?
+  featured         Boolean            @default(false)
+  published        Boolean            @default(true)
+  sortOrder        Int                @default(0)
+  categoryId       String?
+  category         ProductCategory?   @relation(fields: [categoryId], references: [id])
+  industries       Industry[]
+  images           ProductImage[]
+  specs            ProductSpec[]
+  quoteItems       QuoteRequestItem[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  url       String
+  alt       String?
+  sortOrder Int     @default(0)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model ProductSpec {
+  id        String  @id @default(cuid())
+  label     String
+  value     String
+  sortOrder Int     @default(0)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model BlogPost {
+  id             String    @id @default(cuid())
+  title          String
+  slug           String    @unique
+  author         String?
+  excerpt        String?
+  contentHtml    String
+  coverImage     String?
+  published      Boolean   @default(false)
+  publishedAt    DateTime?
+  seoTitle       String?
+  seoDescription String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model QuoteRequest {
+  id          String             @id @default(cuid())
+  companyName String
+  contactName String
+  phone       String
+  email       String?
+  address     String?
+  note        String?
+  status      String             @default("new")
+  items       QuoteRequestItem[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+}
+
+model QuoteRequestItem {
+  id             String       @id @default(cuid())
+  quoteRequestId String
+  quoteRequest   QuoteRequest @relation(fields: [quoteRequestId], references: [id], onDelete: Cascade)
+  productId      String?
+  product        Product?     @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName    String
+  quantity       String
+  note           String?
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String?
+  email     String?
+  message   String
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model SiteSettings {
+  id               Int      @id @default(1)
+  statYearsValue   String   @default("25+")
+  statYearsLabel   String   @default("Gần 30 năm đồng hành cùng doanh nghiệp tại Hồ Chí Minh và các khu công nghiệp lân cận.")
+  statVolumeValue  String   @default("1M")
+  statVolumeLabel  String   @default("Xấp xỉ 1 triệu lít dầu nhớt được cung cấp mỗi năm.")
+  statQualityValue String   @default("100%")
+  statQualityLabel String   @default("100% sản phẩm đạt tiêu chuẩn chất lượng toàn cầu, được kiểm định nghiêm ngặt.")
+  address          String   @default("95 Xô Viết Nghệ Tĩnh, Phường Vũng Tàu, Thành Phố Hồ Chí Minh")
+  phone            String   @default("0786060496")
+  email            String   @default("info@phucthocoltd.com")
+  zaloUrl          String   @default("https://zalo.me/0786060496")
+  facebookUrl      String?
+  linkedinUrl      String?
+  hoursMonFri      String   @default("7:30 - 17:00")
+  hoursSat         String   @default("7:30 - 16:30")
+  hoursSun         String   @default("Đóng cửa")
+  updatedAt        DateTime @updatedAt
+}
