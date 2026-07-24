@@ -15,8 +15,10 @@ export default async function EditCategoryPage({
   const initialData: TaxonomyFormData = {
     id: category.id,
     name: category.name,
+    nameEn: category.nameEn ?? "",
     slug: category.slug,
     description: category.description ?? "",
+    descriptionEn: category.descriptionEn ?? "",
     image: category.image ?? "",
     sortOrder: category.sortOrder.toString(),
   };

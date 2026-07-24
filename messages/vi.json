@@ -1,0 +1,366 @@
+{
+  "meta": {
+    "tagline": "Nhà Phân Phối Dầu Nhớt Công Nghiệp Uy Tín Hàng Đầu Hồ Chí Minh",
+    "description": "Từ năm {foundedYear}, {name} là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh, đồng hành cùng doanh nghiệp trong lĩnh vực dầu khí, cảng biển và hàng hải."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "products": "Sản phẩm",
+    "equivalentFinder": "Tra cứu tương đương",
+    "industries": "Lĩnh vực",
+    "about": "Về chúng tôi",
+    "services": "Dịch vụ",
+    "blog": "Tin tức",
+    "contact": "Liên hệ",
+    "openMenu": "Mở menu",
+    "callNow": "Gọi ngay: {phone}",
+    "quoteCart": "Giỏ báo giá",
+    "language": "Ngôn ngữ",
+    "vietnamese": "Tiếng Việt",
+    "english": "Tiếng Anh"
+  },
+  "footer": {
+    "tagline": "Từ năm {foundedYear}, {name} tự hào là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh.",
+    "quickLinks": "Liên kết nhanh",
+    "contact": "Liên hệ",
+    "workingHours": "Giờ làm việc",
+    "days": {
+      "monFri": "Thứ 2 - Thứ 6",
+      "sat": "Thứ 7",
+      "sun": "Chủ nhật"
+    },
+    "copyright": "© {year} {fullName}. Bảo lưu mọi quyền."
+  },
+  "floatingZalo": {
+    "ariaLabel": "Chat với chúng tôi qua Zalo"
+  },
+  "addToQuote": {
+    "add": "Thêm vào giỏ báo giá",
+    "added": "Đã thêm vào giỏ"
+  },
+  "productCard": {
+    "imagePlaceholder": "Ảnh sản phẩm",
+    "defaultCategory": "Sản phẩm"
+  },
+  "filterBar": {
+    "searchPlaceholder": "Tìm kiếm sản phẩm...",
+    "allCategories": "Tất cả danh mục",
+    "allBrands": "Tất cả thương hiệu",
+    "clearFilters": "Xóa bộ lọc"
+  },
+  "productsPage": {
+    "title": "Sản phẩm dầu nhớt công nghiệp",
+    "metaDescription": "Danh mục đầy đủ các sản phẩm dầu nhớt công nghiệp Phúc Thọ: dầu thủy lực, dầu động cơ, dầu bánh răng, mỡ bôi trơn chính hãng Shell, Mobil, Total, Castrol.",
+    "description": "Dầu nhớt công nghiệp chất lượng cao cho mọi ngành nghề. 100% chính hãng Shell, Mobil, Total, Castrol — được kiểm định và bảo quản nghiêm ngặt.",
+    "showingCount": "Hiển thị {count} sản phẩm",
+    "noResults": "Không tìm thấy sản phẩm phù hợp. Vui lòng thử từ khóa hoặc bộ lọc khác."
+  },
+  "categoryPage": {
+    "breadcrumbProducts": "Sản phẩm",
+    "defaultDescription": "Danh sách sản phẩm {name} chính hãng từ Phúc Thọ.",
+    "showingCount": "Hiển thị {count} sản phẩm"
+  },
+  "brands": {
+    "shell": "Thương hiệu dầu nhớt hàng đầu thế giới với các dòng Tellus, Rimula, Omala, Gadus — giải pháp bôi trơn toàn diện cho công nghiệp và vận tải.",
+    "mobil": "Công nghệ bôi trơn tiên tiến từ ExxonMobil: Mobil DTE, Delvac, SHC, Mobilgrease — hiệu suất vượt trội cho thiết bị công nghiệp nặng.",
+    "total": "Dầu nhớt TotalEnergies từ Pháp: Rubia, Azolla, Carter — chất lượng châu Âu với giá thành cạnh tranh cho mọi ngành công nghiệp.",
+    "castrol": "Thương hiệu dầu nhớt Anh Quốc hơn 120 năm: Hyspin, Alpha, Vecton, Magnatec — bảo vệ tối ưu cho động cơ và máy móc công nghiệp."
+  },
+  "brandPage": {
+    "breadcrumbProducts": "Sản phẩm",
+    "breadcrumbBrand": "Thương hiệu {brand}",
+    "title": "Dầu nhớt {brand} chính hãng",
+    "metaTitle": "Dầu nhớt {brand} chính hãng",
+    "showingCount": "Hiển thị {count} sản phẩm {brand}",
+    "otherBrands": "Thương hiệu khác"
+  },
+  "industriesPage": {
+    "title": "Lĩnh vực hoạt động",
+    "metaDescription": "Phúc Thọ cung cấp dầu nhớt công nghiệp chất lượng cao cho nhiều ngành công nghiệp khác nhau: dầu khí, hàng hải, sản xuất, vận tải, xây dựng.",
+    "description": "Chúng tôi cung cấp dầu nhớt công nghiệp chất lượng cao cho nhiều ngành công nghiệp khác nhau, từ ô tô đến công nghiệp nặng.",
+    "viewDetail": "Xem chi tiết",
+    "statIndustries": "Lĩnh vực hoạt động",
+    "statProducts": "Sản phẩm chất lượng",
+    "statYears": "Năm kinh nghiệm"
+  },
+  "industryDetail": {
+    "breadcrumbIndustries": "Lĩnh vực hoạt động",
+    "defaultDescription": "Giải pháp dầu nhớt công nghiệp cho ngành {name}.",
+    "matchingProducts": "{count} sản phẩm phù hợp",
+    "noProducts": "Chưa có sản phẩm gắn nhãn cụ thể cho ngành này",
+    "contactPrompt": "Liên hệ với chúng tôi để được tư vấn sản phẩm phù hợp cho ngành {name}.",
+    "contactCta": "Liên hệ tư vấn"
+  },
+  "productDetail": {
+    "breadcrumbProducts": "Sản phẩm",
+    "defaultCategory": "Sản phẩm",
+    "callCta": "Gọi tư vấn",
+    "viewQuoteCart": "Xem giỏ báo giá →",
+    "applications": "Ứng dụng",
+    "specifications": "Thông số",
+    "technicalDocuments": "Tài liệu kỹ thuật",
+    "tds": "Bảng thông số kỹ thuật (TDS)",
+    "msds": "Bảng chỉ dẫn an toàn (MSDS)",
+    "detailedDescription": "Mô tả chi tiết",
+    "relatedProducts": "Sản phẩm liên quan"
+  },
+  "home": {
+    "heroImagePlaceholder": "[ Ảnh sản phẩm / kho hàng Phúc Thọ ]",
+    "heroIntro1": "Từ năm {foundedYear}, {name} tự hào là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh. Với gần 30 năm kinh nghiệm, chúng tôi đã đồng hành cùng hàng nghìn doanh nghiệp trong các lĩnh vực: dầu khí, cảng biển và hàng hải.",
+    "heroIntro2": "Sứ mệnh của chúng tôi là cung cấp giải pháp bôi trơn toàn diện – không chỉ sản phẩm chất lượng cao, mà còn dịch vụ tư vấn kỹ thuật chuyên sâu và hỗ trợ hậu mãi tận tâm.",
+    "highlights": [
+      "100% sản phẩm chính hãng, được kiểm định nghiêm ngặt",
+      "Giải pháp kỹ thuật tối ưu cho mọi ngành công nghiệp",
+      "Dịch vụ nhanh chóng – chuyên nghiệp – tận tâm"
+    ],
+    "viewProducts": "Xem sản phẩm",
+    "contactCta": "Liên hệ tư vấn",
+    "whyUsTitle": "Tại sao lại là {name}?",
+    "brandsTitle": "Thương hiệu phân phối chính hãng",
+    "brandsSubtitle": "{name} là đối tác phân phối các thương hiệu dầu nhớt hàng đầu thế giới",
+    "viewBrandProducts": "Xem sản phẩm {brand}",
+    "galleryTitle": "Thư viện hình ảnh",
+    "gallerySubtitle": "Khám phá quy trình sản xuất, lưu trữ và phân phối dầu nhớt công nghiệp của {name}",
+    "featuredTitle": "Sản phẩm nổi bật",
+    "featuredSubtitle": "Khám phá các dòng sản phẩm dầu nhớt công nghiệp chất lượng cao của {name}.",
+    "viewAll": "Xem tất cả",
+    "whyChooseTitle": "Vì sao doanh nghiệp chọn {name}?",
+    "whyChooseSubtitle": "4 cam kết cốt lõi làm nên uy tín gần 30 năm của chúng tôi",
+    "trustValues": [
+      {
+        "title": "Chất lượng đảm bảo",
+        "description": "Chỉ phân phối dầu nhớt chính hãng Shell, Mobil, Total, Castrol — nguồn gốc rõ ràng, đầy đủ chứng từ CO/CQ."
+      },
+      {
+        "title": "Hỗ trợ kỹ thuật",
+        "description": "Đội ngũ kỹ thuật giàu kinh nghiệm tư vấn chọn dầu đúng ứng dụng, hỗ trợ phân tích mẫu dầu định kỳ."
+      },
+      {
+        "title": "Nguồn cung ổn định",
+        "description": "Kho hàng lớn tại Vũng Tàu, sẵn hàng số lượng lớn — giao nhanh trong khu vực và các tỉnh lân cận."
+      },
+      {
+        "title": "Giá cạnh tranh",
+        "description": "Chính sách giá tốt cho đơn hàng số lượng lớn và khách hàng hợp tác lâu dài, chiết khấu minh bạch."
+      }
+    ],
+    "servicesTitle": "Dịch vụ chuyên nghiệp",
+    "servicesSubtitle": "Giải pháp toàn diện đi kèm dịch vụ tận tâm, đảm bảo hệ thống của bạn luôn hoạt động trơn tru.",
+    "homeServices": [
+      {
+        "title": "Tư vấn sản phẩm dầu nhớt",
+        "description": "Hỗ trợ chuyên sâu để lựa chọn sản phẩm dầu nhớt phù hợp nhất cho nhu cầu của bạn."
+      },
+      {
+        "title": "Hỗ trợ kỹ thuật chuyên sâu",
+        "description": "Giải đáp thắc mắc và hỗ trợ kỹ thuật về ứng dụng dầu nhớt và các vấn đề liên quan."
+      },
+      {
+        "title": "Dịch vụ đặt hàng số lượng lớn",
+        "description": "Cung cấp giải pháp mua dầu nhớt số lượng lớn với giá ưu đãi và logistics hiệu quả."
+      }
+    ],
+    "learnMore": "Tìm hiểu thêm",
+    "testimonialsTitle": "Khách hàng nói về chúng tôi",
+    "testimonials": [
+      {
+        "quote": "Phúc Thọ tư vấn đúng loại dầu thủy lực cho dàn máy ép của xưởng, chạy ổn định hẳn và chu kỳ thay dầu dài hơn trước.",
+        "name": "Anh Minh",
+        "role": "Quản lý xưởng cơ khí, KCN Đông Xuyên"
+      },
+      {
+        "quote": "Đặt hàng số lượng lớn luôn được giao đúng hẹn, chứng từ đầy đủ. Làm việc với Phúc Thọ rất yên tâm về nguồn gốc hàng hóa.",
+        "name": "Chị Hằng",
+        "role": "Phụ trách mua hàng, công ty vận tải biển"
+      },
+      {
+        "quote": "Khi máy nén khí gặp sự cố, kỹ thuật của Phúc Thọ hỗ trợ kiểm tra dầu và xử lý ngay trong ngày. Dịch vụ rất tận tâm.",
+        "name": "Anh Tuấn",
+        "role": "Trưởng bảo trì nhà máy, KCN Phú Mỹ"
+      }
+    ],
+    "serviceAreasTitle": "Khu vực phục vụ",
+    "serviceAreasSubtitle": "Cung cấp dầu nhớt cho các nhà máy, xí nghiệp tại các khu công nghiệp trong khu vực Bà Rịa - Vũng Tàu, Đồng Nai và TP. Hồ Chí Minh",
+    "serviceAreas": [
+      "KCN Đông Xuyên",
+      "KCN Phú Mỹ",
+      "KCN Cảng Cái Mép",
+      "KCN Long Sơn",
+      "KCN Mỹ Xuân",
+      "KCN Châu Đức",
+      "KCN Đất Đỏ",
+      "KCN Gò Dầu",
+      "KCN Nhơn Trạch",
+      "KCN Long Thành",
+      "KCN Biên Hòa",
+      "TP. Hồ Chí Minh"
+    ],
+    "contactTitle": "Liên hệ với chúng tôi",
+    "address": "Địa chỉ",
+    "phone": "Điện thoại",
+    "email": "Email"
+  },
+  "about": {
+    "metaTitle": "Về chúng tôi",
+    "metaDescription": "Gần 30 năm kinh nghiệm cung cấp dầu nhớt công nghiệp chất lượng cao, đồng hành cùng hàng nghìn doanh nghiệp tại Hồ Chí Minh.",
+    "since": "Từ năm {foundedYear}",
+    "title": "Về {fullName}",
+    "intro": "Gần 30 năm kinh nghiệm cung cấp dầu nhớt công nghiệp chất lượng cao, đồng hành cùng hàng nghìn doanh nghiệp tại Hồ Chí Minh.",
+    "missionCards": [
+      {
+        "title": "Sứ mệnh của chúng tôi",
+        "description": "Cung cấp giải pháp bôi trơn toàn diện - không chỉ là sản phẩm dầu nhớt chất lượng cao, mà còn là dịch vụ tư vấn kỹ thuật chuyên sâu."
+      },
+      {
+        "title": "Tầm nhìn",
+        "description": "Trở thành đối tác tin cậy hàng đầu trong lĩnh vực cung cấp dầu nhớt công nghiệp."
+      },
+      {
+        "title": "Giá trị cốt lõi",
+        "description": "Chất lượng, uy tín, chuyên nghiệp và luôn đặt lợi ích khách hàng lên hàng đầu."
+      },
+      {
+        "title": "Cam kết",
+        "description": "Đồng hành cùng khách hàng trên hành trình vận hành bền vững và hiệu quả."
+      },
+      {
+        "title": "Cơ sở vật chất",
+        "description": "Hệ thống kho bãi hiện đại, quy mô lớn với công suất lưu trữ khổng lồ."
+      }
+    ],
+    "journeyTitle": "Hành trình phát triển",
+    "journeyDescription": "Từ năm {foundedYear}, {name} tự hào là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh. Với gần 30 năm kinh nghiệm, chúng tôi đã đồng hành cùng hàng nghìn doanh nghiệp trong các lĩnh vực: dầu khí, cảng biển và hàng hải, giúp tối ưu hiệu suất thiết bị.",
+    "yearFounded": "Năm thành lập",
+    "customersTrust": "Khách hàng tin tưởng",
+    "commitmentTitle": "Cam kết của {name}",
+    "commitmentSubtitle": "Với đội ngũ kỹ thuật viên giàu kinh nghiệm và hệ thống kho bãi hiện đại",
+    "commitments": [
+      { "title": "Chất lượng 100%", "description": "Sản phẩm chính hãng, kiểm định và bảo quản nghiêm ngặt" },
+      { "title": "Giải pháp tối ưu", "description": "Kỹ thuật tối ưu cho từng ngành nghề, tăng hiệu suất thiết bị" },
+      { "title": "Dịch vụ chuyên nghiệp", "description": "Nhanh chóng - chuyên nghiệp - tận tâm, hỗ trợ 24/7" },
+      { "title": "Đội ngũ chuyên gia", "description": "Kỹ thuật viên giàu kinh nghiệm, tư vấn chuyên sâu" },
+      { "title": "Kho bãi hiện đại", "description": "Hệ thống kho bãi hiện đại, đảm bảo chất lượng tốt nhất" },
+      { "title": "Giao hàng nhanh", "description": "Mạng lưới phân phối rộng khắp, giao hàng tận nơi" }
+    ],
+    "industriesTitle": "Ngành nghề phục vụ",
+    "industriesSubtitle": "Đồng hành cùng các doanh nghiệp trong nhiều lĩnh vực"
+  },
+  "services": {
+    "metaTitle": "Dịch vụ",
+    "metaDescription": "Giải pháp bôi trơn toàn diện với dịch vụ chuyên nghiệp, từ tư vấn kỹ thuật đến hỗ trợ hậu mãi tận tâm.",
+    "title": "Dịch vụ của chúng tôi",
+    "intro": "Giải pháp bôi trơn toàn diện với dịch vụ chuyên nghiệp, từ tư vấn kỹ thuật đến hỗ trợ hậu mãi tận tâm.",
+    "coreServicesTitle": "Dịch vụ chính",
+    "coreServicesSubtitle": "Các dịch vụ cốt lõi của Phúc Thọ",
+    "coreServices": [
+      {
+        "title": "Tư vấn sản phẩm dầu nhớt",
+        "description": "Đội ngũ chuyên gia của chúng tôi sẽ phân tích yêu cầu vận hành, loại máy móc và môi trường hoạt động của bạn để đề xuất các sản phẩm dầu nhớt tối ưu, đảm bảo hiệu suất cao và tuổi thọ thiết bị kéo dài. Chúng tôi cung cấp tư vấn về các loại dầu động cơ, dầu thủy lực, dầu công nghiệp và mỡ bôi trơn.",
+        "benefits": "Tối ưu hóa hiệu suất thiết bị, kéo dài tuổi thọ máy móc, giảm chi phí bảo trì, đảm bảo tuân thủ tiêu chuẩn ngành."
+      },
+      {
+        "title": "Hỗ trợ kỹ thuật chuyên sâu",
+        "description": "Chúng tôi cung cấp dịch vụ hỗ trợ kỹ thuật toàn diện, bao gồm giải đáp các câu hỏi về đặc tính sản phẩm, hướng dẫn sử dụng đúng cách, phân tích sự cố liên quan đến bôi trơn và đưa ra các giải pháp khắc phục. Đội ngũ kỹ sư giàu kinh nghiệm luôn sẵn sàng hỗ trợ bạn qua điện thoại, email hoặc trực tiếp tại hiện trường.",
+        "benefits": "Giải quyết vấn đề nhanh chóng, nâng cao kiến thức về bôi trơn, tối ưu hóa quy trình vận hành, giảm thiểu thời gian ngừng máy."
+      },
+      {
+        "title": "Dịch vụ đặt hàng số lượng lớn",
+        "description": "Dành cho các doanh nghiệp có nhu cầu sử dụng dầu nhớt thường xuyên và với số lượng lớn, chúng tôi cung cấp dịch vụ đặt hàng số lượng lớn với chính sách giá cạnh tranh, chiết khấu hấp dẫn và các tùy chọn giao hàng linh hoạt. Chúng tôi đảm bảo nguồn cung ổn định và chất lượng sản phẩm đồng nhất.",
+        "benefits": "Tiết kiệm chi phí mua hàng, đảm bảo nguồn cung ổn định, quy trình đặt hàng đơn giản, hỗ trợ giao hàng tận nơi."
+      },
+      {
+        "title": "Giải pháp bảo trì toàn diện",
+        "description": "Chúng tôi cung cấp các giải pháp bảo trì toàn diện bao gồm phân tích mẫu dầu định kỳ, kiểm tra tình trạng máy móc, lập kế hoạch thay dầu và bôi trơn, cũng như tư vấn về các biện pháp phòng ngừa. Mục tiêu là giúp khách hàng duy trì hiệu suất tối ưu của thiết bị, giảm thiểu rủi ro hỏng hóc và kéo dài tuổi thọ tài sản.",
+        "benefits": "Giảm thiểu sự cố, kéo dài tuổi thọ thiết bị, tối ưu hóa chi phí bảo trì, tăng cường an toàn vận hành."
+      },
+      {
+        "title": "Đảm bảo chất lượng sản phẩm",
+        "description": "Chất lượng là ưu tiên hàng đầu của chúng tôi. Mọi sản phẩm dầu nhớt đều trải qua quy trình kiểm định chất lượng nghiêm ngặt từ khâu nguyên liệu đầu vào đến sản phẩm cuối cùng. Chúng tôi cung cấp các chứng nhận chất lượng, báo cáo thử nghiệm và đảm bảo sản phẩm đáp ứng hoặc vượt các tiêu chuẩn ngành quốc tế và địa phương.",
+        "benefits": "Yên tâm về chất lượng sản phẩm, tuân thủ các tiêu chuẩn, giảm thiểu rủi ro vận hành, tăng cường uy tín thương hiệu."
+      }
+    ],
+    "benefitsLabel": "Lợi ích chính:",
+    "additionalServicesTitle": "Dịch vụ bổ sung",
+    "additionalServicesSubtitle": "Các dịch vụ hỗ trợ toàn diện cho khách hàng",
+    "additionalServices": [
+      { "title": "Tư vấn kỹ thuật chuyên sâu", "description": "Đội ngũ kỹ thuật viên giàu kinh nghiệm sẵn sàng tư vấn giải pháp bôi trơn tối ưu cho từng ngành nghề và ứng dụng cụ thể." },
+      { "title": "Giao hàng nhanh chóng", "description": "Hệ thống phân phối rộng khắp, đảm bảo giao hàng nhanh chóng đến tận nơi trong khu vực và các tỉnh lân cận." },
+      { "title": "Hỗ trợ hậu mãi tận tâm", "description": "Dịch vụ chăm sóc khách hàng 24/7, sẵn sàng giải đáp mọi thắc mắc và hỗ trợ kỹ thuật khi cần thiết." },
+      { "title": "Phân tích dầu nhớt", "description": "Dịch vụ phân tích mẫu dầu nhớt định kỳ, giúp theo dõi tình trạng máy móc và dự đoán bảo trì kịp thời." }
+    ],
+    "processTitle": "Quy trình làm việc",
+    "processSubtitle": "Chúng tôi làm việc theo quy trình chuyên nghiệp và minh bạch",
+    "processSteps": [
+      { "step": "01", "title": "Tư vấn & Khảo sát", "description": "Tìm hiểu nhu cầu và khảo sát hiện trạng thiết bị của khách hàng" },
+      { "step": "02", "title": "Đề xuất giải pháp", "description": "Đưa ra giải pháp bôi trơn tối ưu phù hợp với từng ứng dụng" },
+      { "step": "03", "title": "Cung cấp sản phẩm", "description": "Giao hàng nhanh chóng với sản phẩm chính hãng 100%" },
+      { "step": "04", "title": "Hỗ trợ & Theo dõi", "description": "Hỗ trợ kỹ thuật và theo dõi hiệu quả sử dụng định kỳ" }
+    ],
+    "commitmentSectionTitle": "Cam kết dịch vụ",
+    "commitmentSectionText": "Chúng tôi tin rằng, hiệu quả của khách hàng chính là thành công của Phúc Thọ. Hãy để chúng tôi đồng hành cùng bạn trên hành trình vận hành bền vững và hiệu quả.",
+    "commitmentItems": [
+      "Dầu nhớt chính hãng 100% - đạt tiêu chuẩn quốc tế ISO",
+      "Tư vấn kỹ thuật chuyên sâu cho từng ứng dụng công nghiệp",
+      "Phân tích dầu định kỳ - dự báo bảo trì máy móc kịp thời",
+      "Giao hàng nhanh chóng - phục vụ toàn khu vực và lân cận",
+      "Hỗ trợ kỹ thuật 24/7 - giải đáp mọi thắc mắc về sản phẩm và ứng dụng"
+    ],
+    "contactCta": "Liên hệ tư vấn"
+  },
+  "contact": {
+    "metaTitle": "Liên hệ",
+    "metaDescription": "Liên hệ với Phúc Thọ để được tư vấn sản phẩm dầu nhớt công nghiệp phù hợp cho doanh nghiệp của bạn.",
+    "title": "Liên hệ",
+    "intro": "Liên hệ với {name} để được tư vấn sản phẩm dầu nhớt công nghiệp phù hợp cho doanh nghiệp của bạn.",
+    "sendMessage": "Gửi liên hệ",
+    "contactInfo": "Thông tin liên hệ",
+    "mapTitle": "Bản đồ Phúc Thọ"
+  },
+  "contactForm": {
+    "name": "Họ tên *",
+    "phone": "Số điện thoại",
+    "email": "Email",
+    "message": "Nội dung *",
+    "sending": "Đang gửi...",
+    "send": "Gửi liên hệ"
+  },
+  "equivalentFinder": {
+    "metaTitle": "Tra cứu sản phẩm tương đương",
+    "metaDescription": "Tìm sản phẩm dầu nhớt tương đương giữa các thương hiệu Shell, Mobil, Total, Castrol theo danh mục và cấp độ nhớt.",
+    "title": "Tra cứu sản phẩm tương đương",
+    "intro": "Đang dùng dầu nhớt của một hãng nhưng muốn tham khảo sản phẩm tương đương từ Shell, Mobil, Total hoặc Castrol? Chọn sản phẩm bên dưới để xem gợi ý cùng danh mục và cấp độ nhớt.",
+    "selectLabel": "Chọn sản phẩm bạn đang dùng",
+    "selectPlaceholder": "-- Chọn sản phẩm --",
+    "otherCategory": "Khác",
+    "noViscosity": "Sản phẩm này chưa có thông tin cấp độ nhớt để so sánh tự động. Vui lòng liên hệ đội ngũ kỹ thuật để được tư vấn sản phẩm tương đương.",
+    "contactCta": "Liên hệ tư vấn",
+    "noEquivalents": "Chưa tìm thấy sản phẩm tương đương từ hãng khác trong danh mục này (cấp độ nhớt {grade}).",
+    "suggestionCount": "Gợi ý {count} sản phẩm tương đương — cùng danh mục {category}, cấp độ nhớt {grade}",
+    "disclaimer": "* Kết quả gợi ý dựa trên cùng danh mục sản phẩm và cấp độ nhớt tương tự, chỉ mang tính tham khảo ban đầu — không phải xác nhận thay thế chính thức. Vui lòng liên hệ đội ngũ kỹ thuật Phúc Thọ để được tư vấn và xác nhận trước khi thay đổi sản phẩm đang sử dụng."
+  },
+  "quoteCartPage": {
+    "emptyTitle": "Giỏ báo giá đang trống",
+    "emptyDescription": "Hãy thêm sản phẩm bạn quan tâm vào giỏ báo giá để gửi yêu cầu tư vấn giá.",
+    "viewProducts": "Xem sản phẩm",
+    "title": "Giỏ báo giá",
+    "description": "Xem lại danh sách sản phẩm và điền thông tin để gửi yêu cầu báo giá.",
+    "quantityLabel": "Số lượng {name}",
+    "removeLabel": "Xóa {name}",
+    "addMore": "+ Thêm sản phẩm khác",
+    "companyName": "Tên công ty *",
+    "contactName": "Người liên hệ *",
+    "phone": "Số điện thoại *",
+    "email": "Email",
+    "address": "Địa chỉ giao hàng",
+    "note": "Ghi chú",
+    "emptyCartError": "Giỏ báo giá đang trống. Vui lòng thêm sản phẩm trước khi gửi yêu cầu.",
+    "sending": "Đang gửi...",
+    "submit": "Gửi yêu cầu báo giá"
+  },
+  "quoteSuccess": {
+    "metaTitle": "Gửi yêu cầu báo giá thành công",
+    "title": "Gửi yêu cầu báo giá thành công!",
+    "description": "Cảm ơn bạn đã quan tâm đến sản phẩm của {name}. Đội ngũ kinh doanh sẽ liên hệ với bạn trong thời gian sớm nhất để tư vấn và báo giá chi tiết. Nếu cần hỗ trợ gấp, vui lòng gọi {phone}.",
+    "backHome": "Về trang chủ"
+  }
+}

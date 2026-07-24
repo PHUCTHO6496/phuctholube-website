@@ -19,14 +19,14 @@ export const SITE = {
 } as const;
 
 export const NAV_ITEMS = [
-  { label: "Trang chủ", navLabel: "Trang chủ", href: "/" },
-  { label: "Sản phẩm", navLabel: "Sản phẩm", href: "/san-pham" },
-  { label: "Tra cứu sản phẩm tương đương", navLabel: "Tra cứu tương đương", href: "/tra-cuu-tuong-duong" },
-  { label: "Lĩnh vực hoạt động", navLabel: "Lĩnh vực", href: "/linh-vuc-hoat-dong" },
-  { label: "Về chúng tôi", navLabel: "Về chúng tôi", href: "/ve-chung-toi" },
-  { label: "Dịch vụ", navLabel: "Dịch vụ", href: "/dich-vu" },
-  { label: "Tin tức", navLabel: "Tin tức", href: "/tin-tuc" },
-  { label: "Liên hệ", navLabel: "Liên hệ", href: "/lien-he" },
+  { id: "home", href: "/", viOnly: false },
+  { id: "products", href: "/san-pham", viOnly: false },
+  { id: "equivalentFinder", href: "/tra-cuu-tuong-duong", viOnly: false },
+  { id: "industries", href: "/linh-vuc-hoat-dong", viOnly: false },
+  { id: "about", href: "/ve-chung-toi", viOnly: false },
+  { id: "services", href: "/dich-vu", viOnly: false },
+  { id: "blog", href: "/tin-tuc", viOnly: true },
+  { id: "contact", href: "/lien-he", viOnly: false },
 ] as const;
 
 export const HOME_STATS = [

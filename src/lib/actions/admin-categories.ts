@@ -7,12 +7,14 @@ import { getSession } from "@/lib/auth";
 
 const schema = z.object({
   name: z.string().trim().min(2, "Vui lòng nhập tên"),
+  nameEn: z.string().trim().optional(),
   slug: z
     .string()
     .trim()
     .min(2, "Vui lòng nhập slug")
     .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "Slug chỉ gồm chữ thường, số và dấu gạch ngang"),
   description: z.string().trim().optional(),
+  descriptionEn: z.string().trim().optional(),
   image: z.string().trim().optional(),
   sortOrder: z.number(),
 });
@@ -38,8 +40,10 @@ export async function createCategory(input: TaxonomyInput): Promise<TaxonomyResu
   const created = await prisma.productCategory.create({
     data: {
       name: parsed.data.name,
+      nameEn: parsed.data.nameEn || null,
       slug: parsed.data.slug,
       description: parsed.data.description || null,
+      descriptionEn: parsed.data.descriptionEn || null,
       image: parsed.data.image || null,
       sortOrder: parsed.data.sortOrder,
     },
@@ -64,8 +68,10 @@ export async function updateCategory(id: string, input: TaxonomyInput): Promise<
     where: { id },
     data: {
       name: parsed.data.name,
+      nameEn: parsed.data.nameEn || null,
       slug: parsed.data.slug,
       description: parsed.data.description || null,
+      descriptionEn: parsed.data.descriptionEn || null,
       image: parsed.data.image || null,
       sortOrder: parsed.data.sortOrder,
     },

@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 import { Search, X } from "lucide-react";
 
 type Option = { value: string; label: string };
@@ -17,6 +18,7 @@ export function ProductFilterBar({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [, startTransition] = useTransition();
+  const t = useTranslations("filterBar");
 
   const [q, setQ] = useState(searchParams.get("q") ?? "");
 
@@ -57,7 +59,7 @@ export function ProductFilterBar({
           type="text"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="Tìm kiếm sản phẩm..."
+          placeholder={t("searchPlaceholder")}
           className="w-full rounded-md border border-slate-300 py-2 pl-9 pr-3 text-sm focus:border-blue-600 focus:outline-none"
         />
       </div>
@@ -67,7 +69,7 @@ export function ProductFilterBar({
         onChange={(e) => updateParam("category", e.target.value)}
         className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
       >
-        <option value="">Tất cả danh mục</option>
+        <option value="">{t("allCategories")}</option>
         {categories.map((c) => (
           <option key={c.value} value={c.value}>
             {c.label}
@@ -80,7 +82,7 @@ export function ProductFilterBar({
         onChange={(e) => updateParam("brand", e.target.value)}
         className="rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
       >
-        <option value="">Tất cả thương hiệu</option>
+        <option value="">{t("allBrands")}</option>
         {brands.map((b) => (
           <option key={b.value} value={b.value}>
             {b.label}
@@ -98,7 +100,7 @@ export function ProductFilterBar({
           className="inline-flex items-center gap-1 rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50"
         >
           <X className="h-4 w-4" />
-          Xóa bộ lọc
+          {t("clearFilters")}
         </button>
       )}
     </div>

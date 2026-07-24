@@ -28,15 +28,19 @@ export type ProductFormInitialData = {
   msdsUrl: string;
   viscosityGrade: string;
   shortDescription: string;
+  shortDescriptionEn: string;
   description: string;
+  descriptionEn: string;
   useCases: string;
+  useCasesEn: string;
   applicationTags: string;
+  applicationTagsEn: string;
   featured: boolean;
   published: boolean;
   categoryId: string;
   industryIds: string[];
   images: { url: string; alt: string }[];
-  specs: { label: string; value: string }[];
+  specs: { label: string; labelEn: string; value: string }[];
 };
 
 const EMPTY_FORM: ProductFormInitialData = {
@@ -48,9 +52,13 @@ const EMPTY_FORM: ProductFormInitialData = {
   msdsUrl: "",
   viscosityGrade: "",
   shortDescription: "",
+  shortDescriptionEn: "",
   description: "",
+  descriptionEn: "",
   useCases: "",
+  useCasesEn: "",
   applicationTags: "",
+  applicationTagsEn: "",
   featured: false,
   published: true,
   categoryId: "",
@@ -98,7 +106,10 @@ export function ProductForm({
     }));
   }
 
-  function updateSpec(index: number, patch: Partial<{ label: string; value: string }>) {
+  function updateSpec(
+    index: number,
+    patch: Partial<{ label: string; labelEn: string; value: string }>
+  ) {
     setForm((f) => ({
       ...f,
       specs: f.specs.map((s, i) => (i === index ? { ...s, ...patch } : s)),
@@ -106,7 +117,7 @@ export function ProductForm({
   }
 
   function addSpec() {
-    setForm((f) => ({ ...f, specs: [...f.specs, { label: "", value: "" }] }));
+    setForm((f) => ({ ...f, specs: [...f.specs, { label: "", labelEn: "", value: "" }] }));
   }
 
   function removeSpec(index: number) {
@@ -135,15 +146,21 @@ export function ProductForm({
       msdsUrl: form.msdsUrl || undefined,
       viscosityGrade: form.viscosityGrade || undefined,
       shortDescription: form.shortDescription || undefined,
+      shortDescriptionEn: form.shortDescriptionEn || undefined,
       description: form.description || undefined,
+      descriptionEn: form.descriptionEn || undefined,
       useCases: form.useCases.split("\n").map((s) => s.trim()).filter(Boolean),
+      useCasesEn: form.useCasesEn.split("\n").map((s) => s.trim()).filter(Boolean),
       applicationTags: form.applicationTags.split("\n").map((s) => s.trim()).filter(Boolean),
+      applicationTagsEn: form.applicationTagsEn.split("\n").map((s) => s.trim()).filter(Boolean),
       featured: form.featured,
       published: form.published,
       categoryId: form.categoryId || null,
       industryIds: form.industryIds,
       images: form.images.filter((img) => img.url),
-      specs: form.specs.filter((s) => s.label && s.value),
+      specs: form.specs
+        .filter((s) => s.label && s.value)
+        .map((s) => ({ label: s.label, labelEn: s.labelEn || undefined, value: s.value })),
     };
 
     const result = isEdit
@@ -277,11 +294,35 @@ export function ProductForm({
             />
           </div>
           <div>
+            <label className="block text-sm font-medium text-slate-700">
+              Mô tả ngắn (Tiếng Anh)
+            </label>
+            <textarea
+              value={form.shortDescriptionEn}
+              onChange={(e) => updateField("shortDescriptionEn", e.target.value)}
+              rows={2}
+              placeholder="Để trống nếu chưa dịch"
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+            />
+          </div>
+          <div>
             <label className="block text-sm font-medium text-slate-700">Mô tả chi tiết</label>
             <textarea
               value={form.description}
               onChange={(e) => updateField("description", e.target.value)}
               rows={4}
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">
+              Mô tả chi tiết (Tiếng Anh)
+            </label>
+            <textarea
+              value={form.descriptionEn}
+              onChange={(e) => updateField("descriptionEn", e.target.value)}
+              rows={4}
+              placeholder="Để trống nếu chưa dịch"
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />
           </div>
@@ -299,6 +340,18 @@ export function ProductForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700">
+              Ứng dụng (Tiếng Anh, mỗi dòng một mục)
+            </label>
+            <textarea
+              value={form.useCasesEn}
+              onChange={(e) => updateField("useCasesEn", e.target.value)}
+              rows={3}
+              placeholder="Để trống nếu chưa dịch"
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">
               Tag ngành áp dụng (mỗi dòng một mục)
             </label>
             <textarea
@@ -306,6 +359,18 @@ export function ProductForm({
               onChange={(e) => updateField("applicationTags", e.target.value)}
               rows={3}
               placeholder={"Công nghiệp nặng\nXây dựng"}
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700">
+              Tag ngành áp dụng (Tiếng Anh, mỗi dòng một mục)
+            </label>
+            <textarea
+              value={form.applicationTagsEn}
+              onChange={(e) => updateField("applicationTagsEn", e.target.value)}
+              rows={3}
+              placeholder="Để trống nếu chưa dịch"
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />
           </div>
@@ -355,7 +420,14 @@ export function ProductForm({
                 placeholder="Tên thông số (vd: Độ nhớt)"
                 value={spec.label}
                 onChange={(e) => updateSpec(i, { label: e.target.value })}
-                className="w-1/3 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+                className="w-1/4 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+              />
+              <input
+                type="text"
+                placeholder="Tên thông số (Tiếng Anh)"
+                value={spec.labelEn}
+                onChange={(e) => updateSpec(i, { labelEn: e.target.value })}
+                className="w-1/4 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
               />
               <input
                 type="text"

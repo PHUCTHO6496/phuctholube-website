@@ -8,53 +8,61 @@ datasource db {
 }
 
 model ProductCategory {
-  id          String    @id @default(cuid())
-  name        String
-  slug        String    @unique
-  description String?
-  image       String?
-  sortOrder   Int       @default(0)
-  products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id            String    @id @default(cuid())
+  name          String
+  nameEn        String?
+  slug          String    @unique
+  description   String?
+  descriptionEn String?
+  image         String?
+  sortOrder     Int       @default(0)
+  products      Product[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Industry {
-  id          String    @id @default(cuid())
-  name        String
-  slug        String    @unique
-  description String?
-  image       String?
-  sortOrder   Int       @default(0)
-  products    Product[]
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id            String    @id @default(cuid())
+  name          String
+  nameEn        String?
+  slug          String    @unique
+  description   String?
+  descriptionEn String?
+  image         String?
+  sortOrder     Int       @default(0)
+  products      Product[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Product {
-  id               String             @id @default(cuid())
-  name             String
-  slug             String             @unique
-  brand            String?
-  price            Int?
-  tdsUrl           String?
-  msdsUrl          String?
-  viscosityGrade   String?
-  shortDescription String?
-  description      String?
-  useCases         Json?
-  applicationTags  Json?
-  featured         Boolean            @default(false)
-  published        Boolean            @default(true)
-  sortOrder        Int                @default(0)
-  categoryId       String?
-  category         ProductCategory?   @relation(fields: [categoryId], references: [id])
-  industries       Industry[]
-  images           ProductImage[]
-  specs            ProductSpec[]
-  quoteItems       QuoteRequestItem[]
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  id                 String             @id @default(cuid())
+  name               String
+  slug               String             @unique
+  brand              String?
+  price              Int?
+  tdsUrl             String?
+  msdsUrl            String?
+  viscosityGrade     String?
+  shortDescription   String?
+  shortDescriptionEn String?
+  description        String?
+  descriptionEn      String?
+  useCases           Json?
+  useCasesEn         Json?
+  applicationTags    Json?
+  applicationTagsEn  Json?
+  featured           Boolean            @default(false)
+  published          Boolean            @default(true)
+  sortOrder          Int                @default(0)
+  categoryId         String?
+  category           ProductCategory?   @relation(fields: [categoryId], references: [id])
+  industries         Industry[]
+  images             ProductImage[]
+  specs              ProductSpec[]
+  quoteItems         QuoteRequestItem[]
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
 }
 
 model ProductImage {
@@ -69,6 +77,7 @@ model ProductImage {
 model ProductSpec {
   id        String  @id @default(cuid())
   label     String
+  labelEn   String?
   value     String
   sortOrder Int     @default(0)
   productId String
@@ -140,10 +149,13 @@ model SiteSettings {
   galleryImages    String[] @default([])
   statYearsValue   String   @default("25+")
   statYearsLabel   String   @default("Gần 30 năm đồng hành cùng doanh nghiệp tại Hồ Chí Minh và các khu công nghiệp lân cận.")
+  statYearsLabelEn String?
   statVolumeValue  String   @default("1M")
   statVolumeLabel  String   @default("Xấp xỉ 1 triệu lít dầu nhớt được cung cấp mỗi năm.")
+  statVolumeLabelEn String?
   statQualityValue String   @default("100%")
   statQualityLabel String   @default("100% sản phẩm đạt tiêu chuẩn chất lượng toàn cầu, được kiểm định nghiêm ngặt.")
+  statQualityLabelEn String?
   address          String   @default("95 Xô Viết Nghệ Tĩnh, Phường Vũng Tàu, Thành Phố Hồ Chí Minh")
   phone            String   @default("0786060496")
   email            String   @default("info@phucthocoltd.com")

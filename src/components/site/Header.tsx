@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, Globe } from "lucide-react";
 import { NAV_ITEMS, SITE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { formatPhoneDisplay } from "@/lib/format";
@@ -12,8 +12,13 @@ import type { SiteSettingsData } from "@/lib/settings";
 
 export function Header({ settings }: { settings: SiteSettingsData }) {
   const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
   const phoneDisplay = formatPhoneDisplay(settings.phone);
+  const otherLocale = locale === "vi" ? "en" : "vi";
+
+  const navItems = NAV_ITEMS.filter((item) => !item.viOnly || locale === "vi");
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
@@ -36,17 +41,15 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
               {SITE.fullName}
             </span>
             <span className="block text-xs text-slate-500">
-              Từ {SITE.foundedYear}
+              {locale === "vi" ? `Từ ${SITE.foundedYear}` : `Since ${SITE.foundedYear}`}
             </span>
           </span>
         </Link>
 
         <nav className="hidden min-w-0 flex-1 items-center gap-0.5 overflow-x-auto lg:flex xl:gap-1">
-          {NAV_ITEMS.map((item) => {
+          {navItems.map((item) => {
             const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href);
+              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
@@ -58,13 +61,22 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
                     : "text-slate-600 hover:bg-slate-50 hover:text-blue-900"
                 )}
               >
-                {item.navLabel}
+                {t(item.id)}
               </Link>
             );
           })}
         </nav>
 
         <div className="hidden shrink-0 items-center gap-3 lg:flex">
+          <Link
+            href={pathname}
+            locale={otherLocale}
+            className="flex items-center gap-1 rounded-md px-2 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-blue-900"
+            aria-label={t("language")}
+          >
+            <Globe className="h-4 w-4" />
+            {otherLocale.toUpperCase()}
+          </Link>
           <QuoteCartIndicator />
           <a
             href={`tel:${settings.phone}`}
@@ -76,12 +88,20 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
         </div>
 
         <div className="flex items-center gap-1 lg:hidden">
+          <Link
+            href={pathname}
+            locale={otherLocale}
+            className="rounded-md p-2 text-sm font-semibold text-slate-600 hover:bg-slate-100"
+            aria-label={t("language")}
+          >
+            {otherLocale.toUpperCase()}
+          </Link>
           <QuoteCartIndicator />
           <button
             type="button"
             className="rounded-md p-2 text-slate-700 hover:bg-slate-100"
             onClick={() => setOpen((v) => !v)}
-            aria-label="Mở menu"
+            aria-label={t("openMenu")}
           >
             {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -90,14 +110,14 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
 
       {open && (
         <nav className="lg:hidden border-t border-slate-200 bg-white px-4 py-2">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
               className="block rounded-md px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-900"
             >
-              {item.label}
+              {t(item.id)}
             </Link>
           ))}
           <a
@@ -105,7 +125,7 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
             className="mt-2 flex items-center justify-center gap-2 rounded-md bg-amber-500 px-4 py-2.5 text-sm font-semibold text-white"
           >
             <Phone className="h-4 w-4" />
-            Gọi ngay: {phoneDisplay}
+            {t("callNow", { phone: phoneDisplay })}
           </a>
         </nav>
       )}

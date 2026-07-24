@@ -16,6 +16,9 @@ export default async function AdminSettingsPage() {
             ...settings,
             logoUrl: settings.logoUrl ?? "",
             heroImageUrl: settings.heroImageUrl ?? "",
+            statYearsLabelEn: settings.statYearsLabelEn ?? "",
+            statVolumeLabelEn: settings.statVolumeLabelEn ?? "",
+            statQualityLabelEn: settings.statQualityLabelEn ?? "",
             facebookUrl: settings.facebookUrl ?? "",
             linkedinUrl: settings.linkedinUrl ?? "",
           }}

@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { ShoppingCart } from "lucide-react";
 import { useQuoteCart } from "@/lib/store/quote-cart";
@@ -8,6 +9,7 @@ import { useQuoteCart } from "@/lib/store/quote-cart";
 export function QuoteCartIndicator() {
   const [mounted, setMounted] = useState(false);
   const count = useQuoteCart((s) => s.items.length);
+  const t = useTranslations("nav");
 
   useEffect(() => {
     setMounted(true);
@@ -17,7 +19,7 @@ export function QuoteCartIndicator() {
     <Link
       href="/bao-gia"
       className="relative flex items-center rounded-md p-2 text-slate-700 hover:bg-slate-100"
-      aria-label="Giỏ báo giá"
+      aria-label={t("quoteCart")}
     >
       <ShoppingCart className="h-5 w-5" />
       {mounted && count > 0 && (

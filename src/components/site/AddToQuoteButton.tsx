@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { ShoppingCart, Check } from "lucide-react";
 import { useQuoteCart } from "@/lib/store/quote-cart";
 import { cn } from "@/lib/utils";
@@ -25,6 +26,7 @@ export function AddToQuoteButton({
 }) {
   const addItem = useQuoteCart((s) => s.addItem);
   const [added, setAdded] = useState(false);
+  const t = useTranslations("addToQuote");
 
   function handleClick(e: React.MouseEvent) {
     e.preventDefault();
@@ -54,7 +56,7 @@ export function AddToQuoteButton({
       )}
     >
       {added ? <Check className="h-4 w-4" /> : <ShoppingCart className="h-4 w-4" />}
-      {added ? "Đã thêm vào giỏ" : "Thêm vào giỏ báo giá"}
+      {added ? t("added") : t("add")}
     </button>
   );
 }

@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getTranslations } from "next-intl/server";
 import { formatVND } from "@/lib/format";
 import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
 
@@ -13,8 +14,9 @@ export type ProductCardData = {
   images?: { url: string }[];
 };
 
-export function ProductCard({ product }: { product: ProductCardData }) {
+export async function ProductCard({ product }: { product: ProductCardData }) {
   const image = product.images?.[0]?.url;
+  const t = await getTranslations("productCard");
 
   return (
     <div className="flex flex-col rounded-xl border border-slate-200 p-5 transition-shadow hover:shadow-lg">
@@ -24,12 +26,12 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             // eslint-disable-next-line @next/next/no-img-element
             <img src={image} alt={product.name} className="h-full w-full object-cover" />
           ) : (
-            "Ảnh sản phẩm"
+            t("imagePlaceholder")
           )}
         </div>
         <div className="flex items-center justify-between gap-2">
           <p className="text-xs font-semibold uppercase tracking-wide text-amber-600">
-            {product.category?.name ?? "Sản phẩm"}
+            {product.category?.name ?? t("defaultCategory")}
           </p>
           {product.brand && (
             <span className="rounded bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-900">

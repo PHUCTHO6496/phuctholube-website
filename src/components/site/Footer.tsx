@@ -1,15 +1,25 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { NAV_ITEMS, SITE } from "@/lib/constants";
 import { formatPhoneDisplay } from "@/lib/format";
 import { FacebookIcon, LinkedinIcon } from "@/components/site/SocialIcons";
 import type { SiteSettingsData } from "@/lib/settings";
+import { localizedHours } from "@/lib/localized";
 
-export function Footer({ settings }: { settings: SiteSettingsData }) {
+export async function Footer({ settings }: { settings: SiteSettingsData }) {
+  const [t, tNav, locale] = await Promise.all([
+    getTranslations("footer"),
+    getTranslations("nav"),
+    getLocale(),
+  ]);
+
+  const navItems = NAV_ITEMS.filter((item) => !item.viOnly || locale === "vi");
+
   const hours = [
-    { days: "Thứ 2 - Thứ 6", time: settings.hoursMonFri },
-    { days: "Thứ 7", time: settings.hoursSat },
-    { days: "Chủ nhật", time: settings.hoursSun },
+    { days: t("days.monFri"), time: localizedHours(locale, settings.hoursMonFri) },
+    { days: t("days.sat"), time: localizedHours(locale, settings.hoursSat) },
+    { days: t("days.sun"), time: localizedHours(locale, settings.hoursSun) },
   ];
 
   return (
@@ -35,8 +45,7 @@ export function Footer({ settings }: { settings: SiteSettingsData }) {
               </span>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
-              Từ năm {SITE.foundedYear}, {SITE.name} tự hào là nhà phân phối
-              dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh.
+              {t("tagline", { foundedYear: SITE.foundedYear, name: SITE.name })}
             </p>
             {(settings.facebookUrl || settings.linkedinUrl) && (
               <div className="mt-5 flex items-center gap-3">
@@ -68,16 +77,16 @@ export function Footer({ settings }: { settings: SiteSettingsData }) {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide text-white">
-              Liên kết nhanh
+              {t("quickLinks")}
             </h3>
             <ul className="mt-4 space-y-2 text-sm">
-              {NAV_ITEMS.map((item) => (
+              {navItems.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     className="text-slate-400 transition-colors hover:text-amber-400"
                   >
-                    {item.label}
+                    {tNav(item.id)}
                   </Link>
                 </li>
               ))}
@@ -86,7 +95,7 @@ export function Footer({ settings }: { settings: SiteSettingsData }) {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide text-white">
-              Liên hệ
+              {t("contact")}
             </h3>
             <ul className="mt-4 space-y-3 text-sm text-slate-400">
               <li className="flex gap-2">
@@ -113,7 +122,7 @@ export function Footer({ settings }: { settings: SiteSettingsData }) {
 
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wide text-white">
-              Giờ làm việc
+              {t("workingHours")}
             </h3>
             <ul className="mt-4 space-y-2 text-sm text-slate-400">
               {hours.map((h) => (
@@ -130,7 +139,7 @@ export function Footer({ settings }: { settings: SiteSettingsData }) {
         </div>
 
         <div className="mt-10 border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
-          © {new Date().getFullYear()} {SITE.fullName}. Bảo lưu mọi quyền.
+          {t("copyright", { year: new Date().getFullYear(), fullName: SITE.fullName })}
         </div>
       </div>
     </footer>

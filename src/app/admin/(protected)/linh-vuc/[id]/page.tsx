@@ -15,8 +15,10 @@ export default async function EditIndustryPage({
   const initialData: TaxonomyFormData = {
     id: industry.id,
     name: industry.name,
+    nameEn: industry.nameEn ?? "",
     slug: industry.slug,
     description: industry.description ?? "",
+    descriptionEn: industry.descriptionEn ?? "",
     image: industry.image ?? "",
     sortOrder: industry.sortOrder.toString(),
   };

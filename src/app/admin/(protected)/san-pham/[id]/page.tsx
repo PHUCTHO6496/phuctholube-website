@@ -34,17 +34,25 @@ export default async function EditProductPage({
     msdsUrl: product.msdsUrl ?? "",
     viscosityGrade: product.viscosityGrade ?? "",
     shortDescription: product.shortDescription ?? "",
+    shortDescriptionEn: product.shortDescriptionEn ?? "",
     description: product.description ?? "",
+    descriptionEn: product.descriptionEn ?? "",
     useCases: Array.isArray(product.useCases) ? (product.useCases as string[]).join("\n") : "",
+    useCasesEn: Array.isArray(product.useCasesEn)
+      ? (product.useCasesEn as string[]).join("\n")
+      : "",
     applicationTags: Array.isArray(product.applicationTags)
       ? (product.applicationTags as string[]).join("\n")
+      : "",
+    applicationTagsEn: Array.isArray(product.applicationTagsEn)
+      ? (product.applicationTagsEn as string[]).join("\n")
       : "",
     featured: product.featured,
     published: product.published,
     categoryId: product.categoryId ?? "",
     industryIds: product.industries.map((i) => i.id),
     images: product.images.map((img) => ({ url: img.url, alt: img.alt ?? "" })),
-    specs: product.specs.map((s) => ({ label: s.label, value: s.value })),
+    specs: product.specs.map((s) => ({ label: s.label, labelEn: s.labelEn ?? "", value: s.value })),
   };
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { useTranslations } from "next-intl";
 import { CheckCircle2 } from "lucide-react";
 import { submitContactMessage, type ContactFormState } from "@/lib/actions/contact";
 
@@ -11,6 +12,7 @@ export function ContactForm() {
     submitContactMessage,
     initialState
   );
+  const t = useTranslations("contactForm");
 
   if (state.status === "success") {
     return (
@@ -25,7 +27,7 @@ export function ContactForm() {
     <form action={formAction} className="space-y-4">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-slate-700">
-          Họ tên *
+          {t("name")}
         </label>
         <input
           id="name"
@@ -42,7 +44,7 @@ export function ContactForm() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
           <label htmlFor="phone" className="block text-sm font-medium text-slate-700">
-            Số điện thoại
+            {t("phone")}
           </label>
           <input
             id="phone"
@@ -53,7 +55,7 @@ export function ContactForm() {
         </div>
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-            Email
+            {t("email")}
           </label>
           <input
             id="email"
@@ -69,7 +71,7 @@ export function ContactForm() {
 
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-slate-700">
-          Nội dung *
+          {t("message")}
         </label>
         <textarea
           id="message"
@@ -88,7 +90,7 @@ export function ContactForm() {
         disabled={pending}
         className="inline-flex items-center gap-2 rounded-md bg-amber-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-amber-600 disabled:opacity-60"
       >
-        {pending ? "Đang gửi..." : "Gửi liên hệ"}
+        {pending ? t("sending") : t("send")}
       </button>
     </form>
   );

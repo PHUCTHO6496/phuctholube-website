@@ -18,16 +18,20 @@ function slugify(input: string) {
 export type TaxonomyFormData = {
   id?: string;
   name: string;
+  nameEn: string;
   slug: string;
   description: string;
+  descriptionEn: string;
   image: string;
   sortOrder: string;
 };
 
 type TaxonomyInput = {
   name: string;
+  nameEn?: string;
   slug: string;
   description?: string;
+  descriptionEn?: string;
   image?: string;
   sortOrder: number;
 };
@@ -38,8 +42,10 @@ type TaxonomyResult =
 
 const EMPTY_FORM: TaxonomyFormData = {
   name: "",
+  nameEn: "",
   slug: "",
   description: "",
+  descriptionEn: "",
   image: "",
   sortOrder: "0",
 };
@@ -78,8 +84,10 @@ export function TaxonomyForm({
 
     const input: TaxonomyInput = {
       name: form.name,
+      nameEn: form.nameEn || undefined,
       slug: form.slug,
       description: form.description || undefined,
+      descriptionEn: form.descriptionEn || undefined,
       image: form.image || undefined,
       sortOrder: Number(form.sortOrder) || 0,
     };
@@ -111,6 +119,16 @@ export function TaxonomyForm({
           {errors.name && <p className="mt-1 text-xs text-red-600">{errors.name[0]}</p>}
         </div>
         <div>
+          <label className="block text-sm font-medium text-slate-700">Tên (Tiếng Anh)</label>
+          <input
+            type="text"
+            value={form.nameEn}
+            onChange={(e) => updateField("nameEn", e.target.value)}
+            placeholder="Để trống nếu chưa dịch"
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+          />
+        </div>
+        <div>
           <label className="block text-sm font-medium text-slate-700">Slug (URL) *</label>
           <input
             type="text"
@@ -130,6 +148,16 @@ export function TaxonomyForm({
             value={form.description}
             onChange={(e) => updateField("description", e.target.value)}
             rows={3}
+            className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-700">Mô tả (Tiếng Anh)</label>
+          <textarea
+            value={form.descriptionEn}
+            onChange={(e) => updateField("descriptionEn", e.target.value)}
+            rows={3}
+            placeholder="Để trống nếu chưa dịch"
             className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
           />
         </div>
