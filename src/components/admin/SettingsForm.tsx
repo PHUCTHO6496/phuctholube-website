@@ -19,7 +19,10 @@ export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
     e.preventDefault();
     setErrors({});
     setPending(true);
-    const result = await updateSiteSettings(form);
+    const result = await updateSiteSettings({
+      ...form,
+      galleryImages: form.galleryImages.filter(Boolean),
+    });
     setPending(false);
     if (!result.ok) {
       setErrors(result.errors);
@@ -40,6 +43,67 @@ export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
             value={form.logoUrl ?? ""}
             onChange={(url) => updateField("logoUrl", url)}
           />
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-slate-200 bg-white p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          Ảnh trang chủ
+        </h2>
+        <div className="mt-4">
+          <ImageUploadField
+            label="Ảnh khu vực giới thiệu (banner đầu trang chủ)"
+            value={form.heroImageUrl ?? ""}
+            onChange={(url) => updateField("heroImageUrl", url)}
+          />
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-slate-200 bg-white p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          Thư viện hình ảnh
+        </h2>
+        <p className="mt-1 text-xs text-slate-500">
+          Hiển thị ở mục &quot;Thư viện hình ảnh&quot; trên trang chủ. Tối đa 8 ảnh.
+        </p>
+        <div className="mt-4 space-y-4">
+          {form.galleryImages.map((url, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <div className="flex-1">
+                <ImageUploadField
+                  label={`Ảnh ${i + 1}`}
+                  value={url}
+                  onChange={(newUrl) =>
+                    updateField(
+                      "galleryImages",
+                      form.galleryImages.map((u, j) => (j === i ? newUrl : u))
+                    )
+                  }
+                />
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  updateField(
+                    "galleryImages",
+                    form.galleryImages.filter((_, j) => j !== i)
+                  )
+                }
+                className="mt-6 text-sm font-medium text-red-600 hover:text-red-700"
+              >
+                Xóa
+              </button>
+            </div>
+          ))}
+          {form.galleryImages.length < 8 && (
+            <button
+              type="button"
+              onClick={() => updateField("galleryImages", [...form.galleryImages, ""])}
+              className="rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            >
+              + Thêm ảnh
+            </button>
+          )}
         </div>
       </div>
 

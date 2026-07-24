@@ -7,6 +7,8 @@ export async function getSiteSettings() {
   if (!settings) {
     return {
       logoUrl: null,
+      heroImageUrl: null,
+      galleryImages: [] as string[],
       statYearsValue: "25+",
       statYearsLabel: SITE.name,
       statVolumeValue: "1M",

@@ -160,10 +160,19 @@ export default async function Home() {
             </div>
           </div>
 
-          <div className="relative hidden aspect-[4/3] w-full items-center justify-center rounded-2xl border border-white/10 bg-white/5 lg:flex">
-            <span className="text-sm text-slate-400">
-              [ Ảnh sản phẩm / kho hàng Phúc Thọ ]
-            </span>
+          <div className="relative hidden aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 lg:flex">
+            {settings.heroImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={settings.heroImageUrl}
+                alt={SITE.fullName}
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <span className="text-sm text-slate-400">
+                [ Ảnh sản phẩm / kho hàng Phúc Thọ ]
+              </span>
+            )}
           </div>
         </div>
       </section>
@@ -227,30 +236,37 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Gallery placeholder */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
-              Thư viện hình ảnh
-            </h2>
-            <p className="mt-2 text-sm text-slate-600">
-              Khám phá quy trình sản xuất, lưu trữ và phân phối dầu nhớt công
-              nghiệp của {SITE.name}
-            </p>
+      {/* Gallery */}
+      {settings.galleryImages.length > 0 && (
+        <section className="bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+                Thư viện hình ảnh
+              </h2>
+              <p className="mt-2 text-sm text-slate-600">
+                Khám phá quy trình sản xuất, lưu trữ và phân phối dầu nhớt công
+                nghiệp của {SITE.name}
+              </p>
+            </div>
+            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
+              {settings.galleryImages.map((url, i) => (
+                <div
+                  key={url}
+                  className="aspect-square overflow-hidden rounded-lg bg-slate-200"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={url}
+                    alt={`${SITE.name} ${i + 1}`}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={i}
-                className="flex aspect-square items-center justify-center rounded-lg bg-slate-200 text-xs text-slate-500"
-              >
-                Ảnh {i + 1}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Featured products */}
       <section className="bg-slate-50">

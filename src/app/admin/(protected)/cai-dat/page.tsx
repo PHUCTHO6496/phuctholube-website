@@ -15,6 +15,7 @@ export default async function AdminSettingsPage() {
           initialData={{
             ...settings,
             logoUrl: settings.logoUrl ?? "",
+            heroImageUrl: settings.heroImageUrl ?? "",
             facebookUrl: settings.facebookUrl ?? "",
             linkedinUrl: settings.linkedinUrl ?? "",
           }}
