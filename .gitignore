@@ -48,3 +48,6 @@ next-env.d.ts
 
 # locally uploaded images (dev only, use cloud storage in production)
 /public/uploads
+
+.vercel
+.env*
