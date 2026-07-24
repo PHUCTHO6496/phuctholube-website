@@ -10,14 +10,22 @@ export type ProductCardData = {
   price: number | null;
   shortDescription: string | null;
   category: { name: string } | null;
+  images?: { url: string }[];
 };
 
 export function ProductCard({ product }: { product: ProductCardData }) {
+  const image = product.images?.[0]?.url;
+
   return (
     <div className="flex flex-col rounded-xl border border-slate-200 p-5 transition-shadow hover:shadow-lg">
       <Link href={`/san-pham/${product.slug}`} className="group flex flex-1 flex-col">
-        <div className="mb-4 flex aspect-square items-center justify-center rounded-lg bg-slate-100 text-xs text-slate-400">
-          Ảnh sản phẩm
+        <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-slate-100 text-xs text-slate-400">
+          {image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={image} alt={product.name} className="h-full w-full object-cover" />
+          ) : (
+            "Ảnh sản phẩm"
+          )}
         </div>
         <div className="flex items-center justify-between gap-2">
           <p className="text-xs font-semibold uppercase tracking-wide text-amber-600">

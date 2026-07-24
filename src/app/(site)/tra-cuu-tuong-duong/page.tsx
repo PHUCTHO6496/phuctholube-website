@@ -22,6 +22,7 @@ export default async function EquivalentLookupPage() {
       categoryId: true,
       viscosityGrade: true,
       category: { select: { name: true } },
+      images: { take: 1, orderBy: { sortOrder: "asc" }, select: { url: true } },
     },
   });
 

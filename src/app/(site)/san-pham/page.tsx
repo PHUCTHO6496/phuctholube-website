@@ -47,6 +47,7 @@ export default async function ProductsPage({
         price: true,
         shortDescription: true,
         category: { select: { name: true } },
+        images: { take: 1, orderBy: { sortOrder: "asc" }, select: { url: true } },
       },
     }),
   ]);

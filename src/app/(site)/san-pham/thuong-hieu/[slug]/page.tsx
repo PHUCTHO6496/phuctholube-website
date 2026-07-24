@@ -44,6 +44,7 @@ export default async function BrandPage({
       price: true,
       shortDescription: true,
       category: { select: { name: true } },
+      images: { take: 1, orderBy: { sortOrder: "asc" }, select: { url: true } },
     },
   });
 

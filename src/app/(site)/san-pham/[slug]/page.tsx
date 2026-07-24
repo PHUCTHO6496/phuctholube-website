@@ -16,6 +16,7 @@ async function getProduct(slug: string) {
       category: true,
       specs: { orderBy: { sortOrder: "asc" } },
       industries: true,
+      images: { orderBy: { sortOrder: "asc" } },
     },
   });
 }
@@ -66,6 +67,7 @@ export default async function ProductDetailPage({
           price: true,
           shortDescription: true,
           category: { select: { name: true } },
+          images: { take: 1, orderBy: { sortOrder: "asc" }, select: { url: true } },
         },
       })
     : [];
@@ -99,8 +101,17 @@ export default async function ProductDetailPage({
       </nav>
 
       <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
-        <div className="flex aspect-square items-center justify-center rounded-2xl bg-slate-100 text-sm text-slate-400">
-          Ảnh sản phẩm
+        <div className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-slate-100 text-sm text-slate-400">
+          {product.images[0] ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={product.images[0].url}
+              alt={product.name}
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            "Ảnh sản phẩm"
+          )}
         </div>
 
         <div>
