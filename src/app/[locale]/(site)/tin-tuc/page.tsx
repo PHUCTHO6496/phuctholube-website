@@ -22,6 +22,7 @@ export default async function BlogListPage() {
       excerpt: true,
       author: true,
       publishedAt: true,
+      coverImage: true,
     },
   });
 
@@ -46,20 +47,32 @@ export default async function BlogListPage() {
           <Link
             key={post.slug}
             href={`/tin-tuc/${post.slug}`}
-            className="block py-6 first:pt-0"
+            className="flex gap-5 py-6 first:pt-0"
           >
-            <h2 className="text-lg font-bold text-slate-900 transition-colors hover:text-blue-900">
-              {post.title}
-            </h2>
-            {post.excerpt && (
-              <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                {post.excerpt}
-              </p>
+            {post.coverImage && (
+              <div className="hidden w-48 shrink-0 overflow-hidden rounded-lg bg-slate-100 sm:block">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={post.coverImage}
+                  alt={post.title}
+                  className="aspect-[16/9] h-full w-full object-cover"
+                />
+              </div>
             )}
-            <p className="mt-3 text-xs text-slate-500">
-              {post.author}
-              {post.publishedAt ? ` · ${formatDate(post.publishedAt)}` : ""}
-            </p>
+            <div className="min-w-0 flex-1">
+              <h2 className="text-lg font-bold text-slate-900 transition-colors hover:text-blue-900">
+                {post.title}
+              </h2>
+              {post.excerpt && (
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  {post.excerpt}
+                </p>
+              )}
+              <p className="mt-3 text-xs text-slate-500">
+                {post.author}
+                {post.publishedAt ? ` · ${formatDate(post.publishedAt)}` : ""}
+              </p>
+            </div>
           </Link>
         ))}
       </div>

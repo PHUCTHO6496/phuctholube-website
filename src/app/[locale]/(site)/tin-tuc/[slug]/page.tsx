@@ -68,6 +68,17 @@ export default async function BlogDetailPage({
         {post.publishedAt ? ` · ${formatDate(post.publishedAt)}` : ""}
       </p>
 
+      {post.coverImage && (
+        <div className="mt-6 overflow-hidden rounded-xl bg-slate-100">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            className="aspect-[16/9] w-full object-cover"
+          />
+        </div>
+      )}
+
       <div
         className="prose prose-slate mt-8 max-w-none prose-p:leading-relaxed prose-p:text-slate-700"
         dangerouslySetInnerHTML={{ __html: post.contentHtml }}
