@@ -360,7 +360,7 @@
   "quoteSuccess": {
     "metaTitle": "Gửi yêu cầu báo giá thành công",
     "title": "Gửi yêu cầu báo giá thành công!",
-    "description": "Cảm ơn bạn đã quan tâm đến sản phẩm của {name}. Đội ngũ kinh doanh sẽ liên hệ với bạn trong thời gian sớm nhất để tư vấn và báo giá chi tiết. Nếu cần hỗ trợ gấp, vui lòng gọi {phone}.",
+    "description": "Cảm ơn bạn đã quan tâm đến sản phẩm của {name}. Đội ngũ kinh doanh sẽ liên hệ với bạn trong thời gian sớm nhất để tư vấn và báo giá chi tiết. Nếu cần hỗ trợ gấp, vui lòng gọi <phone>{phoneDisplay}</phone>.",
     "backHome": "Về trang chủ"
   }
 }

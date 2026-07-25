@@ -1,7 +1,10 @@
 "use server";
 
 import { z } from "zod";
+import { after } from "next/server";
 import { prisma } from "@/lib/db";
+import { sendOwnerNotification, escapeHtml } from "@/lib/email";
+import { SITE_URL } from "@/lib/constants";
 
 const quoteItemSchema = z.object({
   productId: z.string(),
@@ -55,6 +58,24 @@ export async function submitQuoteRequest(
       },
     },
   });
+
+  after(() =>
+    sendOwnerNotification(
+      `🔔 Yêu cầu báo giá mới từ ${rest.companyName}`,
+      `<h2>Yêu cầu báo giá mới</h2>
+       <p><strong>Công ty:</strong> ${escapeHtml(rest.companyName)}</p>
+       <p><strong>Người liên hệ:</strong> ${escapeHtml(rest.contactName)}</p>
+       <p><strong>Điện thoại:</strong> ${escapeHtml(rest.phone)}</p>
+       ${email ? `<p><strong>Email:</strong> ${escapeHtml(email)}</p>` : ""}
+       ${address ? `<p><strong>Địa chỉ:</strong> ${escapeHtml(address)}</p>` : ""}
+       ${note ? `<p><strong>Ghi chú:</strong> ${escapeHtml(note)}</p>` : ""}
+       <h3>Sản phẩm yêu cầu báo giá</h3>
+       <ul>${items
+         .map((i) => `<li>${escapeHtml(i.productName)} — SL: ${escapeHtml(i.quantity)}</li>`)
+         .join("")}</ul>
+       <p><a href="${SITE_URL}/admin/yeu-cau-bao-gia/${created.id}">Xem chi tiết trong trang quản trị</a></p>`
+    )
+  );
 
   return { ok: true, id: created.id };
 }

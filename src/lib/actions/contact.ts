@@ -1,7 +1,10 @@
 "use server";
 
 import { z } from "zod";
+import { after } from "next/server";
 import { prisma } from "@/lib/db";
+import { sendOwnerNotification, escapeHtml } from "@/lib/email";
+import { SITE_URL } from "@/lib/constants";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2, "Vui lòng nhập họ tên"),
@@ -47,6 +50,19 @@ export async function submitContactMessage(
       message: parsed.data.message,
     },
   });
+
+  after(() =>
+    sendOwnerNotification(
+      `🔔 Liên hệ mới từ ${parsed.data.name}`,
+      `<h2>Liên hệ mới từ website</h2>
+       <p><strong>Họ tên:</strong> ${escapeHtml(parsed.data.name)}</p>
+       ${parsed.data.phone ? `<p><strong>Điện thoại:</strong> ${escapeHtml(parsed.data.phone)}</p>` : ""}
+       ${parsed.data.email ? `<p><strong>Email:</strong> ${escapeHtml(parsed.data.email)}</p>` : ""}
+       <p><strong>Nội dung:</strong></p>
+       <p>${escapeHtml(parsed.data.message)}</p>
+       <p><a href="${SITE_URL}/admin/lien-he">Xem trong trang quản trị</a></p>`
+    )
+  );
 
   return {
     status: "success",

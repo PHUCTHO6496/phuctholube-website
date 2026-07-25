@@ -360,7 +360,7 @@
   "quoteSuccess": {
     "metaTitle": "Quote Request Sent Successfully",
     "title": "Quote Request Sent Successfully!",
-    "description": "Thank you for your interest in {name}'s products. Our sales team will contact you as soon as possible with detailed advice and pricing. For urgent assistance, please call {phone}.",
+    "description": "Thank you for your interest in {name}'s products. Our sales team will contact you as soon as possible with detailed advice and pricing. For urgent assistance, please call <phone>{phoneDisplay}</phone>.",
     "backHome": "Back to home"
   }
 }

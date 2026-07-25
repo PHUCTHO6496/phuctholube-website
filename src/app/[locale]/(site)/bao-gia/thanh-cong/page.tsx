@@ -21,9 +21,10 @@ export default async function QuoteSuccessPage() {
       <p className="mt-3 text-sm leading-relaxed text-slate-600">
         {t.rich("description", {
           name: SITE.name,
-          phone: () => (
+          phoneDisplay: SITE.phoneDisplay,
+          phone: (chunks) => (
             <a href={`tel:${SITE.phone}`} className="font-semibold text-blue-900">
-              {SITE.phoneDisplay}
+              {chunks}
             </a>
           ),
         })}
