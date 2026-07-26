@@ -7,12 +7,21 @@ import { isAuthorizedAgent, unauthorizedResponse } from "@/lib/agent-auth";
 
 // Sanity check against gross pricing mistakes (typos, decimal errors) coming
 // from an automated caller. Legitimate large price changes still go through
-// the admin panel, which has no such limit.
+// the admin panel, which has no such limit. Does not apply to brand-new
+// products, since there is no prior price to compare against.
 const MAX_PRICE_CHANGE_RATIO = 0.3;
 
-const agentProductUpdateSchema = z.object({
-  slug: z.string().trim().min(1, "Vui lòng cung cấp slug sản phẩm cần cập nhật"),
+const agentProductSchema = z.object({
+  slug: z
+    .string()
+    .trim()
+    .min(1, "Vui lòng cung cấp slug sản phẩm")
+    .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "Slug chỉ gồm chữ thường, số và dấu gạch ngang"),
+  name: z.string().trim().optional(),
+  brand: z.string().trim().optional(),
   price: z.number().int().nonnegative().nullable().optional(),
+  stock: z.number().int().nonnegative().nullable().optional(),
+  category: z.object({ name: z.string().trim().min(1) }).optional(),
   shortDescription: z.string().trim().optional(),
   description: z.string().trim().optional(),
   viscosityGrade: z.string().trim().optional(),
@@ -41,6 +50,7 @@ export async function GET(request: NextRequest) {
       name: true,
       brand: true,
       price: true,
+      stock: true,
       viscosityGrade: true,
       published: true,
       featured: true,
@@ -62,7 +72,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Body phải là JSON hợp lệ" }, { status: 400 });
   }
 
-  const parsed = agentProductUpdateSchema.safeParse(body);
+  const parsed = agentProductSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
       { error: "Dữ liệu không hợp lệ", details: parsed.error.flatten().fieldErrors },
@@ -72,13 +82,108 @@ export async function POST(request: NextRequest) {
   const data = parsed.data;
 
   const existing = await prisma.product.findUnique({ where: { slug: data.slug } });
+
   if (!existing) {
+    return createProduct(data);
+  }
+  return updateProduct(existing, data);
+}
+
+type AgentProductInput = z.infer<typeof agentProductSchema>;
+
+async function resolveCategoryId(
+  category: AgentProductInput["category"]
+): Promise<{ id: string | null } | { error: NextResponse }> {
+  if (!category) return { id: null };
+
+  const found = await prisma.productCategory.findFirst({
+    where: { name: { equals: category.name, mode: "insensitive" } },
+  });
+  if (!found) {
+    const all = await prisma.productCategory.findMany({ select: { name: true } });
+    return {
+      error: NextResponse.json(
+        {
+          error: `Không tìm thấy danh mục "${category.name}". Danh mục phải là một trong các danh mục đã có sẵn.`,
+          availableCategories: all.map((c) => c.name),
+        },
+        { status: 422 }
+      ),
+    };
+  }
+  return { id: found.id };
+}
+
+async function createProduct(data: AgentProductInput) {
+  const missing: string[] = [];
+  if (!data.name) missing.push("name");
+  if (data.price === undefined || data.price === null) missing.push("price");
+  if (!data.brand) missing.push("brand");
+  if (missing.length > 0) {
     return NextResponse.json(
-      { error: `Không tìm thấy sản phẩm với slug "${data.slug}". API này chỉ cập nhật sản phẩm đã có sẵn.` },
-      { status: 404 }
+      { error: `Thiếu trường bắt buộc để tạo sản phẩm mới: ${missing.join(", ")}` },
+      { status: 422 }
     );
   }
+  if (data.price! <= 0) {
+    return NextResponse.json({ error: "Giá sản phẩm phải lớn hơn 0" }, { status: 422 });
+  }
 
+  const categoryResult = await resolveCategoryId(data.category);
+  if ("error" in categoryResult) return categoryResult.error;
+
+  try {
+    const created = await prisma.product.create({
+      data: {
+        name: data.name!,
+        slug: data.slug,
+        brand: data.brand!,
+        price: data.price!,
+        stock: data.stock ?? null,
+        categoryId: categoryResult.id,
+        shortDescription: data.shortDescription || null,
+        description: data.description || null,
+        viscosityGrade: data.viscosityGrade || null,
+        tdsUrl: data.tdsUrl || null,
+        msdsUrl: data.msdsUrl || null,
+        featured: data.featured ?? false,
+        published: data.published ?? true,
+        images: data.images
+          ? {
+              create: data.images.map((img, i) => ({
+                url: img.url,
+                alt: img.alt || null,
+                sortOrder: i,
+              })),
+            }
+          : undefined,
+      },
+    });
+
+    revalidatePath("/admin/san-pham");
+    revalidatePath(`/san-pham/${created.slug}`);
+    revalidatePath("/san-pham");
+    revalidatePath("/");
+
+    return NextResponse.json(
+      { ok: true, id: created.id, slug: created.slug, url: `${SITE_URL}/san-pham/${created.slug}` },
+      { status: 201 }
+    );
+  } catch (err: unknown) {
+    if (typeof err === "object" && err !== null && "code" in err && err.code === "P2002") {
+      return NextResponse.json(
+        { error: `Slug "${data.slug}" đã tồn tại (trùng lặp khi tạo).` },
+        { status: 409 }
+      );
+    }
+    throw err;
+  }
+}
+
+async function updateProduct(
+  existing: { id: string; slug: string; price: number | null },
+  data: AgentProductInput
+) {
   if (data.price !== undefined && data.price !== null && existing.price) {
     const changeRatio = Math.abs(data.price - existing.price) / existing.price;
     if (changeRatio > MAX_PRICE_CHANGE_RATIO) {
@@ -88,13 +193,14 @@ export async function POST(request: NextRequest) {
           currentPrice: existing.price,
           requestedPrice: data.price,
         },
-        { status: 422 }
+        { status: 409 }
       );
     }
   }
 
   const updateData: Record<string, unknown> = {};
   if (data.price !== undefined) updateData.price = data.price;
+  if (data.stock !== undefined) updateData.stock = data.stock;
   if (data.shortDescription !== undefined) updateData.shortDescription = data.shortDescription || null;
   if (data.description !== undefined) updateData.description = data.description || null;
   if (data.viscosityGrade !== undefined) updateData.viscosityGrade = data.viscosityGrade || null;
@@ -102,6 +208,11 @@ export async function POST(request: NextRequest) {
   if (data.msdsUrl !== undefined) updateData.msdsUrl = data.msdsUrl || null;
   if (data.featured !== undefined) updateData.featured = data.featured;
   if (data.published !== undefined) updateData.published = data.published;
+  if (data.category) {
+    const categoryResult = await resolveCategoryId(data.category);
+    if ("error" in categoryResult) return categoryResult.error;
+    updateData.categoryId = categoryResult.id;
+  }
 
   if (data.images !== undefined) {
     await prisma.$transaction([

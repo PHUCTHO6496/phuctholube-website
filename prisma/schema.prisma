@@ -41,6 +41,7 @@ model Product {
   slug               String             @unique
   brand              String?
   price              Int?
+  stock              Int?
   tdsUrl             String?
   msdsUrl            String?
   viscosityGrade     String?
