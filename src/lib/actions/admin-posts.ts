@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
-export const schema = z.object({
+const schema = z.object({
   title: z.string().trim().min(2, "Vui lòng nhập tiêu đề"),
   slug: z
     .string()
