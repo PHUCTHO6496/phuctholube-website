@@ -14,6 +14,13 @@ function formatDate(date: Date) {
   return new Intl.DateTimeFormat("vi-VN").format(date);
 }
 
+// coverImage may be an absolute Blob URL (production) or a relative /uploads
+// path (local dev fallback in src/lib/storage.ts) — normalize either to a
+// fully-qualified URL for JsonLd/og:image, which require absolute URLs.
+function absoluteImageUrl(url: string): string {
+  return /^https?:\/\//.test(url) ? url : `${SITE_URL}${url}`;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -22,9 +29,28 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) return {};
+
+  const title = post.seoTitle ?? post.title;
+  const description = post.seoDescription ?? post.excerpt ?? undefined;
+
   return {
-    title: post.seoTitle ?? post.title,
-    description: post.seoDescription ?? post.excerpt ?? undefined,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "article",
+      url: `${SITE_URL}/tin-tuc/${post.slug}`,
+      images: post.coverImage
+        ? [{ url: absoluteImageUrl(post.coverImage), width: 1200, height: 630 }]
+        : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: post.coverImage ? [absoluteImageUrl(post.coverImage)] : undefined,
+    },
   };
 }
 
@@ -45,7 +71,7 @@ export default async function BlogDetailPage({
           "@type": "BlogPosting",
           headline: post.title,
           description: post.excerpt ?? undefined,
-          image: post.coverImage ? `${SITE_URL}${post.coverImage}` : undefined,
+          image: post.coverImage ? absoluteImageUrl(post.coverImage) : undefined,
           datePublished: post.publishedAt?.toISOString(),
           dateModified: post.updatedAt.toISOString(),
           author: post.author ? { "@type": "Person", name: post.author } : undefined,
