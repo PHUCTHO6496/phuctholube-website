@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { AlertCircle, ArrowRight, Search } from "lucide-react";
-import { formatVND } from "@/lib/format";
 import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
 import { Link } from "@/i18n/navigation";
 
@@ -141,9 +140,6 @@ export function EquivalentFinder({ products }: { products: EquivalentProduct[] }
                                 {p.shortDescription}
                               </p>
                             )}
-                            <p className="mt-3 text-sm font-bold text-blue-900">
-                              {formatVND(p.price)}
-                            </p>
                           </Link>
                           <AddToQuoteButton product={p} className="mt-4" fullWidth />
                         </div>

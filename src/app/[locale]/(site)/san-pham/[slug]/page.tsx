@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ChevronRight, FileText } from "lucide-react";
 import { prisma } from "@/lib/db";
-import { formatVND } from "@/lib/format";
 import { ProductCard } from "@/components/site/ProductCard";
 import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -110,13 +109,6 @@ export default async function ProductDetailPage({
           brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
           category: categoryName,
           url: `${SITE_URL}/san-pham/${product.slug}`,
-          offers: {
-            "@type": "Offer",
-            url: `${SITE_URL}/san-pham/${product.slug}`,
-            priceCurrency: "VND",
-            price: product.price ?? undefined,
-            availability: "https://schema.org/InStock",
-          },
         }}
       />
       <nav className="flex items-center gap-1 text-sm text-slate-500">
@@ -155,9 +147,6 @@ export default async function ProductDetailPage({
           <h1 className="mt-2 text-2xl font-extrabold text-slate-900 sm:text-3xl">
             {product.name}
           </h1>
-          <p className="mt-3 text-2xl font-bold text-blue-900">
-            {formatVND(product.price)}
-          </p>
           {shortDescription && (
             <p className="mt-4 text-sm leading-relaxed text-slate-600">
               {shortDescription}

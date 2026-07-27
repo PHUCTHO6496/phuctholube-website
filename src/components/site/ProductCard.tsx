@@ -1,6 +1,5 @@
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
-import { formatVND } from "@/lib/format";
 import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
 
 export type ProductCardData = {
@@ -47,9 +46,6 @@ export async function ProductCard({ product }: { product: ProductCardData }) {
             {product.shortDescription}
           </p>
         )}
-        <p className="mt-3 text-sm font-bold text-blue-900">
-          {formatVND(product.price)}
-        </p>
       </Link>
       <AddToQuoteButton
         product={product}
