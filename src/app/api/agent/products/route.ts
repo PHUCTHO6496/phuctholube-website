@@ -11,7 +11,7 @@ import { isAuthorizedAgent, unauthorizedResponse } from "@/lib/agent-auth";
 // products, since there is no prior price to compare against.
 const MAX_PRICE_CHANGE_RATIO = 0.3;
 
-const agentProductSchema = z.object({
+const agentProductSchema = z.strictObject({
   slug: z
     .string()
     .trim()
@@ -74,8 +74,9 @@ export async function POST(request: NextRequest) {
 
   const parsed = agentProductSchema.safeParse(body);
   if (!parsed.success) {
+    const { formErrors, fieldErrors } = parsed.error.flatten();
     return NextResponse.json(
-      { error: "Dữ liệu không hợp lệ", details: parsed.error.flatten().fieldErrors },
+      { error: "Dữ liệu không hợp lệ", details: fieldErrors, issues: formErrors },
       { status: 422 }
     );
   }
