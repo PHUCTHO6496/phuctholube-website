@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/db";
 
@@ -50,12 +51,13 @@ export default async function BlogListPage() {
             className="flex gap-5 py-6 first:pt-0"
           >
             {post.coverImage && (
-              <div className="hidden w-48 shrink-0 overflow-hidden rounded-lg bg-slate-100 sm:block">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+              <div className="relative hidden aspect-[16/9] w-48 shrink-0 overflow-hidden rounded-lg bg-slate-100 sm:block">
+                <Image
                   src={post.coverImage}
                   alt={post.title}
-                  className="aspect-[16/9] h-full w-full object-cover"
+                  fill
+                  sizes="192px"
+                  className="object-cover"
                 />
               </div>
             )}

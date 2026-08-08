@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Trash2 } from "lucide-react";
@@ -459,12 +460,13 @@ export function ProductForm({
         </div>
         <div className="mt-4 flex flex-wrap gap-4">
           {form.images.map((img, i) => (
-            <div key={i} className="relative">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            <div key={i} className="relative h-24 w-24">
+              <Image
                 src={img.url}
                 alt=""
-                className="h-24 w-24 rounded-lg object-cover ring-1 ring-slate-200"
+                fill
+                sizes="96px"
+                className="rounded-lg object-cover ring-1 ring-slate-200"
               />
               <button
                 type="button"

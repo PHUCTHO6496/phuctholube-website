@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
@@ -29,12 +30,15 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
           <div>
             <div className="flex items-center gap-2">
               {settings.logoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={settings.logoUrl}
-                  alt={SITE.fullName}
-                  className="h-10 w-10 rounded-md object-contain"
-                />
+                <span className="relative block h-10 w-10 shrink-0">
+                  <Image
+                    src={settings.logoUrl}
+                    alt={SITE.fullName}
+                    fill
+                    sizes="40px"
+                    className="rounded-md object-contain"
+                  />
+                </span>
               ) : (
                 <span className="flex h-10 w-10 items-center justify-center rounded-md bg-amber-500 text-lg font-bold text-white">
                   PT

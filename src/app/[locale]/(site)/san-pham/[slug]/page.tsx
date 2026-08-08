@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -120,13 +121,15 @@ export default async function ProductDetailPage({
       </nav>
 
       <div className="mt-6 grid grid-cols-1 gap-10 lg:grid-cols-2">
-        <div className="flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-slate-100 text-sm text-slate-400">
+        <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl bg-slate-100 text-sm text-slate-400">
           {product.images[0] ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={product.images[0].url}
               alt={product.name}
-              className="h-full w-full object-cover"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              priority
+              className="object-cover"
             />
           ) : (
             tProductCard("imagePlaceholder")

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
@@ -95,12 +96,14 @@ export default async function BlogDetailPage({
       </p>
 
       {post.coverImage && (
-        <div className="mt-6 overflow-hidden rounded-xl bg-slate-100">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+        <div className="relative mt-6 aspect-[16/9] overflow-hidden rounded-xl bg-slate-100">
+          <Image
             src={post.coverImage}
             alt={post.title}
-            className="aspect-[16/9] w-full object-cover"
+            fill
+            sizes="(min-width: 1024px) 768px, 100vw"
+            priority
+            className="object-cover"
           />
         </div>
       )}

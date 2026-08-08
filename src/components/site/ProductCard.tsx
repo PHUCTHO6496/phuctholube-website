@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getTranslations } from "next-intl/server";
 import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
@@ -20,10 +21,15 @@ export async function ProductCard({ product }: { product: ProductCardData }) {
   return (
     <div className="flex flex-col rounded-xl border border-slate-200 p-5 transition-shadow hover:shadow-lg">
       <Link href={`/san-pham/${product.slug}`} className="group flex flex-1 flex-col">
-        <div className="mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-slate-100 text-xs text-slate-400">
+        <div className="relative mb-4 flex aspect-square items-center justify-center overflow-hidden rounded-lg bg-slate-100 text-xs text-slate-400">
           {image ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={image} alt={product.name} className="h-full w-full object-cover" />
+            <Image
+              src={image}
+              alt={product.name}
+              fill
+              sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+              className="object-cover"
+            />
           ) : (
             t("imagePlaceholder")
           )}

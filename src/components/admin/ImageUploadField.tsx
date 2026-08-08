@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { ImagePlus, Loader2, X } from "lucide-react";
 
@@ -45,12 +46,13 @@ export function ImageUploadField({
       <label className="block text-sm font-medium text-slate-700">{label}</label>
       <div className="mt-2 flex items-center gap-4">
         {value ? (
-          <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+          <div className="relative h-20 w-20">
+            <Image
               src={value}
               alt=""
-              className="h-20 w-20 rounded-lg object-cover ring-1 ring-slate-200"
+              fill
+              sizes="80px"
+              className="rounded-lg object-cover ring-1 ring-slate-200"
             />
             <button
               type="button"

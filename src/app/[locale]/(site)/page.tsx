@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import {
@@ -108,11 +109,13 @@ export default async function Home() {
 
           <div className="relative hidden aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 lg:flex">
             {settings.heroImageUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={settings.heroImageUrl}
                 alt={SITE.fullName}
-                className="h-full w-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 640px, 100vw"
+                priority
+                className="object-cover"
               />
             ) : (
               <span className="text-sm text-slate-400">
@@ -197,13 +200,14 @@ export default async function Home() {
               {settings.galleryImages.map((url, i) => (
                 <div
                   key={url}
-                  className="aspect-square overflow-hidden rounded-lg bg-slate-200"
+                  className="relative aspect-square overflow-hidden rounded-lg bg-slate-200"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={url}
                     alt={`${SITE.name} ${i + 1}`}
-                    className="h-full w-full object-cover"
+                    fill
+                    sizes="(min-width: 640px) 25vw, 50vw"
+                    className="object-cover"
                   />
                 </div>
               ))}
