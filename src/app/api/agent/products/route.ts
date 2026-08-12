@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/constants";
@@ -161,7 +161,8 @@ async function createProduct(data: AgentProductInput) {
       },
     });
 
-    revalidatePath("/admin/san-pham");
+    revalidateTag("products", "seconds");
+  revalidatePath("/admin/san-pham");
     revalidatePath(`/san-pham/${created.slug}`);
     revalidatePath("/san-pham");
     revalidatePath("/");
@@ -236,6 +237,7 @@ async function updateProduct(
     await prisma.product.update({ where: { id: existing.id }, data: updateData });
   }
 
+  revalidateTag("products", "seconds");
   revalidatePath("/admin/san-pham");
   revalidatePath(`/san-pham/${existing.slug}`);
   revalidatePath("/san-pham");

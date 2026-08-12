@@ -1,8 +1,32 @@
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import { getLocale, getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/db";
 import { EquivalentFinder, type EquivalentProduct } from "@/components/site/EquivalentFinder";
 import { localized } from "@/lib/localized";
+
+const getEquivalentFinderProducts = unstable_cache(
+  async () =>
+    prisma.product.findMany({
+      where: { published: true },
+      orderBy: [{ category: { sortOrder: "asc" } }, { brand: "asc" }, { name: "asc" }],
+      select: {
+        id: true,
+        slug: true,
+        name: true,
+        brand: true,
+        price: true,
+        shortDescription: true,
+        shortDescriptionEn: true,
+        categoryId: true,
+        viscosityGrade: true,
+        category: { select: { name: true, nameEn: true } },
+        images: { take: 1, orderBy: { sortOrder: "asc" }, select: { url: true } },
+      },
+    }),
+  ["equivalent-finder-products"],
+  { tags: ["products"], revalidate: 300 }
+);
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("equivalentFinder");
@@ -18,23 +42,7 @@ export default async function EquivalentLookupPage() {
     getLocale(),
   ]);
 
-  const products = await prisma.product.findMany({
-    where: { published: true },
-    orderBy: [{ category: { sortOrder: "asc" } }, { brand: "asc" }, { name: "asc" }],
-    select: {
-      id: true,
-      slug: true,
-      name: true,
-      brand: true,
-      price: true,
-      shortDescription: true,
-      shortDescriptionEn: true,
-      categoryId: true,
-      viscosityGrade: true,
-      category: { select: { name: true, nameEn: true } },
-      images: { take: 1, orderBy: { sortOrder: "asc" }, select: { url: true } },
-    },
-  });
+  const products = await getEquivalentFinderProducts();
 
   const items: EquivalentProduct[] = products.map((p) => ({
     id: p.id,

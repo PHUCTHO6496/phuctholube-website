@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { slugify } from "@/lib/utils";
@@ -106,6 +106,7 @@ async function createPost(slug: string, data: AgentPostInput) {
     },
   });
 
+  revalidateTag("posts", "seconds");
   revalidatePath("/tin-tuc");
   revalidatePath(`/tin-tuc/${created.slug}`);
   revalidatePath("/admin/bai-viet");
@@ -134,6 +135,7 @@ async function updatePost(existing: { id: string; slug: string }, data: AgentPos
     await prisma.blogPost.update({ where: { id: existing.id }, data: updateData });
   }
 
+  revalidateTag("posts", "seconds");
   revalidatePath("/tin-tuc");
   revalidatePath(`/tin-tuc/${existing.slug}`);
   revalidatePath("/admin/bai-viet");

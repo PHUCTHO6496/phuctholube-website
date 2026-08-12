@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Target, Eye, Gem, HeartHandshake, Warehouse } from "lucide-react";
@@ -7,6 +8,12 @@ import { SITE } from "@/lib/constants";
 import { localized } from "@/lib/localized";
 
 const MISSION_ICONS = [Target, Eye, Gem, HeartHandshake, Warehouse];
+
+const getIndustriesList = unstable_cache(
+  async () => prisma.industry.findMany({ orderBy: { sortOrder: "asc" } }),
+  ["about-industries"],
+  { tags: ["industries"], revalidate: 300 }
+);
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("about");
@@ -22,9 +29,7 @@ export default async function AboutPage() {
     getLocale(),
   ]);
 
-  const industries = await prisma.industry.findMany({
-    orderBy: { sortOrder: "asc" },
-  });
+  const industries = await getIndustriesList();
 
   const missionCards = t.raw("missionCards") as { title: string; description: string }[];
   const commitments = t.raw("commitments") as { title: string; description: string }[];

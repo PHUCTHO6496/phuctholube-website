@@ -1,7 +1,26 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/db";
+
+const getPublishedPosts = unstable_cache(
+  async () =>
+    prisma.blogPost.findMany({
+      where: { published: true },
+      orderBy: { publishedAt: "desc" },
+      select: {
+        slug: true,
+        title: true,
+        excerpt: true,
+        author: true,
+        publishedAt: true,
+        coverImage: true,
+      },
+    }),
+  ["published-posts"],
+  { tags: ["posts"], revalidate: 300 }
+);
 
 export const metadata: Metadata = {
   title: "Tin tức và bài viết",
@@ -14,18 +33,7 @@ function formatDate(date: Date) {
 }
 
 export default async function BlogListPage() {
-  const posts = await prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: { publishedAt: "desc" },
-    select: {
-      slug: true,
-      title: true,
-      excerpt: true,
-      author: true,
-      publishedAt: true,
-      coverImage: true,
-    },
-  });
+  const posts = await getPublishedPosts();
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">

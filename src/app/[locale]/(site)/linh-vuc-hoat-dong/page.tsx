@@ -1,9 +1,26 @@
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ArrowRight } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { localized } from "@/lib/localized";
+
+const getIndustriesWithCounts = unstable_cache(
+  async () =>
+    prisma.industry.findMany({
+      orderBy: { sortOrder: "asc" },
+      include: { _count: { select: { products: true } } },
+    }),
+  ["industries-list"],
+  { tags: ["industries"], revalidate: 300 }
+);
+
+const getPublishedProductCount = unstable_cache(
+  async () => prisma.product.count({ where: { published: true } }),
+  ["published-product-count"],
+  { tags: ["products"], revalidate: 300 }
+);
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("industriesPage");
@@ -19,12 +36,9 @@ export default async function IndustriesPage() {
     getLocale(),
   ]);
 
-  const industries = await prisma.industry.findMany({
-    orderBy: { sortOrder: "asc" },
-    include: { _count: { select: { products: true } } },
-  });
+  const industries = await getIndustriesWithCounts();
 
-  const totalProducts = await prisma.product.count({ where: { published: true } });
+  const totalProducts = await getPublishedProductCount();
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">

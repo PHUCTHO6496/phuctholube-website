@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -8,9 +9,22 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { localized } from "@/lib/localized";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
 
-async function getCategory(slug: string) {
-  return prisma.productCategory.findUnique({ where: { slug } });
-}
+const getCategory = unstable_cache(
+  async (slug: string) => prisma.productCategory.findUnique({ where: { slug } }),
+  ["category-detail"],
+  { tags: ["categories"], revalidate: 300 }
+);
+
+const getCategoryProducts = unstable_cache(
+  async (categoryId: string) =>
+    prisma.product.findMany({
+      where: { published: true, categoryId },
+      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+      select: productCardSelect,
+    }),
+  ["category-products"],
+  { tags: ["products"], revalidate: 300 }
+);
 
 export async function generateMetadata({
   params,
@@ -56,11 +70,7 @@ export default async function ProductCategoryPage({
   const name = localized(locale, category.name, category.nameEn);
   const description = localized(locale, category.description, category.descriptionEn);
 
-  const products = await prisma.product.findMany({
-    where: { published: true, categoryId: category.id },
-    orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
-    select: productCardSelect,
-  });
+  const products = await getCategoryProducts(category.id);
 
   const localizedProducts = products.map((p) => localizeProductCard(p, locale));
 

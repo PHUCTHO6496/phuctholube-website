@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -8,9 +9,22 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { localized } from "@/lib/localized";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
 
-async function getIndustry(slug: string) {
-  return prisma.industry.findUnique({ where: { slug } });
-}
+const getIndustry = unstable_cache(
+  async (slug: string) => prisma.industry.findUnique({ where: { slug } }),
+  ["industry-detail"],
+  { tags: ["industries"], revalidate: 300 }
+);
+
+const getIndustryProducts = unstable_cache(
+  async (slug: string) =>
+    prisma.product.findMany({
+      where: { published: true, industries: { some: { slug } } },
+      orderBy: { sortOrder: "asc" },
+      select: productCardSelect,
+    }),
+  ["industry-products"],
+  { tags: ["products"], revalidate: 300 }
+);
 
 export async function generateMetadata({
   params,
@@ -54,11 +68,7 @@ export default async function IndustryDetailPage({
   const name = localized(locale, industry.name, industry.nameEn);
   const description = localized(locale, industry.description, industry.descriptionEn);
 
-  const productsRaw = await prisma.product.findMany({
-    where: { published: true, industries: { some: { slug } } },
-    orderBy: { sortOrder: "asc" },
-    select: productCardSelect,
-  });
+  const productsRaw = await getIndustryProducts(slug);
   const products = productsRaw.map((p) => localizeProductCard(p, locale));
 
   return (

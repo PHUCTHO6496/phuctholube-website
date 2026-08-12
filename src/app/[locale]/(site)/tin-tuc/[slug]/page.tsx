@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
@@ -7,9 +8,11 @@ import { prisma } from "@/lib/db";
 import { JsonLd } from "@/components/site/JsonLd";
 import { SITE_URL } from "@/lib/constants";
 
-async function getPost(slug: string) {
-  return prisma.blogPost.findUnique({ where: { slug, published: true } });
-}
+const getPost = unstable_cache(
+  async (slug: string) => prisma.blogPost.findUnique({ where: { slug, published: true } }),
+  ["post-detail"],
+  { tags: ["posts"], revalidate: 300 }
+);
 
 function formatDate(date: Date) {
   return new Intl.DateTimeFormat("vi-VN").format(date);
