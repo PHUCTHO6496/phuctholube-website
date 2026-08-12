@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/db";
@@ -7,43 +6,6 @@ import { BRANDS } from "@/lib/constants";
 import { ProductCard } from "@/components/site/ProductCard";
 import { ProductFilterBar } from "@/components/site/ProductFilterBar";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
-
-const getCategoriesList = unstable_cache(
-  async () =>
-    prisma.productCategory.findMany({
-      orderBy: { sortOrder: "asc" },
-      select: { name: true, slug: true },
-    }),
-  ["products-page-categories"],
-  { tags: ["categories"], revalidate: 300 }
-);
-
-const getDistinctBrands = unstable_cache(
-  async () =>
-    prisma.product.findMany({
-      distinct: ["brand"],
-      where: { brand: { not: null } },
-      select: { brand: true },
-      orderBy: { brand: "asc" },
-    }),
-  ["products-page-brands"],
-  { tags: ["products"], revalidate: 300 }
-);
-
-const getFilteredProducts = unstable_cache(
-  async (categorySlug: string, brand: string) =>
-    prisma.product.findMany({
-      where: {
-        published: true,
-        ...(categorySlug ? { category: { slug: categorySlug } } : {}),
-        ...(brand ? { brand } : {}),
-      },
-      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
-      select: productCardSelect,
-    }),
-  ["products-page-filtered"],
-  { tags: ["products"], revalidate: 300 }
-);
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("productsPage");
@@ -69,9 +31,25 @@ export default async function ProductsPage({
   const q = typeof params.q === "string" ? params.q.trim().toLocaleLowerCase(locale) : "";
 
   const [categories, brandRows, products] = await Promise.all([
-    getCategoriesList(),
-    getDistinctBrands(),
-    getFilteredProducts(categorySlug, brand),
+    prisma.productCategory.findMany({
+      orderBy: { sortOrder: "asc" },
+      select: { name: true, slug: true },
+    }),
+    prisma.product.findMany({
+      distinct: ["brand"],
+      where: { brand: { not: null } },
+      select: { brand: true },
+      orderBy: { brand: "asc" },
+    }),
+    prisma.product.findMany({
+      where: {
+        published: true,
+        ...(categorySlug ? { category: { slug: categorySlug } } : {}),
+        ...(brand ? { brand } : {}),
+      },
+      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+      select: productCardSelect,
+    }),
   ]);
 
   const filtered = (

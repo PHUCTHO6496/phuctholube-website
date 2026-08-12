@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath, updateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
@@ -56,7 +56,6 @@ export async function createPost(input: PostInput): Promise<PostResult> {
     },
   });
 
-  updateTag("posts");
   revalidatePath("/admin/bai-viet");
   revalidatePath("/tin-tuc");
   return { ok: true, id: created.id };
@@ -87,7 +86,6 @@ export async function updatePost(id: string, input: PostInput): Promise<PostResu
     },
   });
 
-  updateTag("posts");
   revalidatePath("/admin/bai-viet");
   revalidatePath("/tin-tuc");
   revalidatePath(`/tin-tuc/${data.slug}`);
@@ -97,7 +95,6 @@ export async function updatePost(id: string, input: PostInput): Promise<PostResu
 export async function deletePost(id: string): Promise<{ ok: boolean }> {
   await requireSession();
   await prisma.blogPost.delete({ where: { id } });
-  updateTag("posts");
   revalidatePath("/admin/bai-viet");
   revalidatePath("/tin-tuc");
   return { ok: true };

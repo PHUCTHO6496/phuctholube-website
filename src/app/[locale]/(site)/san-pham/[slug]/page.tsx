@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -13,31 +12,17 @@ import { SITE_URL } from "@/lib/constants";
 import { localized, localizedJson } from "@/lib/localized";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
 
-const getProduct = unstable_cache(
-  async (slug: string) =>
-    prisma.product.findUnique({
-      where: { slug, published: true },
-      include: {
-        category: true,
-        specs: { orderBy: { sortOrder: "asc" } },
-        industries: true,
-        images: { orderBy: { sortOrder: "asc" } },
-      },
-    }),
-  ["product-detail"],
-  { tags: ["products"], revalidate: 300 }
-);
-
-const getRelatedProducts = unstable_cache(
-  async (categoryId: string, excludeId: string) =>
-    prisma.product.findMany({
-      where: { published: true, categoryId, id: { not: excludeId } },
-      take: 4,
-      select: productCardSelect,
-    }),
-  ["product-related"],
-  { tags: ["products"], revalidate: 300 }
-);
+async function getProduct(slug: string) {
+  return prisma.product.findUnique({
+    where: { slug, published: true },
+    include: {
+      category: true,
+      specs: { orderBy: { sortOrder: "asc" } },
+      industries: true,
+      images: { orderBy: { sortOrder: "asc" } },
+    },
+  });
+}
 
 export async function generateMetadata({
   params,
@@ -102,7 +87,15 @@ export default async function ProductDetailPage({
   const applicationTags = localizedJson(locale, applicationTagsVi, applicationTagsEn);
 
   const relatedRaw = product.categoryId
-    ? await getRelatedProducts(product.categoryId, product.id)
+    ? await prisma.product.findMany({
+        where: {
+          published: true,
+          categoryId: product.categoryId,
+          id: { not: product.id },
+        },
+        take: 4,
+        select: productCardSelect,
+      })
     : [];
   const related = relatedRaw.map((p) => localizeProductCard(p, locale));
 

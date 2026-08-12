@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath, updateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
@@ -49,8 +49,6 @@ export async function createIndustry(input: TaxonomyInput): Promise<TaxonomyResu
     },
   });
 
-  updateTag("industries");
-  updateTag("products");
   revalidatePath("/admin/linh-vuc");
   revalidatePath("/linh-vuc-hoat-dong");
   return { ok: true, id: created.id };
@@ -79,8 +77,6 @@ export async function updateIndustry(id: string, input: TaxonomyInput): Promise<
     },
   });
 
-  updateTag("industries");
-  updateTag("products");
   revalidatePath("/admin/linh-vuc");
   revalidatePath("/linh-vuc-hoat-dong");
   return { ok: true, id };
@@ -89,8 +85,6 @@ export async function updateIndustry(id: string, input: TaxonomyInput): Promise<
 export async function deleteIndustry(id: string): Promise<{ ok: boolean }> {
   await requireSession();
   await prisma.industry.delete({ where: { id } });
-  updateTag("industries");
-  updateTag("products");
   revalidatePath("/admin/linh-vuc");
   return { ok: true };
 }

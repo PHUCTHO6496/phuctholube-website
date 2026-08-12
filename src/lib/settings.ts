@@ -1,8 +1,7 @@
-import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/db";
 import { SITE } from "@/lib/constants";
 
-async function fetchSiteSettings() {
+export async function getSiteSettings() {
   const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } });
 
   if (!settings) {
@@ -33,10 +32,5 @@ async function fetchSiteSettings() {
 
   return settings;
 }
-
-export const getSiteSettings = unstable_cache(fetchSiteSettings, ["site-settings"], {
-  tags: ["settings"],
-  revalidate: 300,
-});
 
 export type SiteSettingsData = Awaited<ReturnType<typeof getSiteSettings>>;

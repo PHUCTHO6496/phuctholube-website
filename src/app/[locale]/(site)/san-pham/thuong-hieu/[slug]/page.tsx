@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
@@ -8,17 +7,6 @@ import { prisma } from "@/lib/db";
 import { BRANDS, getBrandBySlug } from "@/lib/constants";
 import { ProductCard } from "@/components/site/ProductCard";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
-
-const getBrandProducts = unstable_cache(
-  async (brandName: string) =>
-    prisma.product.findMany({
-      where: { published: true, brand: brandName },
-      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
-      select: productCardSelect,
-    }),
-  ["brand-products"],
-  { tags: ["products"], revalidate: 300 }
-);
 
 export async function generateMetadata({
   params,
@@ -57,7 +45,11 @@ export default async function BrandPage({
     getLocale(),
   ]);
 
-  const productsRaw = await getBrandProducts(brand.name);
+  const productsRaw = await prisma.product.findMany({
+    where: { published: true, brand: brand.name },
+    orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+    select: productCardSelect,
+  });
   const products = productsRaw.map((p) => localizeProductCard(p, locale));
 
   const otherBrands = BRANDS.filter((b) => b.slug !== brand.slug);

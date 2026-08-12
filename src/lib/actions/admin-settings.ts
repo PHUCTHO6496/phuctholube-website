@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath, updateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
@@ -58,7 +58,6 @@ export async function updateSiteSettings(input: SettingsInput): Promise<Settings
     create: { id: 1, ...data },
   });
 
-  updateTag("settings");
   revalidatePath("/", "layout");
   return { ok: true };
 }

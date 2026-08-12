@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath, updateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
@@ -92,7 +92,6 @@ export async function createProduct(input: ProductInput): Promise<ProductActionR
     },
   });
 
-  updateTag("products");
   revalidatePath("/admin/san-pham");
   revalidatePath("/san-pham");
   revalidatePath("/");
@@ -157,7 +156,6 @@ export async function updateProduct(
     }),
   ]);
 
-  updateTag("products");
   revalidatePath("/admin/san-pham");
   revalidatePath(`/san-pham/${data.slug}`);
   revalidatePath("/san-pham");
@@ -167,7 +165,6 @@ export async function updateProduct(
 export async function deleteProduct(id: string): Promise<{ ok: boolean }> {
   await requireSession();
   await prisma.product.delete({ where: { id } });
-  updateTag("products");
   revalidatePath("/admin/san-pham");
   revalidatePath("/san-pham");
   revalidatePath("/");

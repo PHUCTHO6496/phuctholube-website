@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath, updateTag } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 
@@ -49,8 +49,6 @@ export async function createCategory(input: TaxonomyInput): Promise<TaxonomyResu
     },
   });
 
-  updateTag("categories");
-  updateTag("products");
   revalidatePath("/admin/danh-muc");
   revalidatePath("/san-pham");
   return { ok: true, id: created.id };
@@ -79,8 +77,6 @@ export async function updateCategory(id: string, input: TaxonomyInput): Promise<
     },
   });
 
-  updateTag("categories");
-  updateTag("products");
   revalidatePath("/admin/danh-muc");
   revalidatePath("/san-pham");
   return { ok: true, id };
@@ -89,8 +85,6 @@ export async function updateCategory(id: string, input: TaxonomyInput): Promise<
 export async function deleteCategory(id: string): Promise<{ ok: boolean }> {
   await requireSession();
   await prisma.productCategory.delete({ where: { id } });
-  updateTag("categories");
-  updateTag("products");
   revalidatePath("/admin/danh-muc");
   return { ok: true };
 }
