@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import {
@@ -22,6 +23,18 @@ import { productCardSelect, localizeProductCard } from "@/lib/product-card-data"
 import { localized } from "@/lib/localized";
 
 const TRUST_ICONS = [ShieldCheck, Wrench, Warehouse, BadgePercent];
+
+const getFeaturedProducts = unstable_cache(
+  async () =>
+    prisma.product.findMany({
+      where: { published: true, featured: true },
+      orderBy: { sortOrder: "asc" },
+      take: 8,
+      select: productCardSelect,
+    }),
+  ["home-featured-products"],
+  { tags: ["products"], revalidate: 300 }
+);
 
 export default async function Home() {
   const [settings, t, tMeta, tBrands, locale] = await Promise.all([
@@ -54,12 +67,7 @@ export default async function Home() {
   const serviceAreas = t.raw("serviceAreas") as string[];
   const homeServiceHrefs = ["/dich-vu", "/dich-vu", "/dich-vu"];
 
-  const featuredProductsRaw = await prisma.product.findMany({
-    where: { published: true, featured: true },
-    orderBy: { sortOrder: "asc" },
-    take: 8,
-    select: productCardSelect,
-  });
+  const featuredProductsRaw = await getFeaturedProducts();
   const featuredProducts = featuredProductsRaw.map((p) => localizeProductCard(p, locale));
 
   return (

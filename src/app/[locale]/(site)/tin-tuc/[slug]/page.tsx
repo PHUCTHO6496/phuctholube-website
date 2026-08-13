@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { ChevronRight } from "lucide-react";
@@ -7,12 +8,31 @@ import { prisma } from "@/lib/db";
 import { JsonLd } from "@/components/site/JsonLd";
 import { SITE_URL } from "@/lib/constants";
 
-async function getPost(slug: string) {
-  return prisma.blogPost.findUnique({ where: { slug, published: true } });
-}
+const getPost = unstable_cache(
+  async (slug: string) =>
+    prisma.blogPost.findUnique({
+      where: { slug, published: true },
+      select: {
+        slug: true,
+        title: true,
+        author: true,
+        excerpt: true,
+        contentHtml: true,
+        coverImage: true,
+        publishedAt: true,
+        updatedAt: true,
+        seoTitle: true,
+        seoDescription: true,
+      },
+    }),
+  ["post-detail"],
+  { tags: ["posts"], revalidate: 300 }
+);
 
-function formatDate(date: Date) {
-  return new Intl.DateTimeFormat("vi-VN").format(date);
+// publishedAt/updatedAt come back as ISO strings (not Dates) once they have
+// round-tripped through unstable_cache's JSON serialization, so accept both.
+function formatDate(date: Date | string) {
+  return new Intl.DateTimeFormat("vi-VN").format(new Date(date));
 }
 
 // coverImage may be an absolute Blob URL (production) or a relative /uploads
@@ -73,8 +93,8 @@ export default async function BlogDetailPage({
           headline: post.title,
           description: post.excerpt ?? undefined,
           image: post.coverImage ? absoluteImageUrl(post.coverImage) : undefined,
-          datePublished: post.publishedAt?.toISOString(),
-          dateModified: post.updatedAt.toISOString(),
+          datePublished: post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined,
+          dateModified: new Date(post.updatedAt).toISOString(),
           author: post.author ? { "@type": "Person", name: post.author } : undefined,
           mainEntityOfPage: `${SITE_URL}/tin-tuc/${post.slug}`,
         }}

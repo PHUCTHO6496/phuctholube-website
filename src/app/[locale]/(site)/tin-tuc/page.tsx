@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/db";
 
@@ -9,23 +10,32 @@ export const metadata: Metadata = {
     "Cập nhật thông tin mới nhất về dầu nhớt công nghiệp, hướng dẫn sử dụng và kiến thức chuyên ngành.",
 };
 
-function formatDate(date: Date) {
-  return new Intl.DateTimeFormat("vi-VN").format(date);
+// publishedAt comes back as an ISO string (not a Date) once it has round-tripped
+// through unstable_cache's JSON serialization, so accept both.
+function formatDate(date: Date | string) {
+  return new Intl.DateTimeFormat("vi-VN").format(new Date(date));
 }
 
+const getPublishedPosts = unstable_cache(
+  async () =>
+    prisma.blogPost.findMany({
+      where: { published: true },
+      orderBy: { publishedAt: "desc" },
+      select: {
+        slug: true,
+        title: true,
+        excerpt: true,
+        author: true,
+        publishedAt: true,
+        coverImage: true,
+      },
+    }),
+  ["published-posts"],
+  { tags: ["posts"], revalidate: 300 }
+);
+
 export default async function BlogListPage() {
-  const posts = await prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: { publishedAt: "desc" },
-    select: {
-      slug: true,
-      title: true,
-      excerpt: true,
-      author: true,
-      publishedAt: true,
-      coverImage: true,
-    },
-  });
+  const posts = await getPublishedPosts();
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">

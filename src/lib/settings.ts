@@ -1,8 +1,36 @@
+import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/db";
 import { SITE } from "@/lib/constants";
 
-export async function getSiteSettings() {
-  const settings = await prisma.siteSettings.findUnique({ where: { id: 1 } });
+const SETTINGS_SELECT = {
+  logoUrl: true,
+  heroImageUrl: true,
+  galleryImages: true,
+  statYearsValue: true,
+  statYearsLabel: true,
+  statYearsLabelEn: true,
+  statVolumeValue: true,
+  statVolumeLabel: true,
+  statVolumeLabelEn: true,
+  statQualityValue: true,
+  statQualityLabel: true,
+  statQualityLabelEn: true,
+  address: true,
+  phone: true,
+  email: true,
+  zaloUrl: true,
+  facebookUrl: true,
+  linkedinUrl: true,
+  hoursMonFri: true,
+  hoursSat: true,
+  hoursSun: true,
+} as const;
+
+async function fetchSiteSettings() {
+  const settings = await prisma.siteSettings.findUnique({
+    where: { id: 1 },
+    select: SETTINGS_SELECT,
+  });
 
   if (!settings) {
     return {
@@ -32,5 +60,10 @@ export async function getSiteSettings() {
 
   return settings;
 }
+
+export const getSiteSettings = unstable_cache(fetchSiteSettings, ["site-settings"], {
+  tags: ["settings"],
+  revalidate: 300,
+});
 
 export type SiteSettingsData = Awaited<ReturnType<typeof getSiteSettings>>;
