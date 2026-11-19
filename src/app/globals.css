@@ -12,6 +12,21 @@
   --font-sans: var(--font-be-vietnam-pro);
 }
 
+@theme {
+  --animate-slide-up: slide-up 0.35s ease-out;
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

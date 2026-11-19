@@ -3,6 +3,10 @@
 import { useRef, useState } from "react";
 import { FileText, Loader2, X } from "lucide-react";
 
+// Vercel rejects serverless request bodies over 4.5MB before our route runs
+// (413 with a non-JSON body), so check on the client and give a clear message.
+const MAX_FILE_BYTES = 4_400_000;
+
 export function DocumentUploadField({
   label,
   value,
@@ -19,6 +23,11 @@ export function DocumentUploadField({
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (file.size > MAX_FILE_BYTES) {
+      setError("Tệp quá lớn (tối đa khoảng 4MB). Vui lòng nén PDF rồi tải lại.");
+      if (inputRef.current) inputRef.current.value = "";
+      return;
+    }
     setUploading(true);
     setError(null);
 

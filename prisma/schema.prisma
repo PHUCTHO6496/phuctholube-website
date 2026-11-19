@@ -136,6 +136,21 @@ model ContactMessage {
   createdAt DateTime @default(now())
 }
 
+model GuideLead {
+  id          String    @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  company     String?
+  ipHash      String?
+  emailStatus String    @default("pending")
+  emailSentAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([email, createdAt])
+  @@index([ipHash, createdAt])
+}
+
 model AdminUser {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -166,5 +181,6 @@ model SiteSettings {
   hoursMonFri      String   @default("7:30 - 17:00")
   hoursSat         String   @default("7:30 - 16:30")
   hoursSun         String   @default("Đóng cửa")
+  leadGuidePdfUrl  String?
   updatedAt        DateTime @updatedAt
 }

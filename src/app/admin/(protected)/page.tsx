@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 
+function daysAgo(days: number) {
+  return new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+}
+
 export default async function AdminDashboard() {
   const [
     productCount,
@@ -9,6 +13,7 @@ export default async function AdminDashboard() {
     postCount,
     newQuoteCount,
     newContactCount,
+    recentGuideLeadCount,
   ] = await Promise.all([
     prisma.product.count(),
     prisma.productCategory.count(),
@@ -16,6 +21,7 @@ export default async function AdminDashboard() {
     prisma.blogPost.count(),
     prisma.quoteRequest.count({ where: { status: "new" } }),
     prisma.contactMessage.count({ where: { status: "new" } }),
+    prisma.guideLead.count({ where: { createdAt: { gte: daysAgo(7) } } }),
   ]);
 
   const cards = [
@@ -34,6 +40,12 @@ export default async function AdminDashboard() {
       value: newContactCount,
       href: "/admin/lien-he",
       highlight: newContactCount > 0,
+    },
+    {
+      label: "Khách nhận cẩm nang (7 ngày qua)",
+      value: recentGuideLeadCount,
+      href: "/admin/cam-nang",
+      highlight: recentGuideLeadCount > 0,
     },
   ];
 

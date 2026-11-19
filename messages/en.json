@@ -324,6 +324,20 @@
     "sending": "Sending...",
     "send": "Send message"
   },
+  "leadGuide": {
+    "title": "Free gift: Industrial Lubricant Handbook",
+    "description": "Storage, oil-filling and condition-monitoring guidance plus ready-to-print forms for maintenance teams. Leave your details and Phuc Tho will email you the PDF.",
+    "teaserCta": "Get the free handbook",
+    "name": "Full name",
+    "email": "Email for the handbook",
+    "phone": "Phone number",
+    "company": "Company (optional)",
+    "consent": "I agree that Phuc Tho may store these details to send the handbook and contact me about products.",
+    "submit": "Send me the handbook",
+    "sending": "Sending...",
+    "success": "The handbook has been sent to {email}. If you don't see it, please check your Spam or Promotions folder.",
+    "close": "Close"
+  },
   "equivalentFinder": {
     "metaTitle": "Equivalent Product Finder",
     "metaDescription": "Find equivalent lubricant products across Shell, Mobil, Total, and Castrol by category and viscosity grade.",

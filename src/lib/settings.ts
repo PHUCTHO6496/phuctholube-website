@@ -24,6 +24,7 @@ const SETTINGS_SELECT = {
   hoursMonFri: true,
   hoursSat: true,
   hoursSun: true,
+  leadGuidePdfUrl: true,
 } as const;
 
 async function fetchSiteSettings() {
@@ -55,6 +56,7 @@ async function fetchSiteSettings() {
       hoursMonFri: SITE.hours[0].time,
       hoursSat: SITE.hours[1].time,
       hoursSun: SITE.hours[2].time,
+      leadGuidePdfUrl: null,
     };
   }
 

@@ -10,6 +10,7 @@ import {
   Newspaper,
   MessageSquareText,
   Mail,
+  BookOpen,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -24,6 +25,7 @@ const NAV_ITEMS = [
   { href: "/admin/bai-viet", label: "Bài viết", icon: Newspaper },
   { href: "/admin/yeu-cau-bao-gia", label: "Yêu cầu báo giá", icon: MessageSquareText },
   { href: "/admin/lien-he", label: "Liên hệ", icon: Mail },
+  { href: "/admin/cam-nang", label: "Khách nhận cẩm nang", icon: BookOpen },
   { href: "/admin/cai-dat", label: "Cài đặt", icon: Settings },
 ];
 

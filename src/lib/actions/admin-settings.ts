@@ -27,6 +27,7 @@ const schema = z.object({
   hoursMonFri: z.string().trim().min(1),
   hoursSat: z.string().trim().min(1),
   hoursSun: z.string().trim().min(1),
+  leadGuidePdfUrl: z.string().trim().optional(),
 });
 
 export type SettingsInput = z.infer<typeof schema>;
@@ -50,6 +51,7 @@ export async function updateSiteSettings(input: SettingsInput): Promise<Settings
     statQualityLabelEn: parsed.data.statQualityLabelEn || null,
     facebookUrl: parsed.data.facebookUrl || null,
     linkedinUrl: parsed.data.linkedinUrl || null,
+    leadGuidePdfUrl: parsed.data.leadGuidePdfUrl || null,
   };
 
   await prisma.siteSettings.upsert({

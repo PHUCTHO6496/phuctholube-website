@@ -12,8 +12,39 @@ function getTransporter() {
   transporter = nodemailer.createTransport({
     service: "gmail",
     auth: { user, pass },
+    // Customer-facing sends happen while the visitor waits on the form, so
+    // fail fast instead of nodemailer's multi-minute defaults.
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 30_000,
   });
   return transporter;
+}
+
+export async function sendCustomerEmail(message: {
+  to: string;
+  subject: string;
+  html: string;
+  text: string;
+  replyTo?: string;
+  attachments?: nodemailer.SendMailOptions["attachments"];
+}): Promise<boolean> {
+  const t = getTransporter();
+  if (!t) {
+    console.error("Bỏ qua gửi email cho khách: chưa cấu hình GMAIL_USER / GMAIL_APP_PASSWORD");
+    return false;
+  }
+
+  try {
+    await t.sendMail({
+      from: `"Dầu Nhớt Phúc Thọ" <${process.env.GMAIL_USER}>`,
+      ...message,
+    });
+    return true;
+  } catch (err) {
+    console.error("Gửi email cho khách thất bại:", err);
+    return false;
+  }
 }
 
 export async function sendOwnerNotification(subject: string, html: string) {

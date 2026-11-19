@@ -21,6 +21,7 @@ export default async function AdminSettingsPage() {
             statQualityLabelEn: settings.statQualityLabelEn ?? "",
             facebookUrl: settings.facebookUrl ?? "",
             linkedinUrl: settings.linkedinUrl ?? "",
+            leadGuidePdfUrl: settings.leadGuidePdfUrl ?? "",
           }}
         />
       </div>

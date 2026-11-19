@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { updateSiteSettings, type SettingsInput } from "@/lib/actions/admin-settings";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { DocumentUploadField } from "@/components/admin/DocumentUploadField";
 
 export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
   const [form, setForm] = useState<SettingsInput>(initialData);
@@ -308,6 +309,24 @@ export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />
           </div>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-slate-200 bg-white p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          Cẩm nang tặng khách
+        </h2>
+        <p className="mt-1 text-xs leading-relaxed text-slate-500">
+          Khi đã có file, website tự hiện ô mời khách để lại thông tin (góc dưới bên trái) và
+          tự gửi file này qua email cho khách. Xóa file để tắt ô mời. File PDF nên dưới 4MB
+          để email gửi nhanh. Nhớ bấm &quot;Lưu cài đặt&quot; sau khi tải lên hoặc xóa.
+        </p>
+        <div className="mt-4">
+          <DocumentUploadField
+            label="File cẩm nang dầu nhớt (PDF)"
+            value={form.leadGuidePdfUrl ?? ""}
+            onChange={(url) => updateField("leadGuidePdfUrl", url)}
+          />
         </div>
       </div>
 

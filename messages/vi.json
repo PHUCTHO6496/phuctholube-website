@@ -324,6 +324,20 @@
     "sending": "Đang gửi...",
     "send": "Gửi liên hệ"
   },
+  "leadGuide": {
+    "title": "Tặng miễn phí: Cẩm nang dầu nhớt công nghiệp",
+    "description": "Hướng dẫn bảo quản, châm dầu, theo dõi vận hành kèm bộ biểu mẫu in sẵn cho đội bảo trì. Để lại thông tin, Phúc Thọ sẽ gửi file PDF qua email.",
+    "teaserCta": "Nhận cẩm nang miễn phí",
+    "name": "Họ tên",
+    "email": "Email nhận cẩm nang",
+    "phone": "Số điện thoại",
+    "company": "Công ty (không bắt buộc)",
+    "consent": "Tôi đồng ý để Phúc Thọ lưu thông tin trên để gửi cẩm nang và liên hệ tư vấn sản phẩm.",
+    "submit": "Gửi cẩm nang cho tôi",
+    "sending": "Đang gửi...",
+    "success": "Cẩm nang đã được gửi tới {email}. Nếu chưa thấy, vui lòng kiểm tra cả mục Spam hoặc Quảng cáo.",
+    "close": "Đóng"
+  },
   "equivalentFinder": {
     "metaTitle": "Tra cứu sản phẩm tương đương",
     "metaDescription": "Tìm sản phẩm dầu nhớt tương đương giữa các thương hiệu Shell, Mobil, Total, Castrol theo danh mục và cấp độ nhớt.",

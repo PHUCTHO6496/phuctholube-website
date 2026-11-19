@@ -14,10 +14,17 @@ const SHARP_LINUX_X64_FILES = [
   "node_modules/@img/sharp-libvips-linux-x64/**/*",
 ];
 
+// Font used to write the visitor's name on the handbook PDF cover
+// (src/lib/guide-pdf.ts). It's read from disk at runtime, and the handbook
+// server action runs inside whichever page function the visitor is on, so
+// every route needs it in its trace.
+const GUIDE_PDF_FONT_FILES = ["./src/assets/fonts/BeVietnamPro-SemiBold.ttf"];
+
 const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     "/api/upload": SHARP_LINUX_X64_FILES,
     "/api/agent/upload": SHARP_LINUX_X64_FILES,
+    "/**": GUIDE_PDF_FONT_FILES,
   },
   images: {
     remotePatterns: [
