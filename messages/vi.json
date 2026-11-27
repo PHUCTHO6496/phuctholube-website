@@ -29,7 +29,8 @@
       "sat": "Thứ 7",
       "sun": "Chủ nhật"
     },
-    "copyright": "© {year} {fullName}. Bảo lưu mọi quyền."
+    "copyright": "© {year} {fullName}. Bảo lưu mọi quyền.",
+    "legalInfo": "{legalName} · MST: {taxCode} · Trụ sở: {address}"
   },
   "floatingZalo": {
     "ariaLabel": "Chat với chúng tôi qua Zalo"
@@ -116,8 +117,8 @@
     "viewProducts": "Xem sản phẩm",
     "contactCta": "Liên hệ tư vấn",
     "whyUsTitle": "Tại sao lại là {name}?",
-    "brandsTitle": "Thương hiệu phân phối chính hãng",
-    "brandsSubtitle": "{name} là đối tác phân phối các thương hiệu dầu nhớt hàng đầu thế giới",
+    "brandsTitle": "Thương hiệu dầu nhớt chính hãng",
+    "brandsSubtitle": "Dầu nhớt chính hãng Shell, Mobil, Total, Castrol. Riêng Shell, {name} là đối tác phân phối khu vực thuộc hệ thống của C.L — Nhà phân phối tổng được Shell Việt Nam bổ nhiệm.",
     "viewBrandProducts": "Xem sản phẩm {brand}",
     "galleryTitle": "Thư viện hình ảnh",
     "gallerySubtitle": "Khám phá quy trình sản xuất, lưu trữ và phân phối dầu nhớt công nghiệp của {name}",
@@ -232,6 +233,13 @@
     "journeyDescription": "Từ năm {foundedYear}, {name} tự hào là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh. Với gần 30 năm kinh nghiệm, chúng tôi đã đồng hành cùng hàng nghìn doanh nghiệp trong các lĩnh vực: dầu khí, cảng biển và hàng hải, giúp tối ưu hiệu suất thiết bị.",
     "yearFounded": "Năm thành lập",
     "customersTrust": "Khách hàng tin tưởng",
+    "shellPartnerTitle": "Đối tác phân phối dầu nhờn Shell",
+    "shellPartnerBody": "{name} là Đối tác phân phối khu vực thuộc hệ thống phân phối của Công ty CP Dịch vụ Phát triển Thị trường C.L — Nhà phân phối tổng (Master Distributor) được Shell Việt Nam bổ nhiệm cho ngành hàng công nghiệp B2B. Theo văn bản xác nhận của C.L, {name} được chỉ định tiếp cận, tư vấn, chào bán, cung ứng và hỗ trợ khách hàng doanh nghiệp đối với sản phẩm dầu nhờn Shell kể từ ngày 23/06/2026.",
+    "shellPartnerArea": "Khu vực phụ trách: các phường Vũng Tàu, Tam Thắng, Rạch Dừa, Phước Thắng, Bà Rịa, Long Hương, Tam Long; các xã Long Sơn, Long Điền, Long Hải, Đất Đỏ, Phước Hải, Xuyên Mộc, Hồ Tràm, Bình Châu, Hòa Hiệp, Hòa Hội, Bàu Lâm và Đặc khu Côn Đảo (TP. Hồ Chí Minh). Với các thương hiệu Mobil, Total và Castrol, {name} cung cấp sản phẩm chính hãng.",
+    "companyInfoTitle": "Thông tin doanh nghiệp",
+    "legalNameLabel": "Tên doanh nghiệp",
+    "taxCodeLabel": "Mã số thuế",
+    "registeredAddressLabel": "Trụ sở",
     "commitmentTitle": "Cam kết của {name}",
     "commitmentSubtitle": "Với đội ngũ kỹ thuật viên giàu kinh nghiệm và hệ thống kho bãi hiện đại",
     "commitments": [
@@ -350,6 +358,9 @@
     "contactCta": "Liên hệ tư vấn",
     "noEquivalents": "Chưa tìm thấy sản phẩm tương đương từ hãng khác trong danh mục này (cấp độ nhớt {grade}).",
     "suggestionCount": "Gợi ý {count} sản phẩm tương đương — cùng danh mục {category}, cấp độ nhớt {grade}",
+    "tableTitle": "Bảng quy đổi sản phẩm tương đương",
+    "tableIntro": "Sản phẩm cùng danh mục và cùng cấp độ nhớt giữa các thương hiệu. Bảng chỉ mang tính tham khảo — vui lòng liên hệ đội ngũ kỹ thuật Phúc Thọ để xác nhận trước khi thay thế dầu đang dùng.",
+    "gradeColumn": "Cấp độ nhớt",
     "disclaimer": "* Kết quả gợi ý dựa trên cùng danh mục sản phẩm và cấp độ nhớt tương tự, chỉ mang tính tham khảo ban đầu — không phải xác nhận thay thế chính thức. Vui lòng liên hệ đội ngũ kỹ thuật Phúc Thọ để được tư vấn và xác nhận trước khi thay đổi sản phẩm đang sử dụng."
   },
   "quoteCartPage": {

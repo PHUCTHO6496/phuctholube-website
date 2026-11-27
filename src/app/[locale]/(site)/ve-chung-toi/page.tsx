@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { Target, Eye, Gem, HeartHandshake, Warehouse } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { SITE } from "@/lib/constants";
@@ -20,10 +21,11 @@ const getIndustriesList = unstable_cache(
 );
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("about");
+  const [t, locale] = await Promise.all([getTranslations("about"), getLocale()]);
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    ...localeAlternates(locale, "/ve-chung-toi"),
   };
 }
 
@@ -93,6 +95,37 @@ export default async function AboutPage() {
               <div className="text-4xl font-extrabold text-blue-900">1000+</div>
               <p className="mt-1 text-sm text-slate-600">{t("customersTrust")}</p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-b border-slate-200 bg-white">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-14 sm:px-6 lg:grid-cols-5 lg:px-8">
+          <div className="lg:col-span-3">
+            <h2 className="text-2xl font-bold text-slate-900">{t("shellPartnerTitle")}</h2>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              {t("shellPartnerBody", { name: SITE.name })}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-slate-600">
+              {t("shellPartnerArea", { name: SITE.name })}
+            </p>
+          </div>
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 lg:col-span-2">
+            <h2 className="text-base font-bold text-slate-900">{t("companyInfoTitle")}</h2>
+            <dl className="mt-4 space-y-3 text-sm">
+              <div>
+                <dt className="text-slate-500">{t("legalNameLabel")}</dt>
+                <dd className="font-semibold text-slate-900">{SITE.legalName}</dd>
+              </div>
+              <div>
+                <dt className="text-slate-500">{t("taxCodeLabel")}</dt>
+                <dd className="font-semibold text-slate-900">{SITE.taxCode}</dd>
+              </div>
+              <div>
+                <dt className="text-slate-500">{t("registeredAddressLabel")}</dt>
+                <dd className="font-semibold text-slate-900">{SITE.registeredAddress}</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </section>

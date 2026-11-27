@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { SITE } from "@/lib/constants";
 import { getSiteSettings } from "@/lib/settings";
@@ -8,10 +9,11 @@ import { localizedHours } from "@/lib/localized";
 import { ContactForm } from "@/components/site/ContactForm";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("contact");
+  const [t, locale] = await Promise.all([getTranslations("contact"), getLocale()]);
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    ...localeAlternates(locale, "/lien-he"),
   };
 }
 

@@ -11,6 +11,7 @@ import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
 import { JsonLd } from "@/components/site/JsonLd";
 import { SITE_URL } from "@/lib/constants";
 import { localized, localizedJson } from "@/lib/localized";
+import { localeAlternates } from "@/lib/seo";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
 
 const getProduct = unstable_cache(
@@ -75,8 +76,23 @@ export async function generateMetadata({
       localized(locale, product.shortDescription, product.shortDescriptionEn) ??
       localized(locale, product.description, product.descriptionEn) ??
       undefined,
+    // Most products only have an English short description; their /en page
+    // still shows the Vietnamese detailed description, so it stays out of
+    // the index until that is translated too.
+    ...localeAlternates(
+      locale,
+      `/san-pham/${product.slug}`,
+      !product.description || !!product.descriptionEn
+    ),
   };
 }
+
+// Spec rows are entered in Vietnamese; these common labels don't need a
+// per-product English translation.
+const SPEC_LABELS_EN: Record<string, string> = {
+  "Thương hiệu": "Brand",
+  "Quy cách": "Packaging",
+};
 
 export default async function ProductDetailPage({
   params,
@@ -235,7 +251,7 @@ export default async function ProductDetailPage({
                     className="flex justify-between gap-4 px-4 py-2.5 text-sm"
                   >
                     <dt className="text-slate-500">
-                      {localized(locale, spec.label, spec.labelEn)}
+                      {localized(locale, spec.label, spec.labelEn ?? SPEC_LABELS_EN[spec.label])}
                     </dt>
                     <dd className="font-medium text-slate-900">{spec.value}</dd>
                   </div>

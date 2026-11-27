@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { AlertCircle, ArrowRight, Search } from "lucide-react";
 import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
 import { Link } from "@/i18n/navigation";
+import { normalizeGrade } from "@/lib/product-name";
 
 export type EquivalentProduct = {
   id: string;
@@ -35,12 +36,13 @@ export function EquivalentFinder({ products }: { products: EquivalentProduct[] }
   const selected = products.find((p) => p.id === selectedId) ?? null;
 
   const equivalents = useMemo(() => {
-    if (!selected || !selected.viscosityGrade) return [];
+    const grade = normalizeGrade(selected?.viscosityGrade);
+    if (!selected || !grade) return [];
     return products.filter(
       (p) =>
         p.id !== selected.id &&
         p.categoryId === selected.categoryId &&
-        p.viscosityGrade === selected.viscosityGrade &&
+        normalizeGrade(p.viscosityGrade) === grade &&
         p.brand !== selected.brand
     );
   }, [products, selected]);

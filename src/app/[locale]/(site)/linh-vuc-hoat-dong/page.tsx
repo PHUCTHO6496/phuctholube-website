@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { ArrowRight } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { localized } from "@/lib/localized";
@@ -30,10 +31,11 @@ const getPublishedProductCount = unstable_cache(
 );
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("industriesPage");
+  const [t, locale] = await Promise.all([getTranslations("industriesPage"), getLocale()]);
   return {
     title: t("title"),
     description: t("metaDescription"),
+    ...localeAlternates(locale, "/linh-vuc-hoat-dong"),
   };
 }
 

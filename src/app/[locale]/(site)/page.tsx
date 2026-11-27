@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
@@ -21,6 +22,7 @@ import { getSiteSettings } from "@/lib/settings";
 import { formatPhoneDisplay } from "@/lib/format";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
 import { localized } from "@/lib/localized";
+import { localeAlternates } from "@/lib/seo";
 
 const TRUST_ICONS = [ShieldCheck, Wrench, Warehouse, BadgePercent];
 
@@ -35,6 +37,11 @@ const getFeaturedProducts = unstable_cache(
   ["home-featured-products"],
   { tags: ["products"], revalidate: 300 }
 );
+
+// Title/description come from the root layout's defaults.
+export async function generateMetadata(): Promise<Metadata> {
+  return localeAlternates(await getLocale(), "/");
+}
 
 export default async function Home() {
   const [settings, t, tMeta, tBrands, locale] = await Promise.all([

@@ -1,9 +1,15 @@
+// Must be the host the site is actually served on (Vercel 308-redirects the
+// apex to www), or every canonical/sitemap URL we publish is a redirect.
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://phuctholube.com";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.phuctholube.com";
 
 export const SITE = {
   name: "Phúc Thọ",
   fullName: "Dầu Nhớt Phúc Thọ",
+  // Legal entity behind the "Dầu Nhớt Phúc Thọ" brand, as registered.
+  legalName: "CÔNG TY TNHH THƯƠNG MẠI PHÚC THỌ",
+  taxCode: "3500378966",
+  registeredAddress: "15 Mạc Đĩnh Chi, Phường Vũng Tàu, TP. Hồ Chí Minh",
   tagline: "Nhà Phân Phối Dầu Nhớt Công Nghiệp Uy Tín Hàng Đầu Hồ Chí Minh",
   foundedYear: 1996,
   phone: "0786060496",

@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { CheckCircle2 } from "lucide-react";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("services");
+  const [t, locale] = await Promise.all([getTranslations("services"), getLocale()]);
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    ...localeAlternates(locale, "/dich-vu"),
   };
 }
 

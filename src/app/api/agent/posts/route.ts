@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
+import { getSiteSettings } from "@/lib/settings";
 import { slugify } from "@/lib/utils";
 import { SITE_URL } from "@/lib/constants";
 import { isAuthorizedAgent, unauthorizedResponse } from "@/lib/agent-auth";
@@ -25,6 +26,38 @@ const agentPostSchema = z.object({
 });
 
 type AgentPostInput = z.infer<typeof agentPostSchema>;
+
+// The agent used to start a fresh URL for every rewrite of a topic
+// ("...-26112026", "...-v2"), leaving several posts competing for the same
+// search. A new post must have a stable slug; to revise a topic, POST again
+// with the existing post's slug (that updates it in place).
+const DATED_SLUG = /-(\d{8}|v\d+)$/;
+
+// The site speaks for Phúc Thọ only. Võ Lan is a separate company (a reseller
+// of Phúc Thọ), so posts must not send visitors there or sign as its team.
+const FOREIGN_BRAND = /(?<!\p{L})v[õo]\s*lan(?!\p{L})/iu;
+
+// The agent has invented contact addresses before (sales@phuctholube.com
+// doesn't exist), so any email in a post must be the one in site settings.
+const EMAIL = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
+
+function contentIssues(data: AgentPostInput, siteEmail: string): string[] {
+  const fields = { title: data.title, author: data.author, excerpt: data.excerpt, contentHtml: data.contentHtml, seoTitle: data.seoTitle, seoDescription: data.seoDescription };
+  const issues: string[] = [];
+  for (const [field, value] of Object.entries(fields)) {
+    if (!value) continue;
+    if (FOREIGN_BRAND.test(value.normalize("NFC"))) {
+      issues.push(`${field}: không được nhắc "Võ Lan" — website này đứng tên Dầu Nhớt Phúc Thọ (Công ty TNHH Thương Mại Phúc Thọ).`);
+    }
+    const foreignEmails = (value.match(EMAIL) ?? []).filter(
+      (email) => email.toLowerCase() !== siteEmail.toLowerCase()
+    );
+    if (foreignEmails.length > 0) {
+      issues.push(`${field}: email ${[...new Set(foreignEmails)].join(", ")} không phải email của website — chỉ dùng ${siteEmail}.`);
+    }
+  }
+  return issues;
+}
 
 export async function GET(request: NextRequest) {
   if (!isAuthorizedAgent(request)) return unauthorizedResponse();
@@ -73,9 +106,24 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const settings = await getSiteSettings();
+  const issues = contentIssues(data, settings.email);
+  if (issues.length > 0) {
+    return NextResponse.json({ error: "Nội dung không hợp lệ", details: issues }, { status: 422 });
+  }
+
   const existing = await prisma.blogPost.findUnique({ where: { slug } });
 
   if (!existing) {
+    if (DATED_SLUG.test(slug)) {
+      return NextResponse.json(
+        {
+          error:
+            "Slug bài mới không được kết thúc bằng ngày (-ddmmyyyy) hoặc phiên bản (-v2). Dùng slug ổn định theo chủ đề; nếu chủ đề đã có bài, hãy gửi lại với slug của bài đó để cập nhật thay vì tạo bài mới (xem GET /api/agent/posts).",
+        },
+        { status: 422 }
+      );
+    }
     return createPost(slug, data);
   }
   return updatePost(existing, data);

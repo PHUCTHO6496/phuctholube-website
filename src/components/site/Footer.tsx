@@ -142,8 +142,15 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
-          {t("copyright", { year: new Date().getFullYear(), fullName: SITE.fullName })}
+        <div className="mt-10 space-y-1 border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
+          <p>
+            {t("legalInfo", {
+              legalName: SITE.legalName,
+              taxCode: SITE.taxCode,
+              address: SITE.registeredAddress,
+            })}
+          </p>
+          <p>{t("copyright", { year: new Date().getFullYear(), fullName: SITE.fullName })}</p>
         </div>
       </div>
     </footer>

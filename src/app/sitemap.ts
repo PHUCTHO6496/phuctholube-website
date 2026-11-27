@@ -2,6 +2,10 @@ import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/db";
 import { BRANDS, SITE_URL } from "@/lib/constants";
 
+// Otherwise the sitemap is frozen at build time and posts/products added
+// through the admin or the agent API stay out of it until the next deploy.
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, categories, industries, posts] = await Promise.all([
     prisma.product.findMany({

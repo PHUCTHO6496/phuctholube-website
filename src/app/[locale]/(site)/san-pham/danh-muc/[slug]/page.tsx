@@ -7,6 +7,7 @@ import { ChevronRight } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/site/ProductCard";
 import { localized } from "@/lib/localized";
+import { localeAlternates } from "@/lib/seo";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
 
 const getCategory = unstable_cache(
@@ -48,6 +49,7 @@ export async function generateMetadata({
     description:
       localized(locale, category.description, category.descriptionEn) ??
       t("defaultDescription", { name }),
+    ...localeAlternates(locale, `/san-pham/danh-muc/${slug}`, !!category.nameEn),
   };
 }
 

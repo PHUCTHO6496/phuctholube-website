@@ -20,6 +20,8 @@ export default async function SiteLayout({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: SITE.fullName,
+          legalName: SITE.legalName,
+          taxID: SITE.taxCode,
           url: SITE_URL,
           telephone: settings.phone,
           email: settings.email,

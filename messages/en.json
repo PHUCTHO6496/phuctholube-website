@@ -29,7 +29,8 @@
       "sat": "Saturday",
       "sun": "Sunday"
     },
-    "copyright": "© {year} {fullName}. All rights reserved."
+    "copyright": "© {year} {fullName}. All rights reserved.",
+    "legalInfo": "{legalName} · Tax ID: {taxCode} · Registered office: {address}"
   },
   "floatingZalo": {
     "ariaLabel": "Chat with us on Zalo"
@@ -116,8 +117,8 @@
     "viewProducts": "View products",
     "contactCta": "Contact us",
     "whyUsTitle": "Why {name}?",
-    "brandsTitle": "Authorized Distributor of Leading Brands",
-    "brandsSubtitle": "{name} is an authorized distributor of the world's leading lubricant brands",
+    "brandsTitle": "Genuine Lubricants from Leading Brands",
+    "brandsSubtitle": "Genuine Shell, Mobil, Total and Castrol lubricants. For Shell, {name} is a regional distribution partner within the network of C.L, the master distributor appointed by Shell Vietnam.",
     "viewBrandProducts": "View {brand} products",
     "galleryTitle": "Photo Gallery",
     "gallerySubtitle": "Explore {name}'s industrial lubricant production, storage, and distribution process",
@@ -232,6 +233,13 @@
     "journeyDescription": "Since {foundedYear}, {name} has proudly been a leading industrial lubricant distributor in Ho Chi Minh City. With nearly 30 years of experience, we have partnered with thousands of businesses in oil & gas, seaport, and maritime industries, helping optimize equipment performance.",
     "yearFounded": "Year founded",
     "customersTrust": "Trusted customers",
+    "shellPartnerTitle": "Shell lubricants distribution partner",
+    "shellPartnerBody": "{name} is a regional distribution partner within the network of C.L Market Development Services JSC, the master distributor appointed by Shell Vietnam for the B2B industrial segment. Under C.L's letter of confirmation, {name} has been appointed to reach, advise, quote, supply and support business customers for Shell lubricants since 23 June 2026.",
+    "shellPartnerArea": "Service area: Vũng Tàu, Tam Thắng, Rạch Dừa, Phước Thắng, Bà Rịa, Long Hương and Tam Long wards; Long Sơn, Long Điền, Long Hải, Đất Đỏ, Phước Hải, Xuyên Mộc, Hồ Tràm, Bình Châu, Hòa Hiệp, Hòa Hội and Bàu Lâm communes; and Côn Đảo special zone (Ho Chi Minh City). For Mobil, Total and Castrol, {name} supplies genuine products.",
+    "companyInfoTitle": "Company information",
+    "legalNameLabel": "Legal name",
+    "taxCodeLabel": "Tax ID",
+    "registeredAddressLabel": "Registered office",
     "commitmentTitle": "{name}'s Commitment",
     "commitmentSubtitle": "With an experienced technical team and modern warehouse facilities",
     "commitments": [
@@ -350,6 +358,9 @@
     "contactCta": "Contact us",
     "noEquivalents": "No equivalent products from other brands found in this category (viscosity grade {grade}).",
     "suggestionCount": "{count} equivalent product suggestions — same category {category}, viscosity grade {grade}",
+    "tableTitle": "Equivalent products cross-reference",
+    "tableIntro": "Products in the same category and viscosity grade across brands. For reference only — please contact the Phúc Thọ technical team to confirm before switching the oil you use.",
+    "gradeColumn": "Viscosity grade",
     "disclaimer": "* Suggested results are based on matching product category and similar viscosity grade, for initial reference only — not an official replacement confirmation. Please contact the Phúc Thọ technical team for advice and confirmation before changing the product you currently use."
   },
   "quoteCartPage": {

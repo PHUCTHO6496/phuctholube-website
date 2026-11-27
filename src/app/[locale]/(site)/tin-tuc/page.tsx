@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { unstable_cache } from "next/cache";
+import { getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/db";
+import { localeAlternates } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Tin tức và bài viết",
-  description:
-    "Cập nhật thông tin mới nhất về dầu nhớt công nghiệp, hướng dẫn sử dụng và kiến thức chuyên ngành.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return {
+    title: "Tin tức và bài viết",
+    description:
+      "Cập nhật thông tin mới nhất về dầu nhớt công nghiệp, hướng dẫn sử dụng và kiến thức chuyên ngành.",
+    // Blog posts are Vietnamese-only.
+    ...localeAlternates(locale, "/tin-tuc", false),
+  };
+}
 
 // publishedAt comes back as an ISO string (not a Date) once it has round-tripped
 // through unstable_cache's JSON serialization, so accept both.

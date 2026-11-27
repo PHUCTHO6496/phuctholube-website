@@ -3,7 +3,11 @@ import { unstable_cache } from "next/cache";
 import { getLocale, getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/db";
 import { EquivalentFinder, type EquivalentProduct } from "@/components/site/EquivalentFinder";
+import { EquivalentTable, type EquivalentSection } from "@/components/site/EquivalentTable";
+import { BRANDS } from "@/lib/constants";
 import { localized } from "@/lib/localized";
+import { listingPreference, normalizeGrade, productBaseName } from "@/lib/product-name";
+import { localeAlternates } from "@/lib/seo";
 
 const getEquivalentFinderProducts = unstable_cache(
   async () =>
@@ -29,11 +33,69 @@ const getEquivalentFinderProducts = unstable_cache(
 );
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("equivalentFinder");
+  const [t, locale] = await Promise.all([getTranslations("equivalentFinder"), getLocale()]);
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    ...localeAlternates(locale, "/tra-cuu-tuong-duong"),
   };
+}
+
+const BRAND_NAMES: string[] = BRANDS.map((b) => b.name);
+
+function gradeOrder(a: string, b: string) {
+  const na = Number(a);
+  const nb = Number(b);
+  if (!Number.isNaN(na) && !Number.isNaN(nb)) return na - nb;
+  if (!Number.isNaN(na)) return -1;
+  if (!Number.isNaN(nb)) return 1;
+  return a.localeCompare(b, "en", { numeric: true });
+}
+
+/**
+ * Category -> grade -> brand -> listings, keeping only grades that more
+ * than one brand offers (otherwise there's nothing to cross-reference).
+ * Packaging variants of one grade collapse into a single entry.
+ */
+function buildEquivalentSections(items: EquivalentProduct[]): EquivalentSection[] {
+  const byCategory = new Map<string, Map<string, Map<string, Map<string, EquivalentProduct>>>>();
+
+  for (const p of items) {
+    const grade = normalizeGrade(p.viscosityGrade);
+    if (!grade || !p.brand || !BRAND_NAMES.includes(p.brand)) continue;
+    const grades = byCategory.get(p.categoryName) ?? new Map();
+    byCategory.set(p.categoryName, grades);
+    const brands = grades.get(grade) ?? new Map();
+    grades.set(grade, brands);
+    const listings = brands.get(p.brand) ?? new Map();
+    brands.set(p.brand, listings);
+
+    const key = productBaseName(p.name).toLowerCase().replace(/[\s-]+/g, "");
+    const current = listings.get(key);
+    if (!current || listingPreference(p.name) < listingPreference(current.name)) {
+      listings.set(key, p);
+    }
+  }
+
+  const sections: EquivalentSection[] = [];
+  for (const [category, grades] of byCategory) {
+    const rows = Array.from(grades.entries())
+      .filter(([, brands]) => brands.size > 1)
+      .sort(([a], [b]) => gradeOrder(a, b))
+      .map(([grade, brands]) => ({
+        grade,
+        byBrand: Object.fromEntries(
+          Array.from(brands.entries()).map(([brand, listings]) => [
+            brand,
+            Array.from(listings.values())
+              .map((p) => ({ slug: p.slug, label: productBaseName(p.name) }))
+              .sort((a, b) => a.label.localeCompare(b.label, "en", { numeric: true })),
+          ])
+        ),
+      }));
+    if (rows.length > 0) sections.push({ category, rows });
+  }
+  return sections;
 }
 
 export default async function EquivalentLookupPage() {
@@ -68,6 +130,14 @@ export default async function EquivalentLookupPage() {
       <div className="mt-8">
         <EquivalentFinder products={items} />
       </div>
+
+      <EquivalentTable
+        sections={buildEquivalentSections(items)}
+        brands={BRAND_NAMES}
+        title={t("tableTitle")}
+        intro={t("tableIntro")}
+        gradeLabel={t("gradeColumn")}
+      />
     </div>
   );
 }

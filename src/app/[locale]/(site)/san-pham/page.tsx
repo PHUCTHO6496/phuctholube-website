@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
+import { localeAlternates } from "@/lib/seo";
 import { prisma } from "@/lib/db";
 import { BRANDS } from "@/lib/constants";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -46,10 +47,12 @@ const getFilteredProducts = unstable_cache(
 );
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("productsPage");
+  const [t, locale] = await Promise.all([getTranslations("productsPage"), getLocale()]);
   return {
     title: t("title"),
     description: t("metaDescription"),
+    // Filtered views (?category=, ?q=) all point back to the plain list.
+    ...localeAlternates(locale, "/san-pham"),
   };
 }
 

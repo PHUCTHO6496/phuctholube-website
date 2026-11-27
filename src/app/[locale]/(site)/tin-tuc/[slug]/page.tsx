@@ -3,10 +3,13 @@ import Image from "next/image";
 import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 import { ChevronRight } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { JsonLd } from "@/components/site/JsonLd";
 import { SITE_URL } from "@/lib/constants";
+import { localeAlternates } from "@/lib/seo";
+import { linkProductMentions } from "@/lib/product-links";
 
 const getPost = unstable_cache(
   async (slug: string) =>
@@ -48,7 +51,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getPost(slug);
+  const [post, locale] = await Promise.all([getPost(slug), getLocale()]);
   if (!post) return {};
 
   const title = post.seoTitle ?? post.title;
@@ -57,6 +60,8 @@ export async function generateMetadata({
   return {
     title,
     description,
+    // Posts are Vietnamese-only; the /en copy stays out of the index.
+    ...localeAlternates(locale, `/tin-tuc/${post.slug}`, false),
     openGraph: {
       title,
       description,
@@ -83,6 +88,8 @@ export default async function BlogDetailPage({
   const { slug } = await params;
   const post = await getPost(slug);
   if (!post) notFound();
+
+  const contentHtml = await linkProductMentions(post.contentHtml);
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
@@ -130,7 +137,7 @@ export default async function BlogDetailPage({
 
       <div
         className="prose prose-slate mt-8 max-w-none prose-p:leading-relaxed prose-p:text-slate-700"
-        dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+        dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
 
       <div className="mt-12 border-t border-slate-200 pt-8">

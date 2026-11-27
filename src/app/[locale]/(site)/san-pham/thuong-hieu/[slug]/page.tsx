@@ -8,6 +8,7 @@ import { prisma } from "@/lib/db";
 import { BRANDS, getBrandBySlug } from "@/lib/constants";
 import { ProductCard } from "@/components/site/ProductCard";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
+import { localeAlternates } from "@/lib/seo";
 
 const getBrandProducts = unstable_cache(
   async (brandName: string) =>
@@ -28,13 +29,15 @@ export async function generateMetadata({
   const { slug } = await params;
   const brand = getBrandBySlug(slug);
   if (!brand) return {};
-  const [t, tBrands] = await Promise.all([
+  const [t, tBrands, locale] = await Promise.all([
     getTranslations("brandPage"),
     getTranslations("brands"),
+    getLocale(),
   ]);
   return {
     title: t("metaTitle", { brand: brand.name }),
     description: tBrands(brand.slug),
+    ...localeAlternates(locale, `/san-pham/thuong-hieu/${brand.slug}`),
   };
 }
 
