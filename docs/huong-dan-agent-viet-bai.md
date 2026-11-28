@@ -16,6 +16,7 @@ www.phuctholube.com qua `POST /api/agent/posts`.
 - Quan hệ với Shell: viết là "đối tác phân phối khu vực thuộc hệ thống của C.L, Nhà phân phối tổng được Shell Việt Nam bổ nhiệm".
   - Không viết "nhà phân phối chính thức" hay "nhà phân phối ủy quyền của Shell Việt Nam".
   - Với Mobil, Total, Castrol: chỉ viết "cung cấp sản phẩm chính hãng".
+- Khu vực phục vụ: Bà Rịa – Vũng Tàu và TP. Hồ Chí Minh. **Không ghi Đồng Nai** (hay các KCN Nhơn Trạch, Long Thành, Biên Hòa, Gò Dầu) là nơi Phúc Thọ phục vụ hoặc giao hàng. Vẫn được nhắc Đồng Nai khi nêu sự kiện chung của ngành, ví dụ nhà máy điện Nhơn Trạch.
 
 ## 2. Không bịa
 

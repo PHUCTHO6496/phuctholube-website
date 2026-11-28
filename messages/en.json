@@ -184,7 +184,7 @@
       }
     ],
     "serviceAreasTitle": "Service Area",
-    "serviceAreasSubtitle": "Supplying lubricants to factories and plants across industrial parks in Ba Ria - Vung Tau, Dong Nai, and Ho Chi Minh City",
+    "serviceAreasSubtitle": "Supplying lubricants to factories and plants across industrial parks in Ba Ria - Vung Tau and Ho Chi Minh City",
     "serviceAreas": [
       "Dong Xuyen Industrial Park",
       "Phu My Industrial Park",
@@ -193,10 +193,6 @@
       "My Xuan Industrial Park",
       "Chau Duc Industrial Park",
       "Dat Do Industrial Park",
-      "Go Dau Industrial Park",
-      "Nhon Trach Industrial Park",
-      "Long Thanh Industrial Park",
-      "Bien Hoa Industrial Park",
       "Ho Chi Minh City"
     ],
     "contactTitle": "Contact Us",
