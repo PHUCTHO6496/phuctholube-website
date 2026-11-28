@@ -371,10 +371,14 @@ export function ProductForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700">Mô tả chi tiết</label>
+            <p className="mt-0.5 text-xs text-slate-500">
+              Cách dòng trống để tách đoạn. Dòng bắt đầu bằng &quot;## &quot; là tiêu đề mục,
+              &quot;### &quot; là câu hỏi (mục hỏi đáp), &quot;- &quot; là gạch đầu dòng.
+            </p>
             <textarea
               value={form.description}
               onChange={(e) => updateField("description", e.target.value)}
-              rows={4}
+              rows={10}
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />
           </div>
@@ -385,7 +389,7 @@ export function ProductForm({
             <textarea
               value={form.descriptionEn}
               onChange={(e) => updateField("descriptionEn", e.target.value)}
-              rows={4}
+              rows={10}
               placeholder="Để trống nếu chưa dịch"
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />
@@ -397,7 +401,7 @@ export function ProductForm({
             <textarea
               value={form.descriptionZh}
               onChange={(e) => updateField("descriptionZh", e.target.value)}
-              rows={4}
+              rows={10}
               placeholder="Để trống nếu chưa dịch"
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />

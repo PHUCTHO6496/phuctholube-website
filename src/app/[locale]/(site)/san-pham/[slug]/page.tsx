@@ -8,6 +8,7 @@ import { BadgeCheck, ChevronRight, FileText } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/site/ProductCard";
 import { ProductQuoteActions } from "@/components/site/ProductQuoteActions";
+import { ProductDescription } from "@/components/site/ProductDescription";
 import { JsonLd } from "@/components/site/JsonLd";
 import { redirectIfMoved } from "@/lib/redirects";
 import { BRANDS, SITE } from "@/lib/constants";
@@ -522,7 +523,7 @@ export default async function ProductDetailPage({
       {description && (
         <div className="mt-12 max-w-3xl border-t border-slate-200 pt-8">
           <h2 className="text-lg font-bold text-slate-900">{t("detailedDescription")}</h2>
-          <p className="mt-3 text-sm leading-relaxed text-slate-600">{description}</p>
+          <ProductDescription text={description} />
         </div>
       )}
 
