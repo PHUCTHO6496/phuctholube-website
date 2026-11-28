@@ -16,9 +16,11 @@ export default async function EditIndustryPage({
     id: industry.id,
     name: industry.name,
     nameEn: industry.nameEn ?? "",
+    nameZh: industry.nameZh ?? "",
     slug: industry.slug,
     description: industry.description ?? "",
     descriptionEn: industry.descriptionEn ?? "",
+    descriptionZh: industry.descriptionZh ?? "",
     image: industry.image ?? "",
     sortOrder: industry.sortOrder.toString(),
   };

@@ -143,6 +143,18 @@ export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />
           </div>
+          <div className="sm:col-start-2 sm:col-span-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Mô tả số 1 (Tiếng Trung)
+            </label>
+            <input
+              type="text"
+              value={form.statYearsLabelZh ?? ""}
+              onChange={(e) => updateField("statYearsLabelZh", e.target.value)}
+              placeholder="Để trống nếu chưa dịch"
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-slate-700">Số 2 (vd: 1M)</label>
             <input
@@ -173,6 +185,18 @@ export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />
           </div>
+          <div className="sm:col-start-2 sm:col-span-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Mô tả số 2 (Tiếng Trung)
+            </label>
+            <input
+              type="text"
+              value={form.statVolumeLabelZh ?? ""}
+              onChange={(e) => updateField("statVolumeLabelZh", e.target.value)}
+              placeholder="Để trống nếu chưa dịch"
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+            />
+          </div>
           <div>
             <label className="block text-sm font-medium text-slate-700">Số 3 (vd: 100%)</label>
             <input
@@ -199,6 +223,18 @@ export function SettingsForm({ initialData }: { initialData: SettingsInput }) {
               type="text"
               value={form.statQualityLabelEn ?? ""}
               onChange={(e) => updateField("statQualityLabelEn", e.target.value)}
+              placeholder="Để trống nếu chưa dịch"
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+            />
+          </div>
+          <div className="sm:col-start-2 sm:col-span-2">
+            <label className="block text-sm font-medium text-slate-700">
+              Mô tả số 3 (Tiếng Trung)
+            </label>
+            <input
+              type="text"
+              value={form.statQualityLabelZh ?? ""}
+              onChange={(e) => updateField("statQualityLabelZh", e.target.value)}
               placeholder="Để trống nếu chưa dịch"
               className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
             />

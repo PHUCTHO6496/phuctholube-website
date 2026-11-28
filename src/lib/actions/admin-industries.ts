@@ -8,6 +8,7 @@ import { getSession } from "@/lib/auth";
 const schema = z.object({
   name: z.string().trim().min(2, "Vui lòng nhập tên"),
   nameEn: z.string().trim().optional(),
+  nameZh: z.string().trim().optional(),
   slug: z
     .string()
     .trim()
@@ -15,6 +16,7 @@ const schema = z.object({
     .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, "Slug chỉ gồm chữ thường, số và dấu gạch ngang"),
   description: z.string().trim().optional(),
   descriptionEn: z.string().trim().optional(),
+  descriptionZh: z.string().trim().optional(),
   image: z.string().trim().optional(),
   sortOrder: z.number(),
 });
@@ -41,9 +43,11 @@ export async function createIndustry(input: TaxonomyInput): Promise<TaxonomyResu
     data: {
       name: parsed.data.name,
       nameEn: parsed.data.nameEn || null,
+      nameZh: parsed.data.nameZh || null,
       slug: parsed.data.slug,
       description: parsed.data.description || null,
       descriptionEn: parsed.data.descriptionEn || null,
+      descriptionZh: parsed.data.descriptionZh || null,
       image: parsed.data.image || null,
       sortOrder: parsed.data.sortOrder,
     },
@@ -71,9 +75,11 @@ export async function updateIndustry(id: string, input: TaxonomyInput): Promise<
     data: {
       name: parsed.data.name,
       nameEn: parsed.data.nameEn || null,
+      nameZh: parsed.data.nameZh || null,
       slug: parsed.data.slug,
       description: parsed.data.description || null,
       descriptionEn: parsed.data.descriptionEn || null,
+      descriptionZh: parsed.data.descriptionZh || null,
       image: parsed.data.image || null,
       sortOrder: parsed.data.sortOrder,
     },

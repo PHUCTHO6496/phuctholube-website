@@ -36,11 +36,16 @@ export default async function EditProductPage({
     viscosityGrade: product.viscosityGrade ?? "",
     shortDescription: product.shortDescription ?? "",
     shortDescriptionEn: product.shortDescriptionEn ?? "",
+    shortDescriptionZh: product.shortDescriptionZh ?? "",
     description: product.description ?? "",
     descriptionEn: product.descriptionEn ?? "",
+    descriptionZh: product.descriptionZh ?? "",
     useCases: Array.isArray(product.useCases) ? (product.useCases as string[]).join("\n") : "",
     useCasesEn: Array.isArray(product.useCasesEn)
       ? (product.useCasesEn as string[]).join("\n")
+      : "",
+    useCasesZh: Array.isArray(product.useCasesZh)
+      ? (product.useCasesZh as string[]).join("\n")
       : "",
     applicationTags: Array.isArray(product.applicationTags)
       ? (product.applicationTags as string[]).join("\n")
@@ -48,12 +53,15 @@ export default async function EditProductPage({
     applicationTagsEn: Array.isArray(product.applicationTagsEn)
       ? (product.applicationTagsEn as string[]).join("\n")
       : "",
+    applicationTagsZh: Array.isArray(product.applicationTagsZh)
+      ? (product.applicationTagsZh as string[]).join("\n")
+      : "",
     featured: product.featured,
     published: product.published,
     categoryId: product.categoryId ?? "",
     industryIds: product.industries.map((i) => i.id),
     images: product.images.map((img) => ({ url: img.url, alt: img.alt ?? "" })),
-    specs: product.specs.map((s) => ({ label: s.label, labelEn: s.labelEn ?? "", value: s.value })),
+    specs: product.specs.map((s) => ({ label: s.label, labelEn: s.labelEn ?? "", labelZh: s.labelZh ?? "", value: s.value })),
     variants: product.variants.map((v) => ({
       id: v.id,
       packaging: v.packaging,

@@ -14,7 +14,14 @@ const getIndustry = unstable_cache(
   async (slug: string) =>
     prisma.industry.findUnique({
       where: { slug },
-      select: { name: true, nameEn: true, description: true, descriptionEn: true },
+      select: {
+        name: true,
+        nameEn: true,
+        nameZh: true,
+        description: true,
+        descriptionEn: true,
+        descriptionZh: true,
+      },
     }),
   ["industry-detail"],
   { tags: ["industries"], revalidate: 300 }
@@ -43,13 +50,16 @@ export async function generateMetadata({
     getTranslations("industryDetail"),
   ]);
   if (!industry) return {};
-  const name = localized(locale, industry.name, industry.nameEn);
+  const name = localized(locale, industry.name, industry.nameEn, industry.nameZh);
   return {
     title: name,
     description:
-      localized(locale, industry.description, industry.descriptionEn) ??
+      localized(locale, industry.description, industry.descriptionEn, industry.descriptionZh) ??
       t("defaultDescription", { name }),
-    ...localeAlternates(locale, `/linh-vuc-hoat-dong/${slug}`, !!industry.nameEn),
+    ...localeAlternates(locale, `/linh-vuc-hoat-dong/${slug}`, {
+      en: !!industry.nameEn,
+      zh: !!industry.nameZh,
+    }),
   };
 }
 
@@ -71,8 +81,8 @@ export default async function IndustryDetailPage({
   ]);
   if (!industry) notFound();
 
-  const name = localized(locale, industry.name, industry.nameEn);
-  const description = localized(locale, industry.description, industry.descriptionEn);
+  const name = localized(locale, industry.name, industry.nameEn, industry.nameZh);
+  const description = localized(locale, industry.description, industry.descriptionEn, industry.descriptionZh);
 
   const productsRaw = await getIndustryProducts(slug);
   const products = productsRaw.map((p) => localizeProductCard(p, locale));

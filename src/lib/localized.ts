@@ -1,27 +1,37 @@
 /**
- * Returns the English variant of a field when on the English locale and a
- * translation exists, otherwise falls back to the Vietnamese (default) value.
- * Keeps the site usable for any product/category/industry an owner adds
- * without immediately filling in the English fields.
+ * Picks the variant of a field for the current locale. Vietnamese is the
+ * source language and always filled in; English and Chinese are optional.
+ * A Chinese page without a Chinese translation shows the English text if
+ * there is one (more readable for most Chinese visitors than Vietnamese),
+ * otherwise the Vietnamese. Keeps the site usable for any product/category/
+ * industry an owner adds without immediately translating it.
  */
 export function localized<T extends string | null>(
   locale: string,
   vi: T,
-  en: string | null | undefined
+  en: string | null | undefined,
+  zh?: string | null
 ): T {
-  return locale === "en" && en ? (en as T) : vi;
+  if (locale === "en") return en ? (en as T) : vi;
+  if (locale === "zh") return (zh || en || vi) as T;
+  return vi;
 }
 
-export function localizedJson<T>(locale: string, vi: T, en: T): T {
-  return locale === "en" && en ? en : vi;
+/** Same fallback order as `localized`, for JSON list fields (use cases, tags). */
+export function localizedJson<T>(locale: string, vi: T, en: T, zh?: T): T {
+  if (locale === "en") return en || vi;
+  if (locale === "zh") return zh || en || vi;
+  return vi;
 }
 
 /**
  * Working-hours values are free text (e.g. "7:30 - 17:00"), which reads fine
- * in either language, except for the literal "Đóng cửa" (Closed) some days
- * use instead of a time range.
+ * in any language, except for the literal "Đóng cửa" (Closed) some days use
+ * instead of a time range.
  */
 export function localizedHours(locale: string, value: string): string {
-  if (locale === "en" && value.trim() === "Đóng cửa") return "Closed";
+  if (value.trim() !== "Đóng cửa") return value;
+  if (locale === "en") return "Closed";
+  if (locale === "zh") return "休息";
   return value;
 }

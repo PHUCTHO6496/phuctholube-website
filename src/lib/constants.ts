@@ -27,11 +27,13 @@ export const SITE = {
 /**
  * Brand names as shown to visitors. "Dầu Nhớt" means "Lubricants"; English
  * pages use an unaccented, translated form readers can pronounce and search.
+ * Chinese pages use 福寿 (the Sino-Vietnamese reading of Phúc Thọ), with the
+ * Latin name kept alongside so visitors can match it to invoices and signs.
  */
 export function siteNames(locale: string) {
-  return locale === "en"
-    ? { name: "Phuc Tho", fullName: "Phuc Tho Lubricants" }
-    : { name: SITE.name, fullName: SITE.fullName };
+  if (locale === "en") return { name: "Phuc Tho", fullName: "Phuc Tho Lubricants" };
+  if (locale === "zh") return { name: "福寿", fullName: "福寿润滑油", latinName: "Phuc Tho" };
+  return { name: SITE.name, fullName: SITE.fullName };
 }
 
 function stripAccents(s: string) {
@@ -41,10 +43,12 @@ function stripAccents(s: string) {
 /**
  * Vietnamese address -> conventional English form for English pages:
  * "95 Xô Viết Nghệ Tĩnh, Phường Vũng Tàu, Thành Phố Hồ Chí Minh" ->
- * "95 Xo Viet Nghe Tinh, Vung Tau Ward, Ho Chi Minh City".
+ * "95 Xo Viet Nghe Tinh, Vung Tau Ward, Ho Chi Minh City". Chinese pages use
+ * the same form: Vietnamese street names have no standard Chinese spelling,
+ * and the Latin form is what appears on maps and delivery documents.
  */
 export function localizedAddress(address: string, locale: string) {
-  if (locale !== "en") return address;
+  if (locale !== "en" && locale !== "zh") return address;
   return address
     .split(",")
     .map((part) => {

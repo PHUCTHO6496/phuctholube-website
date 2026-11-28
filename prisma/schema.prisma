@@ -11,9 +11,11 @@ model ProductCategory {
   id            String    @id @default(cuid())
   name          String
   nameEn        String?
+  nameZh        String?
   slug          String    @unique
   description   String?
   descriptionEn String?
+  descriptionZh String?
   image         String?
   sortOrder     Int       @default(0)
   products      Product[]
@@ -25,9 +27,11 @@ model Industry {
   id            String    @id @default(cuid())
   name          String
   nameEn        String?
+  nameZh        String?
   slug          String    @unique
   description   String?
   descriptionEn String?
+  descriptionZh String?
   image         String?
   sortOrder     Int       @default(0)
   products      Product[]
@@ -47,12 +51,16 @@ model Product {
   viscosityGrade     String?
   shortDescription   String?
   shortDescriptionEn String?
+  shortDescriptionZh String?
   description        String?
   descriptionEn      String?
+  descriptionZh      String?
   useCases           Json?
   useCasesEn         Json?
+  useCasesZh         Json?
   applicationTags    Json?
   applicationTagsEn  Json?
+  applicationTagsZh  Json?
   featured           Boolean            @default(false)
   published          Boolean            @default(true)
   sortOrder          Int                @default(0)
@@ -107,6 +115,7 @@ model ProductSpec {
   id        String  @id @default(cuid())
   label     String
   labelEn   String?
+  labelZh   String?
   value     String
   sortOrder Int     @default(0)
   productId String
@@ -194,12 +203,15 @@ model SiteSettings {
   statYearsValue   String   @default("25+")
   statYearsLabel   String   @default("Gần 30 năm đồng hành cùng doanh nghiệp tại Hồ Chí Minh và các khu công nghiệp lân cận.")
   statYearsLabelEn String?
+  statYearsLabelZh String?
   statVolumeValue  String   @default("1M")
   statVolumeLabel  String   @default("Xấp xỉ 1 triệu lít dầu nhớt được cung cấp mỗi năm.")
   statVolumeLabelEn String?
+  statVolumeLabelZh String?
   statQualityValue String   @default("100%")
   statQualityLabel String   @default("100% sản phẩm đạt tiêu chuẩn chất lượng toàn cầu, được kiểm định nghiêm ngặt.")
   statQualityLabelEn String?
+  statQualityLabelZh String?
   address          String   @default("95 Xô Viết Nghệ Tĩnh, Phường Vũng Tàu, Thành Phố Hồ Chí Minh")
   phone            String   @default("0786060496")
   email            String   @default("info@phucthocoltd.com")

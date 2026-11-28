@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { NAV_ITEMS, SITE, localizedAddress, siteNames } from "@/lib/constants";
-import { POLICIES } from "@/lib/policies";
+import { POLICIES, policyTitle } from "@/lib/policies";
 import { formatPhoneDisplay } from "@/lib/format";
 import { FacebookIcon, LinkedinIcon } from "@/components/site/SocialIcons";
 import type { SiteSettingsData } from "@/lib/settings";
@@ -151,7 +151,7 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
                 href={`/chinh-sach/${p.slug}`}
                 className="text-slate-400 transition-colors hover:text-amber-400"
               >
-                {locale === "en" ? p.titleEn : p.title}
+                {policyTitle(p, locale)}
               </Link>
             </li>
           ))}

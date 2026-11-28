@@ -16,9 +16,11 @@ export default async function EditCategoryPage({
     id: category.id,
     name: category.name,
     nameEn: category.nameEn ?? "",
+    nameZh: category.nameZh ?? "",
     slug: category.slug,
     description: category.description ?? "",
     descriptionEn: category.descriptionEn ?? "",
+    descriptionZh: category.descriptionZh ?? "",
     image: category.image ?? "",
     sortOrder: category.sortOrder.toString(),
   };

@@ -15,8 +15,10 @@ const getIndustriesWithCounts = unstable_cache(
         slug: true,
         name: true,
         nameEn: true,
+        nameZh: true,
         description: true,
         descriptionEn: true,
+        descriptionZh: true,
         _count: { select: { products: true } },
       },
     }),
@@ -66,11 +68,11 @@ export default async function IndustriesPage() {
             className="group rounded-xl border border-slate-200 p-6 transition-shadow hover:shadow-lg"
           >
             <h3 className="text-lg font-bold text-slate-900 group-hover:text-blue-900">
-              {localized(locale, ind.name, ind.nameEn)}
+              {localized(locale, ind.name, ind.nameEn, ind.nameZh)}
             </h3>
             {ind.description && (
               <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                {localized(locale, ind.description, ind.descriptionEn)}
+                {localized(locale, ind.description, ind.descriptionEn, ind.descriptionZh)}
               </p>
             )}
             <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-blue-900">

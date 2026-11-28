@@ -4,11 +4,12 @@ import Image from "next/image";
 import { Link, usePathname } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { Menu, X, Phone, Globe } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { NAV_ITEMS, SITE, siteNames } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { formatPhoneDisplay } from "@/lib/format";
 import { QuoteCartIndicator } from "@/components/site/QuoteCartIndicator";
+import { LanguageSwitcher } from "@/components/site/LanguageSwitcher";
 import type { SiteSettingsData } from "@/lib/settings";
 
 export function Header({ settings }: { settings: SiteSettingsData }) {
@@ -18,7 +19,6 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
   const phoneDisplay = formatPhoneDisplay(settings.phone);
-  const otherLocale = locale === "vi" ? "en" : "vi";
 
   const navItems = NAV_ITEMS.filter((item) => !item.viOnly || locale === "vi");
 
@@ -47,7 +47,7 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
               {brand.fullName}
             </span>
             <span className="block text-xs text-slate-500">
-              {locale === "vi" ? `Từ ${SITE.foundedYear}` : `Since ${SITE.foundedYear}`}
+              {t("since", { year: String(SITE.foundedYear) })}
             </span>
           </span>
         </Link>
@@ -74,15 +74,7 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
         </nav>
 
         <div className="hidden shrink-0 items-center gap-3 lg:flex">
-          <Link
-            href={pathname}
-            locale={otherLocale}
-            className="flex items-center gap-1 rounded-md px-2 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-blue-900"
-            aria-label={t("language")}
-          >
-            <Globe className="h-4 w-4" />
-            {otherLocale.toUpperCase()}
-          </Link>
+          <LanguageSwitcher />
           <QuoteCartIndicator />
           <a
             href={`tel:${settings.phone}`}
@@ -94,14 +86,7 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
         </div>
 
         <div className="flex items-center gap-1 lg:hidden">
-          <Link
-            href={pathname}
-            locale={otherLocale}
-            className="rounded-md p-2 text-sm font-semibold text-slate-600 hover:bg-slate-100"
-            aria-label={t("language")}
-          >
-            {otherLocale.toUpperCase()}
-          </Link>
+          <LanguageSwitcher compact />
           <QuoteCartIndicator />
           <button
             type="button"

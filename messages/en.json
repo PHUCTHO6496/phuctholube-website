@@ -15,6 +15,7 @@
     "openMenu": "Open menu",
     "callNow": "Call now: {phone}",
     "quoteCart": "Quote cart",
+    "since": "Since {year}",
     "language": "Language",
     "vietnamese": "Vietnamese",
     "english": "English"

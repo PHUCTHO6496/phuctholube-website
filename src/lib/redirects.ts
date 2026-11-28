@@ -23,7 +23,7 @@ const getRedirectTarget = unstable_cache(
  */
 export async function redirectIfMoved(locale: string, path: string) {
   const target = await getRedirectTarget(path);
-  if (target) permanentRedirect(locale === "en" ? `/en${target}` : target);
+  if (target) permanentRedirect(locale === "vi" ? target : `/${locale}${target}`);
 }
 
 type RedirectWriter = {

@@ -11,6 +11,10 @@ const beVietnamPro = Be_Vietnam_Pro({
   weight: ["400", "500", "600", "700", "800"],
 });
 
+const OG_LOCALE: Record<string, string> = { vi: "vi_VN", en: "en_US", zh: "zh_CN" };
+// BCP 47 tag for <html lang>: "zh-Hans" picks Simplified Chinese glyphs and fonts.
+const HTML_LANG: Record<string, string> = { zh: "zh-Hans" };
+
 export async function generateMetadata(): Promise<Metadata> {
   const [settings, locale, t] = await Promise.all([
     getSiteSettings(),
@@ -34,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description,
     openGraph: {
       type: "website",
-      locale: locale === "en" ? "en_US" : "vi_VN",
+      locale: OG_LOCALE[locale] ?? "vi_VN",
       siteName: brand.fullName,
       title,
       description,
@@ -52,7 +56,7 @@ export default async function RootLayout({
 
   return (
     <html
-      lang={locale}
+      lang={HTML_LANG[locale] ?? locale}
       className={`${beVietnamPro.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans">{children}</body>

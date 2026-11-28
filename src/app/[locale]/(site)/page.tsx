@@ -56,15 +56,15 @@ export default async function Home() {
   const homeStats = [
     {
       value: settings.statYearsValue,
-      label: localized(locale, settings.statYearsLabel, settings.statYearsLabelEn),
+      label: localized(locale, settings.statYearsLabel, settings.statYearsLabelEn, settings.statYearsLabelZh),
     },
     {
       value: settings.statVolumeValue,
-      label: localized(locale, settings.statVolumeLabel, settings.statVolumeLabelEn),
+      label: localized(locale, settings.statVolumeLabel, settings.statVolumeLabelEn, settings.statVolumeLabelZh),
     },
     {
       value: settings.statQualityValue,
-      label: localized(locale, settings.statQualityLabel, settings.statQualityLabelEn),
+      label: localized(locale, settings.statQualityLabel, settings.statQualityLabelEn, settings.statQualityLabelZh),
     },
   ];
 

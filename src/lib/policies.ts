@@ -1,5 +1,5 @@
-// Customer-facing policies linked from the footer. English versions live in
-// ./policies-en.ts and must be kept in step with this file. Figures (delivery times, fees, return windows,
+// Customer-facing policies linked from the footer. English and Chinese versions
+// live in ./policies-en.ts and ./policies-zh.ts and must be kept in step with this file. Figures (delivery times, fees, return windows,
 // payment terms) were confirmed by the owner on 2026-11-28. When drafting a
 // change, wrap unconfirmed values in double square brackets: the policy page
 // highlights them so they can't go live unnoticed.
@@ -10,11 +10,14 @@ export type Policy = {
   slug: string;
   title: string;
   titleEn: string;
+  titleZh: string;
   description: string;
   updated: string;
   intro?: string;
   sections: PolicySection[];
 };
+/** A policy's text in another language; title and date come from `Policy`. */
+export type PolicyTranslation = { description: string; intro?: string; sections: PolicySection[] };
 
 const OWNER =
   "CÔNG TY TNHH THƯƠNG MẠI PHÚC THỌ (MST 3500378966), chủ sở hữu và vận hành website www.phuctholube.com (sau đây gọi là “Phúc Thọ” hoặc “chúng tôi”)";
@@ -24,6 +27,7 @@ export const POLICIES: Policy[] = [
     slug: "bao-mat-thong-tin",
     title: "Chính sách bảo mật thông tin",
     titleEn: "Privacy policy",
+    titleZh: "隐私政策",
     description:
       "Phúc Thọ thu thập những thông tin gì qua website, dùng vào việc gì, lưu ở đâu và bạn có những quyền gì đối với dữ liệu cá nhân của mình.",
     updated: "01/12/2026",
@@ -107,6 +111,7 @@ export const POLICIES: Policy[] = [
     slug: "dieu-khoan-giao-dich",
     title: "Điều khoản giao dịch",
     titleEn: "Terms of trade",
+    titleZh: "交易条款",
     description:
       "Điều kiện sử dụng website và giao dịch mua bán dầu nhớt với Phúc Thọ: báo giá, xác lập đơn hàng, thanh toán, chứng từ và giải quyết tranh chấp.",
     updated: "01/12/2026",
@@ -170,6 +175,7 @@ export const POLICIES: Policy[] = [
     slug: "giao-hang",
     title: "Chính sách giao hàng",
     titleEn: "Delivery policy",
+    titleZh: "交货政策",
     description:
       "Phạm vi, thời gian, chi phí giao hàng và cách kiểm tra khi nhận dầu nhớt từ Phúc Thọ.",
     updated: "01/12/2026",
@@ -228,6 +234,7 @@ export const POLICIES: Policy[] = [
     slug: "doi-tra",
     title: "Chính sách đổi trả",
     titleEn: "Returns policy",
+    titleZh: "退货政策",
     description:
       "Khi nào Phúc Thọ nhận đổi trả dầu nhớt, điều kiện, quy trình và cách hoàn tiền.",
     updated: "01/12/2026",
@@ -289,6 +296,12 @@ export const POLICIES: Policy[] = [
     ],
   },
 ];
+
+export function policyTitle(policy: Policy, locale: string) {
+  if (locale === "en") return policy.titleEn;
+  if (locale === "zh") return policy.titleZh;
+  return policy.title;
+}
 
 export function getPolicy(slug: string) {
   return POLICIES.find((p) => p.slug === slug);

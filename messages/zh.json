@@ -1,0 +1,403 @@
+{
+  "meta": {
+    "tagline": "胡志明市领先的工业润滑油分销商",
+    "description": "自{foundedYear}年起，{name}一直是胡志明市领先的工业润滑油分销商，服务于石油天然气、港口和海运等行业的企业。"
+  },
+  "nav": {
+    "home": "首页",
+    "products": "产品",
+    "equivalentFinder": "等效产品查询",
+    "industries": "服务行业",
+    "about": "关于我们",
+    "services": "服务",
+    "blog": "新闻",
+    "contact": "联系我们",
+    "openMenu": "打开菜单",
+    "callNow": "立即致电：{phone}",
+    "quoteCart": "询价车",
+    "since": "Phuc Tho · 始于{year}年",
+    "language": "语言",
+    "vietnamese": "越南语",
+    "english": "英语"
+  },
+  "footer": {
+    "tagline": "自{foundedYear}年起，{name}一直是胡志明市领先的工业润滑油分销商。",
+    "quickLinks": "快速链接",
+    "contact": "联系方式",
+    "workingHours": "营业时间",
+    "days": {
+      "monFri": "周一至周五",
+      "sat": "周六",
+      "sun": "周日"
+    },
+    "copyright": "© {year} {fullName}。保留所有权利。",
+    "legalInfo": "{legalName} · 税号：{taxCode} · 注册地址：{address}"
+  },
+  "floatingZalo": {
+    "ariaLabel": "通过 Zalo 与我们聊天"
+  },
+  "addToQuote": {
+    "add": "加入询价车",
+    "added": "已加入询价车"
+  },
+  "productCard": {
+    "packaging": "包装",
+    "imagePlaceholder": "产品图片",
+    "defaultCategory": "产品"
+  },
+  "filterBar": {
+    "searchPlaceholder": "搜索产品...",
+    "allCategories": "全部类别",
+    "allBrands": "全部品牌",
+    "clearFilters": "清除筛选"
+  },
+  "productsPage": {
+    "title": "工业润滑油",
+    "metaDescription": "福寿工业润滑油完整产品目录：Shell、Mobil、Total 和 Castrol 的液压油、发动机油、齿轮油和润滑脂。",
+    "description": "适用于各行各业的优质工业润滑油。100% 正品 Shell、Mobil、Total 和 Castrol 产品，经严格检验并规范储存。",
+    "showingCount": "共 {count} 个产品",
+    "noResults": "未找到匹配的产品，请尝试其他关键词或筛选条件。"
+  },
+  "categoryPage": {
+    "breadcrumbProducts": "产品",
+    "defaultDescription": "福寿供应的正品{name}产品。",
+    "showingCount": "共 {count} 个产品"
+  },
+  "brands": {
+    "shell": "全球领先的润滑油品牌，拥有 Tellus、Rimula、Omala、Gadus 等系列——为工业和运输提供全面的润滑解决方案。",
+    "mobil": "来自埃克森美孚（ExxonMobil）的先进润滑技术：Mobil DTE、Delvac、SHC、Mobilgrease——为重型工业设备带来卓越性能。",
+    "total": "来自法国的 TotalEnergies 润滑油：Rubia、Azolla、Carter——欧洲品质，价格具有竞争力，适用于各个行业。",
+    "castrol": "拥有 120 多年历史的英国润滑油品牌：Hyspin、Alpha、Vecton、Magnatec——为工业发动机和机械提供最佳保护。"
+  },
+  "brandPage": {
+    "breadcrumbProducts": "产品",
+    "breadcrumbBrand": "{brand} 品牌",
+    "title": "正品 {brand} 润滑油",
+    "metaTitle": "正品 {brand} 润滑油",
+    "showingCount": "共 {count} 个 {brand} 产品",
+    "otherBrands": "其他品牌"
+  },
+  "industriesPage": {
+    "title": "服务行业",
+    "metaDescription": "福寿为众多行业供应优质工业润滑油：石油天然气、海运、制造、运输和建筑。",
+    "description": "我们为从汽车到重工业的众多行业供应优质工业润滑油。",
+    "viewDetail": "查看详情",
+    "statIndustries": "服务行业",
+    "statProducts": "产品",
+    "statYears": "年经验"
+  },
+  "industryDetail": {
+    "breadcrumbIndustries": "服务行业",
+    "defaultDescription": "{name}行业的工业润滑油解决方案。",
+    "matchingProducts": "{count} 个适用产品",
+    "noProducts": "该行业暂未标注产品",
+    "contactPrompt": "欢迎联系我们，获取适合{name}行业的产品建议。",
+    "contactCta": "联系我们"
+  },
+  "productDetail": {
+    "packaging": "包装规格",
+    "packagingHint": "请选择需要报价的包装规格——也可以稍后在询价车中选择。",
+    "breadcrumbProducts": "产品",
+    "defaultCategory": "产品",
+    "callCta": "致电咨询",
+    "viewQuoteCart": "查看询价车 →",
+    "applications": "应用",
+    "specifications": "技术参数",
+    "technicalDocuments": "技术资料",
+    "tds": "技术数据表（TDS）",
+    "msds": "安全数据表（MSDS）",
+    "detailedDescription": "详细介绍",
+    "relatedProducts": "相关产品"
+  },
+  "home": {
+    "heroImagePlaceholder": "[ 福寿产品/仓库图片 ]",
+    "heroIntro1": "自{foundedYear}年起，{name}一直是胡志明市领先的工业润滑油分销商。凭借近 30 年的经验，我们已与石油天然气、港口和海运行业的数千家企业合作。",
+    "heroIntro2": "我们的使命是提供全面的润滑解决方案——不仅提供优质产品，还提供深入的技术咨询和贴心的售后支持。",
+    "highlights": [
+      "100% 正品，严格检验",
+      "为各行业提供最佳技术方案",
+      "快速、专业、贴心的服务"
+    ],
+    "viewProducts": "查看产品",
+    "contactCta": "联系我们",
+    "whyUsTitle": "为什么选择{name}？",
+    "brandsTitle": "知名品牌正品润滑油",
+    "brandsSubtitle": "正品 Shell、Mobil、Total 和 Castrol 润滑油。就 Shell 而言，{name}是 C.L 分销网络中的区域分销合作伙伴，C.L 为 Shell 越南指定的总分销商。",
+    "viewBrandProducts": "查看 {brand} 产品",
+    "galleryTitle": "图片集",
+    "gallerySubtitle": "了解{name}工业润滑油的生产、储存和配送流程",
+    "featuredTitle": "精选产品",
+    "featuredSubtitle": "探索{name}的优质工业润滑油产品系列。",
+    "viewAll": "查看全部",
+    "whyChooseTitle": "企业为什么选择{name}",
+    "whyChooseSubtitle": "近 30 年经营背后的四项承诺",
+    "trustValues": [
+      {
+        "title": "品质保证",
+        "description": "我们只分销正品 Shell、Mobil、Total 和 Castrol 润滑油——来源清晰，CO 和 COA 文件齐全。"
+      },
+      {
+        "title": "技术支持",
+        "description": "经验丰富的技术团队为每种应用推荐合适的油品，并支持定期油样分析。"
+      },
+      {
+        "title": "供应稳定",
+        "description": "头顿大型仓库，库存充足——快速配送至本地区及周边省份。"
+      },
+      {
+        "title": "价格优势",
+        "description": "大宗订单和长期合作伙伴享有优惠价格，折扣透明。"
+      }
+    ],
+    "servicesTitle": "专业服务",
+    "servicesSubtitle": "全面的解决方案加上贴心的服务，确保您的系统顺畅运行。",
+    "homeServices": [
+      {
+        "title": "润滑油产品咨询",
+        "description": "专家协助您选择最适合您设备和工况的润滑油。"
+      },
+      {
+        "title": "技术支持",
+        "description": "解答润滑油应用及相关问题，并提供技术支持。"
+      },
+      {
+        "title": "大宗订购服务",
+        "description": "大宗采购解决方案，价格优惠，物流高效。"
+      }
+    ],
+    "learnMore": "了解更多",
+    "testimonialsTitle": "客户评价",
+    "testimonials": [
+      {
+        "quote": "福寿为我们车间的压力机推荐了完全合适的液压油——机器运行稳定得多，换油周期也比以前更长。",
+        "name": "Minh 先生",
+        "role": "车间主管，Dong Xuyen 工业区"
+      },
+      {
+        "quote": "大宗订单总是按时交付，文件齐全。与福寿合作，对产品来源十分放心。",
+        "name": "Hang 女士",
+        "role": "采购主管，航运公司"
+      },
+      {
+        "quote": "我们的空压机出现问题时，福寿的技术人员检查了油品并在当天解决。服务非常贴心。",
+        "name": "Tuan 先生",
+        "role": "工厂维护经理，Phu My 工业区"
+      }
+    ],
+    "serviceAreasTitle": "服务区域",
+    "serviceAreasSubtitle": "为巴地头顿和胡志明市各工业区的工厂和企业供应润滑油",
+    "serviceAreas": [
+      "Dong Xuyen 工业区",
+      "Phu My 工业区",
+      "Cai Mep 港工业区",
+      "Long Son 工业区",
+      "My Xuan 工业区",
+      "Chau Duc 工业区",
+      "Dat Do 工业区",
+      "胡志明市"
+    ],
+    "contactTitle": "联系我们",
+    "address": "地址",
+    "phone": "电话",
+    "email": "电子邮箱"
+  },
+  "about": {
+    "metaTitle": "关于我们",
+    "metaDescription": "近 30 年优质工业润滑油供应经验，服务胡志明市数千家企业。",
+    "since": "始于{foundedYear}年",
+    "title": "关于{fullName}",
+    "intro": "近 30 年优质工业润滑油供应经验，服务胡志明市数千家企业。",
+    "missionCards": [
+      {
+        "title": "我们的使命",
+        "description": "提供全面的润滑解决方案——不仅提供优质润滑油产品，还提供深入的技术咨询服务。"
+      },
+      {
+        "title": "愿景",
+        "description": "成为工业润滑油供应领域领先的可信赖合作伙伴。"
+      },
+      {
+        "title": "核心价值观",
+        "description": "品质、诚信、专业，始终将客户利益放在首位。"
+      },
+      {
+        "title": "承诺",
+        "description": "与客户携手，迈向可持续、高效的运营。"
+      },
+      {
+        "title": "设施",
+        "description": "现代化的大型仓储系统，储存能力强大。"
+      }
+    ],
+    "journeyTitle": "发展历程",
+    "journeyDescription": "自{foundedYear}年起，{name}一直是胡志明市领先的工业润滑油分销商。凭借近 30 年的经验，我们已与石油天然气、港口和海运行业的数千家企业合作，帮助优化设备性能。",
+    "yearFounded": "成立年份",
+    "customersTrust": "信赖我们的客户",
+    "shellPartnerTitle": "Shell 润滑油分销合作伙伴",
+    "shellPartnerBody": "{name}是 C.L 市场开发服务股份公司（C.L Market Development Services JSC）分销网络中的区域分销合作伙伴；C.L 是 Shell 越南为 B2B 工业领域指定的总分销商。根据 C.L 的确认函，自 2026 年 6 月 23 日起，{name}获委任为企业客户提供 Shell 润滑油的开发、咨询、报价、供货和支持服务。",
+    "shellPartnerArea": "服务区域：Vung Tau、Tam Thang、Rach Dua、Phuoc Thang、Ba Ria、Long Huong 和 Tam Long 坊；Long Son、Long Dien、Long Hai、Dat Do、Phuoc Hai、Xuyen Moc、Ho Tram、Binh Chau、Hoa Hiep、Hoa Hoi 和 Bau Lam 社；以及 Con Dao 特区（胡志明市）。对于 Mobil、Total 和 Castrol，{name}供应正品。",
+    "companyInfoTitle": "公司信息",
+    "legalNameLabel": "法定名称",
+    "taxCodeLabel": "税号",
+    "registeredAddressLabel": "注册地址",
+    "commitmentTitle": "{name}的承诺",
+    "commitmentSubtitle": "拥有经验丰富的技术团队和现代化仓储设施",
+    "commitments": [
+      { "title": "100% 品质", "description": "正品，严格检验和储存" },
+      { "title": "最佳方案", "description": "针对各行业进行技术优化，提升设备性能" },
+      { "title": "专业服务", "description": "快速、专业、贴心——24/7 支持" },
+      { "title": "专家团队", "description": "经验丰富的技术人员提供深入咨询" },
+      { "title": "现代化仓储", "description": "现代化仓储系统，确保最佳产品质量" },
+      { "title": "快速配送", "description": "广泛的配送网络，送货上门" }
+    ],
+    "industriesTitle": "服务行业",
+    "industriesSubtitle": "与众多行业的企业合作"
+  },
+  "services": {
+    "metaTitle": "服务",
+    "metaDescription": "全面的润滑解决方案与专业服务，从技术咨询到贴心的售后支持。",
+    "title": "我们的服务",
+    "intro": "全面的润滑解决方案与专业服务，从技术咨询到贴心的售后支持。",
+    "coreServicesTitle": "核心服务",
+    "coreServicesSubtitle": "我们提供的服务",
+    "coreServices": [
+      {
+        "title": "润滑油产品咨询",
+        "description": "我们的专家团队分析您的运行要求、机械类型和工作环境，推荐最合适的润滑油产品，确保高性能并延长设备寿命。我们提供发动机油、液压油、工业油和润滑脂方面的咨询。",
+        "benefits": "优化设备性能，延长机械寿命，降低维护成本，并符合行业标准。"
+      },
+      {
+        "title": "技术支持",
+        "description": "我们提供全面的技术支持，包括解答产品特性问题、指导正确使用、分析润滑相关问题并提供解决方案。我们经验丰富的工程师可通过电话、电子邮件或现场提供帮助。",
+        "benefits": "快速解决问题，提升润滑知识，优化操作流程，减少停机时间。"
+      },
+      {
+        "title": "大宗订购服务",
+        "description": "对于有经常性、大批量润滑油需求的企业，我们提供大宗订购服务，价格具有竞争力，折扣优惠，配送方式灵活。我们确保供应稳定、产品质量一致。",
+        "benefits": "降低采购成本，保障稳定供应，订购流程简单，支持送货上门。"
+      },
+      {
+        "title": "全面维护解决方案",
+        "description": "我们提供全面的维护解决方案，包括定期油样分析、机械状态检查、换油和润滑计划制定以及预防措施咨询。我们的目标是帮助客户保持最佳设备性能，将故障风险降至最低，并延长资产寿命。",
+        "benefits": "减少故障，延长设备寿命，优化维护成本，提高运行安全性。"
+      },
+      {
+        "title": "产品质量保证",
+        "description": "质量是我们的首要任务。每一款润滑油产品从原材料到成品都经过严格的质量控制。我们提供质量认证和检测报告，确保产品达到或超过国际及当地行业标准。",
+        "benefits": "产品质量有保障，符合标准，降低运营风险，提升品牌声誉。"
+      }
+    ],
+    "benefitsLabel": "主要优势：",
+    "additionalServicesTitle": "附加服务",
+    "additionalServicesSubtitle": "为客户提供全面的支持服务",
+    "additionalServices": [
+      { "title": "技术咨询", "description": "经验丰富的技术团队随时为各行业和具体应用提供最佳润滑解决方案建议。" },
+      { "title": "快速配送", "description": "广泛的配送网络，确保快速送货上门，覆盖本地区及周边省份。" },
+      { "title": "贴心售后支持", "description": "24/7 客户关怀，随时解答任何问题，并在需要时提供技术支持。" },
+      { "title": "润滑油分析", "description": "定期润滑油样品分析服务，跟踪机械状态并预测维护需求。" }
+    ],
+    "processTitle": "服务流程",
+    "processSubtitle": "我们遵循专业、透明的工作流程",
+    "processSteps": [
+      { "step": "01", "title": "咨询与调研", "description": "了解您的需求并调研设备现状" },
+      { "step": "02", "title": "方案建议", "description": "为每种应用推荐最佳润滑方案" },
+      { "step": "03", "title": "产品供应", "description": "快速交付 100% 正品" },
+      { "step": "04", "title": "支持与跟进", "description": "技术支持及定期性能跟进" }
+    ],
+    "commitmentSectionTitle": "我们的服务承诺",
+    "commitmentSectionText": "我们相信，客户的成功就是福寿的成功。让我们与您携手，迈向可持续、高效的运营。",
+    "commitmentItems": [
+      "100% 正品润滑油——符合国际 ISO 标准",
+      "为各类工业应用提供技术咨询",
+      "定期油品分析——及时预测维护需求",
+      "快速配送——服务整个地区及更远区域",
+      "24/7 技术支持——解答所有产品和应用问题"
+    ],
+    "contactCta": "联系我们"
+  },
+  "contact": {
+    "metaTitle": "联系我们",
+    "metaDescription": "联系福寿，获取适合贵企业的工业润滑油产品建议。",
+    "title": "联系我们",
+    "intro": "联系{name}，获取适合贵企业的工业润滑油产品建议。",
+    "sendMessage": "发送留言",
+    "contactInfo": "联系信息",
+    "mapTitle": "办公室位置地图"
+  },
+  "contactForm": {
+    "name": "姓名 *",
+    "phone": "电话号码",
+    "email": "电子邮箱",
+    "message": "留言内容 *",
+    "sending": "发送中...",
+    "send": "发送留言"
+  },
+  "leadGuide": {
+    "title": "免费赠送：工业润滑油手册",
+    "description": "为维护团队提供储存、加油和状态监测指南，以及可直接打印的表格。留下您的信息，福寿将通过电子邮件把 PDF 发送给您。",
+    "teaserCta": "免费领取手册",
+    "name": "姓名",
+    "email": "接收手册的电子邮箱",
+    "phone": "电话号码",
+    "company": "公司（选填）",
+    "consent": "我同意福寿保存这些信息，用于发送手册并就产品与我联系。",
+    "submit": "把手册发给我",
+    "sending": "发送中...",
+    "success": "手册已发送至 {email}。如未收到，请检查垃圾邮件或推广邮件文件夹。",
+    "close": "关闭"
+  },
+  "equivalentFinder": {
+    "metaTitle": "等效产品查询",
+    "metaDescription": "按产品类别和粘度等级查找 Shell、Mobil、Total 和 Castrol 之间的等效润滑油产品。",
+    "title": "等效产品查询",
+    "intro": "目前正在使用某一品牌的润滑油，想比较 Shell、Mobil、Total 或 Castrol 的等效产品？请在下方选择产品，查看同类别、同粘度等级的建议。",
+    "selectLabel": "选择您目前使用的产品",
+    "selectPlaceholder": "-- 选择产品 --",
+    "otherCategory": "其他",
+    "noViscosity": "该产品暂无可用于自动比较的粘度等级信息。请联系我们的技术团队获取等效产品建议。",
+    "contactCta": "联系我们",
+    "noEquivalents": "在此类别中未找到其他品牌的等效产品（粘度等级 {grade}）。",
+    "suggestionCount": "{count} 个等效产品建议——同类别 {category}，粘度等级 {grade}",
+    "tableTitle": "等效产品对照表",
+    "tableIntro": "各品牌中类别、粘度等级和基础油类型相同的产品——矿物油、PAO 合成油和 PAG 合成油分开列出，因为它们不能直接互换。仅供参考——更换所用油品前，请联系福寿技术团队确认。",
+    "family": {"mineral": "矿物油", "synthetic": "合成（PAO/GTL）", "pag": "合成 PAG", "water-glycol": "水-乙二醇", "unknown": "基础油未分类"},
+    "gradeColumn": "粘度等级",
+    "disclaimer": "* 建议结果基于相同产品类别和相近粘度等级，仅供初步参考——并非正式的替代确认。更换目前使用的产品前，请联系福寿技术团队咨询并确认。"
+  },
+  "quoteCartPage": {
+    "packaging": "包装规格",
+    "packagingLabel": "{name} 的包装规格",
+    "choosePackaging": "-- 选择包装规格 --",
+    "emptyTitle": "您的询价车是空的",
+    "emptyDescription": "将您感兴趣的产品加入询价车，即可申请报价。",
+    "viewProducts": "查看产品",
+    "title": "询价车",
+    "description": "请核对产品清单并填写您的信息，以提交询价申请。",
+    "quantityLabel": "{name} 的数量",
+    "removeLabel": "移除 {name}",
+    "addMore": "+ 添加更多产品",
+    "companyName": "公司名称 *",
+    "contactName": "联系人 *",
+    "phone": "电话号码 *",
+    "email": "电子邮箱",
+    "address": "送货地址",
+    "note": "备注",
+    "emptyCartError": "您的询价车是空的。请先添加产品再提交申请。",
+    "sending": "发送中...",
+    "submit": "提交询价申请"
+  },
+  "blog": {
+    "title": "新闻与文章",
+    "description": "工业润滑油技术文章：选型、储存、油品分析和设备保养。",
+    "showing": "共 {count} 篇文章",
+    "breadcrumb": "新闻",
+    "backToAll": "← 全部文章",
+    "vietnameseOnly": "我们的文章目前仅以越南语发布。"
+  },
+  "quoteSuccess": {
+    "metaTitle": "询价申请已成功发送",
+    "title": "询价申请已成功发送！",
+    "description": "感谢您关注{name}的产品。我们的销售团队将尽快与您联系，提供详细建议和报价。如需紧急协助，请致电 <phone>{phoneDisplay}</phone>。",
+    "backHome": "返回首页"
+  }
+}

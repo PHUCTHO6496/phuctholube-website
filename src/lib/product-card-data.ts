@@ -10,7 +10,8 @@ export const productCardSelect = {
   // here ends up in the page payload via the client "add to quote" button.
   shortDescription: true,
   shortDescriptionEn: true,
-  category: { select: { name: true, nameEn: true } },
+  shortDescriptionZh: true,
+  category: { select: { name: true, nameEn: true, nameZh: true } },
   images: { take: 1, orderBy: { sortOrder: "asc" as const }, select: { url: true } },
   variants: { orderBy: { sortOrder: "asc" as const }, select: { packaging: true } },
 } as const;
@@ -22,7 +23,9 @@ type ProductCardRaw = {
   brand: string | null;
   shortDescription: string | null;
   shortDescriptionEn: string | null;
-  category: { name: string; nameEn: string | null } | null;
+  // Optional for the same stale-cache reason as `variants` below.
+  shortDescriptionZh?: string | null;
+  category: { name: string; nameEn: string | null; nameZh?: string | null } | null;
   images: { url: string }[];
   // Optional: unstable_cache keys on the query function's source, which
   // doesn't change when productCardSelect does, so entries cached before
@@ -36,9 +39,9 @@ export function localizeProductCard(
 ): ProductCardData {
   return {
     ...p,
-    shortDescription: localized(locale, p.shortDescription, p.shortDescriptionEn),
+    shortDescription: localized(locale, p.shortDescription, p.shortDescriptionEn, p.shortDescriptionZh),
     category: p.category
-      ? { name: localized(locale, p.category.name, p.category.nameEn) }
+      ? { name: localized(locale, p.category.name, p.category.nameEn, p.category.nameZh) }
       : null,
     packagings: (variants ?? []).map((v) => v.packaging),
   };

@@ -28,12 +28,16 @@ const getProduct = unstable_cache(
         categoryId: true,
         shortDescription: true,
         shortDescriptionEn: true,
+        shortDescriptionZh: true,
         description: true,
         descriptionEn: true,
+        descriptionZh: true,
         useCases: true,
         useCasesEn: true,
+        useCasesZh: true,
         applicationTags: true,
         applicationTagsEn: true,
+        applicationTagsZh: true,
         tdsUrl: true,
         msdsUrl: true,
         category: true,
@@ -72,22 +76,20 @@ export async function generateMetadata({
   ]);
   if (!product) return {};
   const categoryName = product.category
-    ? localized(locale, product.category.name, product.category.nameEn)
+    ? localized(locale, product.category.name, product.category.nameEn, product.category.nameZh)
     : t("defaultCategory");
   return {
     title: `${product.name} - ${categoryName}`,
     description:
-      localized(locale, product.shortDescription, product.shortDescriptionEn) ??
-      localized(locale, product.description, product.descriptionEn) ??
+      localized(locale, product.shortDescription, product.shortDescriptionEn, product.shortDescriptionZh) ??
+      localized(locale, product.description, product.descriptionEn, product.descriptionZh) ??
       undefined,
-    // Most products only have an English short description; their /en page
-    // still shows the Vietnamese detailed description, so it stays out of
-    // the index until that is translated too.
-    ...localeAlternates(
-      locale,
-      `/san-pham/${product.slug}`,
-      !product.description || !!product.descriptionEn
-    ),
+    // A product whose detailed description isn't translated yet would show
+    // it in another language, so that copy stays out of the index.
+    ...localeAlternates(locale, `/san-pham/${product.slug}`, {
+      en: !product.description || !!product.descriptionEn,
+      zh: !product.description || !!product.descriptionZh,
+    }),
   };
 }
 
@@ -96,6 +98,10 @@ export async function generateMetadata({
 const SPEC_LABELS_EN: Record<string, string> = {
   "Thương hiệu": "Brand",
   "Quy cách": "Packaging",
+};
+const SPEC_LABELS_ZH: Record<string, string> = {
+  "Thương hiệu": "品牌",
+  "Quy cách": "包装规格",
 };
 
 export default async function ProductDetailPage({
@@ -123,7 +129,12 @@ export default async function ProductDetailPage({
       .filter((s) => packagings.length === 0 || s.label !== "Quy cách")
       .map((s) => ({
       key: s.id,
-      label: localized(locale, s.label, s.labelEn ?? SPEC_LABELS_EN[s.label]),
+      label: localized(
+        locale,
+        s.label,
+        s.labelEn ?? SPEC_LABELS_EN[s.label],
+        s.labelZh ?? SPEC_LABELS_ZH[s.label]
+      ),
       value: localizeSpecValue(s.value, locale),
     })),
     ...(packagings.length > 0
@@ -134,26 +145,30 @@ export default async function ProductDetailPage({
   const shortDescription = localized(
     locale,
     product.shortDescription,
-    product.shortDescriptionEn
+    product.shortDescriptionEn,
+    product.shortDescriptionZh
   );
-  const description = localized(locale, product.description, product.descriptionEn);
+  const description = localized(
+    locale,
+    product.description,
+    product.descriptionEn,
+    product.descriptionZh
+  );
   const categoryName = product.category
-    ? localized(locale, product.category.name, product.category.nameEn)
+    ? localized(locale, product.category.name, product.category.nameEn, product.category.nameZh)
     : t("defaultCategory");
 
-  const useCasesVi = Array.isArray(product.useCases) ? (product.useCases as string[]) : [];
-  const useCasesEn = Array.isArray(product.useCasesEn)
-    ? (product.useCasesEn as string[])
-    : [];
-  const useCases = localizedJson(locale, useCasesVi, useCasesEn);
-
-  const applicationTagsVi = Array.isArray(product.applicationTags)
-    ? (product.applicationTags as string[])
-    : [];
-  const applicationTagsEn = Array.isArray(product.applicationTagsEn)
-    ? (product.applicationTagsEn as string[])
-    : [];
-  const applicationTags = localizedJson(locale, applicationTagsVi, applicationTagsEn);
+  const list = (v: unknown) => (Array.isArray(v) && v.length > 0 ? (v as string[]) : null);
+  const useCases =
+    localizedJson(locale, list(product.useCases), list(product.useCasesEn), list(product.useCasesZh)) ??
+    [];
+  const applicationTags =
+    localizedJson(
+      locale,
+      list(product.applicationTags),
+      list(product.applicationTagsEn),
+      list(product.applicationTagsZh)
+    ) ?? [];
 
   const relatedRaw = product.categoryId
     ? await getRelatedProducts(product.categoryId, product.id)

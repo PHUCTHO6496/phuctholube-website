@@ -28,11 +28,12 @@ const getEquivalentFinderProducts = unstable_cache(
         brand: true,
         shortDescription: true,
         shortDescriptionEn: true,
+        shortDescriptionZh: true,
         categoryId: true,
         viscosityGrade: true,
         // Base oil as transcribed from the TDS, when we have it.
         specs: { where: { label: "Loại dầu gốc" }, take: 1, select: { value: true } },
-        category: { select: { name: true, nameEn: true } },
+        category: { select: { name: true, nameEn: true, nameZh: true } },
         images: { take: 1, orderBy: { sortOrder: "asc" }, select: { url: true } },
       },
     }),
@@ -140,10 +141,10 @@ export default async function EquivalentLookupPage() {
     slug: p.slug,
     name: p.name,
     brand: p.brand,
-    shortDescription: localized(locale, p.shortDescription, p.shortDescriptionEn),
+    shortDescription: localized(locale, p.shortDescription, p.shortDescriptionEn, p.shortDescriptionZh),
     categoryId: p.categoryId,
     categoryName: p.category
-      ? localized(locale, p.category.name, p.category.nameEn)
+      ? localized(locale, p.category.name, p.category.nameEn, p.category.nameZh)
       : t("otherCategory"),
     viscosityGrade: p.viscosityGrade,
     baseOilFamily: baseOilFamily(p.name, p.specs?.[0]?.value),

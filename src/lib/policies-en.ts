@@ -1,14 +1,12 @@
 // English versions of the policies in ./policies.ts (same terms, confirmed
 // by the owner on 2026-11-28). The Vietnamese text prevails if they differ;
 // keep both in step when either changes.
-import type { PolicySection } from "@/lib/policies";
-
-type PolicyEn = { description: string; intro?: string; sections: PolicySection[] };
+import type { PolicyTranslation } from "@/lib/policies";
 
 const OWNER =
   "CÔNG TY TNHH THƯƠNG MẠI PHÚC THỌ (tax code 3500378966), the owner and operator of www.phuctholube.com (“Phuc Tho”, “we” or “us”)";
 
-export const POLICIES_EN: Record<string, PolicyEn> = {
+export const POLICIES_EN: Record<string, PolicyTranslation> = {
   "bao-mat-thong-tin": {
     description:
       "What information Phuc Tho collects through this website, what we use it for, where it is stored and your rights over your personal data.",

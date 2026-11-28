@@ -14,7 +14,7 @@ const getIndustriesList = unstable_cache(
   async () =>
     prisma.industry.findMany({
       orderBy: { sortOrder: "asc" },
-      select: { slug: true, name: true, nameEn: true },
+      select: { slug: true, name: true, nameEn: true, nameZh: true },
     }),
   ["about-industries"],
   { tags: ["industries"], revalidate: 300 }
@@ -163,7 +163,7 @@ export default async function AboutPage() {
                 href={`/linh-vuc-hoat-dong/${ind.slug}`}
                 className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-blue-900 hover:text-blue-900"
               >
-                {localized(locale, ind.name, ind.nameEn)}
+                {localized(locale, ind.name, ind.nameEn, ind.nameZh)}
               </Link>
             ))}
           </div>

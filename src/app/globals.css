@@ -9,7 +9,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-be-vietnam-pro);
+  /* Be Vietnam Pro has no Chinese glyphs; /zh text falls through to the
+     system's Simplified Chinese sans-serif instead of a serif default. */
+  --font-sans: var(--font-be-vietnam-pro), "PingFang SC", "Microsoft YaHei",
+    "Noto Sans SC", "Source Han Sans SC", sans-serif;
 }
 
 @theme {

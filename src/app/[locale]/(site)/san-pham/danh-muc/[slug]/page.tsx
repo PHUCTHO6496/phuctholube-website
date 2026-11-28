@@ -14,7 +14,15 @@ const getCategory = unstable_cache(
   async (slug: string) =>
     prisma.productCategory.findUnique({
       where: { slug },
-      select: { id: true, name: true, nameEn: true, description: true, descriptionEn: true },
+      select: {
+        id: true,
+        name: true,
+        nameEn: true,
+        nameZh: true,
+        description: true,
+        descriptionEn: true,
+        descriptionZh: true,
+      },
     }),
   ["category-detail"],
   { tags: ["categories"], revalidate: 300 }
@@ -43,13 +51,16 @@ export async function generateMetadata({
     getTranslations("categoryPage"),
   ]);
   if (!category) return {};
-  const name = localized(locale, category.name, category.nameEn);
+  const name = localized(locale, category.name, category.nameEn, category.nameZh);
   return {
     title: name,
     description:
-      localized(locale, category.description, category.descriptionEn) ??
+      localized(locale, category.description, category.descriptionEn, category.descriptionZh) ??
       t("defaultDescription", { name }),
-    ...localeAlternates(locale, `/san-pham/danh-muc/${slug}`, !!category.nameEn),
+    ...localeAlternates(locale, `/san-pham/danh-muc/${slug}`, {
+      en: !!category.nameEn,
+      zh: !!category.nameZh,
+    }),
   };
 }
 
@@ -73,8 +84,8 @@ export default async function ProductCategoryPage({
   ]);
   if (!category) notFound();
 
-  const name = localized(locale, category.name, category.nameEn);
-  const description = localized(locale, category.description, category.descriptionEn);
+  const name = localized(locale, category.name, category.nameEn, category.nameZh);
+  const description = localized(locale, category.description, category.descriptionEn, category.descriptionZh);
 
   const products = await getCategoryProducts(category.id);
 

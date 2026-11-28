@@ -5,15 +5,21 @@ import { Link } from "@/i18n/navigation";
 import { SITE, localizedAddress } from "@/lib/constants";
 import { formatPhoneDisplay } from "@/lib/format";
 import { getSiteSettings } from "@/lib/settings";
-import { POLICIES, getPolicy, type Policy } from "@/lib/policies";
+import { POLICIES, getPolicy, policyTitle, type Policy, type PolicyTranslation } from "@/lib/policies";
 import { POLICIES_EN } from "@/lib/policies-en";
+import { POLICIES_ZH } from "@/lib/policies-zh";
+
+const TRANSLATIONS: Record<string, Record<string, PolicyTranslation>> = {
+  en: POLICIES_EN,
+  zh: POLICIES_ZH,
+};
 import { localeAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return POLICIES.map((p) => ({ slug: p.slug }));
 }
 
-const CHROME = {
+const CHROME: Record<string, Record<string, string>> = {
   vi: {
     updated: "Cập nhật lần cuối",
     contact: "Liên hệ",
@@ -21,6 +27,7 @@ const CHROME = {
     registered: "Trụ sở",
     office: "Văn phòng",
     hotline: "Hotline",
+    email: "Email",
     others: "Các chính sách khác",
     prevails: "",
   },
@@ -31,31 +38,46 @@ const CHROME = {
     registered: "Registered office",
     office: "Office",
     hotline: "Phone",
+    email: "Email",
     others: "Other policies",
     prevails:
       "This English version is provided for convenience. If it differs from the Vietnamese version, the Vietnamese version prevails.",
   },
+  zh: {
+    updated: "最后更新",
+    contact: "联系方式",
+    taxCode: "税号",
+    registered: "注册地址",
+    office: "办公室",
+    hotline: "电话",
+    email: "电子邮箱",
+    others: "其他政策",
+    prevails: "本中文版本仅为方便阅读而提供。如与越南语版本有任何不一致，以越南语版本为准。",
+  },
 };
 
-/** The policy text for a locale: English from policies-en, Vietnamese as written. */
+/** The policy text for a locale: a translation file when one exists, else the Vietnamese. */
 function contentFor(policy: Policy, locale: string) {
-  const en = locale === "en" ? POLICIES_EN[policy.slug] : undefined;
+  const tr = TRANSLATIONS[locale]?.[policy.slug];
   return {
-    title: en ? policy.titleEn : policy.title,
-    description: en?.description ?? policy.description,
-    intro: en ? en.intro : policy.intro,
-    sections: en?.sections ?? policy.sections,
+    title: tr ? policyTitle(policy, locale) : policy.title,
+    description: tr?.description ?? policy.description,
+    intro: tr ? tr.intro : policy.intro,
+    sections: tr?.sections ?? policy.sections,
   };
 }
 
-// "01/12/2026" -> "1 December 2026" for English readers (DD/MM is ambiguous).
+// "01/12/2026" -> "1 December 2026" / "2026年12月1日" (DD/MM reads as MM/DD to many).
 function formatUpdated(date: string, locale: string) {
-  if (locale !== "en") return date;
+  if (locale === "vi") return date;
   const m = date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
   if (!m) return date;
-  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(
-    new Date(Date.UTC(Number(m[3]), Number(m[2]) - 1, Number(m[1])))
-  );
+  return new Intl.DateTimeFormat(locale === "zh" ? "zh-CN" : "en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(Number(m[3]), Number(m[2]) - 1, Number(m[1]))));
 }
 
 export async function generateMetadata({
@@ -71,7 +93,10 @@ export async function generateMetadata({
   return {
     title: content.title,
     description: content.description,
-    ...localeAlternates(locale, `/chinh-sach/${policy.slug}`, !!POLICIES_EN[policy.slug]),
+    ...localeAlternates(locale, `/chinh-sach/${policy.slug}`, {
+      en: !!POLICIES_EN[policy.slug],
+      zh: !!POLICIES_ZH[policy.slug],
+    }),
   };
 }
 
@@ -103,7 +128,7 @@ export default async function PolicyPage({
   if (!policy) notFound();
   const [settings, locale] = await Promise.all([getSiteSettings(), getLocale()]);
   const content = contentFor(policy, locale);
-  const c = locale === "en" ? CHROME.en : CHROME.vi;
+  const c = CHROME[locale] ?? CHROME.vi;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
@@ -163,7 +188,7 @@ export default async function PolicyPage({
             <a href={`tel:${settings.phone}`} className="font-semibold text-blue-900 hover:underline">
               {formatPhoneDisplay(settings.phone)}
             </a>{" "}
-            · Email:{" "}
+            · {c.email}:{" "}
             <a href={`mailto:${settings.email}`} className="font-semibold text-blue-900 hover:underline">
               {settings.email}
             </a>
@@ -177,7 +202,7 @@ export default async function PolicyPage({
           {POLICIES.filter((p) => p.slug !== policy.slug).map((p) => (
             <li key={p.slug}>
               <Link href={`/chinh-sach/${p.slug}`} className="text-blue-900 hover:text-amber-600">
-                {locale === "en" ? p.titleEn : p.title}
+                {policyTitle(p, locale)}
               </Link>
             </li>
           ))}
