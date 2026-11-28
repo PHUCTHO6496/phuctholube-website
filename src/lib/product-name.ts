@@ -58,7 +58,9 @@ export function baseOilFamilyFromText(text: string | null | undefined): BaseOilF
 const BASE_OIL_BY_NAME: [RegExp, BaseOilFamily][] = [
   [/^Shell (Omala S2 GX|Turbo T |Corena S2 P|Corena S3 R|Tonna S2 M|Tellus S2 [MV]X|Tellus Zinc Free|Morlina S2|Paper Machine Oil S3 M)/i, "mineral"],
   [/^Mobil SHC/i, "synthetic"],
-  [/^Mobilgear 600 XP|^Mobil DTE (2\d|10 Excel)|^Mobil Rarus 4/i, "mineral"],
+  // Not DTE 10 Excel: Mobil's PDS describes it as made from synthetic
+  // technology base oils, so it stays unclassified rather than "mineral".
+  [/^Mobilgear 600 XP|^Mobil DTE 2\d|^Mobil Rarus 4/i, "mineral"],
   [/^Castrol Alphasyn PG/i, "pag"],
   [/^Castrol (Alpha SP|Optigear BM|Hyspin AWS|Aircol PD|Perfecto T)/i, "mineral"],
   [/^Castrol Aircol SN/i, "synthetic"],
