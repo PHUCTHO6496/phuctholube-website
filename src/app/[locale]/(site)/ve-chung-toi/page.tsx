@@ -5,7 +5,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { localeAlternates } from "@/lib/seo";
 import { Target, Eye, Gem, HeartHandshake, Warehouse } from "lucide-react";
 import { prisma } from "@/lib/db";
-import { SITE, localizedAddress, siteNames } from "@/lib/constants";
+import { BRANDS, SITE, localizedAddress, siteNames } from "@/lib/constants";
 import { localized } from "@/lib/localized";
 
 const MISSION_ICONS = [Target, Eye, Gem, HeartHandshake, Warehouse];
@@ -93,8 +93,8 @@ export default async function AboutPage() {
               <p className="mt-1 text-sm text-slate-600">{t("yearFounded")}</p>
             </div>
             <div>
-              <div className="text-4xl font-extrabold text-blue-900">1000+</div>
-              <p className="mt-1 text-sm text-slate-600">{t("customersTrust")}</p>
+              <div className="text-4xl font-extrabold text-blue-900">{BRANDS.length}</div>
+              <p className="mt-1 text-sm text-slate-600">{t("genuineBrands")}</p>
             </div>
           </div>
         </div>

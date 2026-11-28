@@ -13,7 +13,6 @@ import {
   Wrench,
   Warehouse,
   BadgePercent,
-  Quote,
 } from "lucide-react";
 import { BRANDS, SITE, localizedAddress, siteNames } from "@/lib/constants";
 import { prisma } from "@/lib/db";
@@ -71,7 +70,6 @@ export default async function Home() {
   const highlights = t.raw("highlights") as string[];
   const trustValues = t.raw("trustValues") as { title: string; description: string }[];
   const homeServices = t.raw("homeServices") as { title: string; description: string }[];
-  const testimonials = t.raw("testimonials") as { quote: string; name: string; role: string }[];
   const serviceAreas = t.raw("serviceAreas") as string[];
   const homeServiceHrefs = ["/dich-vu", "/dich-vu", "/dich-vu"];
 
@@ -325,33 +323,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="bg-white">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
-              {t("testimonialsTitle")}
-            </h2>
-          </div>
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {testimonials.map((testimonial) => (
-              <figure
-                key={testimonial.name}
-                className="rounded-xl bg-slate-50 p-6 ring-1 ring-slate-200"
-              >
-                <Quote className="h-6 w-6 text-amber-500" />
-                <blockquote className="mt-3 text-sm leading-relaxed text-slate-700">
-                  {testimonial.quote}
-                </blockquote>
-                <figcaption className="mt-4">
-                  <p className="text-sm font-bold text-slate-900">{testimonial.name}</p>
-                  <p className="text-xs text-slate-500">{testimonial.role}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Service areas */}
       <section className="bg-gradient-to-br from-blue-950 via-blue-900 to-slate-900 text-white">

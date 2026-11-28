@@ -10,7 +10,7 @@ export const SITE = {
   legalName: "CÔNG TY TNHH THƯƠNG MẠI PHÚC THỌ",
   taxCode: "3500378966",
   registeredAddress: "15 Mạc Đĩnh Chi, Phường Vũng Tàu, TP. Hồ Chí Minh",
-  tagline: "Nhà Phân Phối Dầu Nhớt Công Nghiệp Uy Tín Hàng Đầu Hồ Chí Minh",
+  tagline: "Phân Phối Dầu Nhớt Công Nghiệp Chính Hãng Tại Vũng Tàu",
   foundedYear: 1996,
   phone: "0786060496",
   phoneDisplay: "078 606 0496",
@@ -115,7 +115,7 @@ export const BRANDS = [
     slug: "shell",
     name: "Shell",
     description:
-      "Thương hiệu dầu nhớt hàng đầu thế giới với các dòng Tellus, Rimula, Omala, Gadus — giải pháp bôi trơn toàn diện cho công nghiệp và vận tải.",
+      "Thương hiệu dầu nhớt toàn cầu với các dòng Tellus, Rimula, Omala, Gadus — giải pháp bôi trơn toàn diện cho công nghiệp và vận tải.",
   },
   {
     slug: "mobil",

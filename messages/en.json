@@ -1,7 +1,7 @@
 {
   "meta": {
-    "tagline": "Ho Chi Minh City's Leading Industrial Lubricant Distributor",
-    "description": "Since {foundedYear}, {name} has been a leading industrial lubricant distributor in Ho Chi Minh City, serving businesses in oil & gas, seaport, and maritime industries."
+    "tagline": "Genuine Industrial Lubricants in Vung Tau",
+    "description": "Since {foundedYear}, {name} has supplied genuine Shell, Mobil, Total and Castrol industrial lubricants in Vung Tau (Ho Chi Minh City) to businesses in oil & gas, ports, shipping and manufacturing."
   },
   "nav": {
     "home": "Home",
@@ -21,7 +21,7 @@
     "english": "English"
   },
   "footer": {
-    "tagline": "Since {foundedYear}, {name} has proudly been a leading industrial lubricant distributor in Ho Chi Minh City.",
+    "tagline": "Since {foundedYear}, {name} has supplied genuine industrial lubricants to businesses in Vung Tau and nearby industrial parks.",
     "quickLinks": "Quick Links",
     "contact": "Contact",
     "workingHours": "Business Hours",
@@ -64,7 +64,7 @@
     "showingCount": "Showing {count} products"
   },
   "brands": {
-    "shell": "A world-leading lubricant brand with the Tellus, Rimula, Omala, and Gadus lines — comprehensive lubrication solutions for industry and transportation.",
+    "shell": "A global lubricant brand with the Tellus, Rimula, Omala, and Gadus lines — comprehensive lubrication solutions for industry and transportation.",
     "mobil": "Advanced lubrication technology from ExxonMobil: Mobil DTE, Delvac, SHC, Mobilgrease — outstanding performance for heavy industrial equipment.",
     "total": "TotalEnergies lubricants from France: Rubia, Azolla, Carter — European quality at a competitive price for every industry.",
     "castrol": "A British lubricant brand with over 120 years of heritage: Hyspin, Alpha, Vecton, Magnatec — optimal protection for industrial engines and machinery."
@@ -111,21 +111,21 @@
   },
   "home": {
     "heroImagePlaceholder": "[ Phuc Tho product / warehouse image ]",
-    "heroIntro1": "Since {foundedYear}, {name} has proudly been a leading industrial lubricant distributor in Ho Chi Minh City. With nearly 30 years of experience, we have partnered with thousands of businesses in the oil & gas, seaport, and maritime industries.",
+    "heroIntro1": "Since {foundedYear}, {name} has distributed genuine industrial lubricants in Vung Tau (Ho Chi Minh City). For nearly 30 years we have supplied businesses in oil & gas, ports, shipping and manufacturing.",
     "heroIntro2": "Our mission is to provide comprehensive lubrication solutions — not just high-quality products, but also in-depth technical consulting and dedicated after-sales support.",
     "highlights": [
-      "100% genuine products, strictly inspected",
+      "100% genuine products with CO and COA documents",
       "Optimal technical solutions for every industry",
       "Fast, professional, and dedicated service"
     ],
     "viewProducts": "View products",
     "contactCta": "Contact us",
     "whyUsTitle": "Why {name}?",
-    "brandsTitle": "Genuine Lubricants from Leading Brands",
+    "brandsTitle": "Genuine Lubricant Brands",
     "brandsSubtitle": "Genuine Shell, Mobil, Total and Castrol lubricants. For Shell, {name} is a regional distribution partner within the network of C.L, the master distributor appointed by Shell Vietnam.",
     "viewBrandProducts": "View {brand} products",
     "galleryTitle": "Photo Gallery",
-    "gallerySubtitle": "Explore {name}'s industrial lubricant production, storage, and distribution process",
+    "gallerySubtitle": "{name}'s warehouse, storage and deliveries",
     "featuredTitle": "Featured Products",
     "featuredSubtitle": "Discover {name}'s high-quality industrial lubricant product lines.",
     "viewAll": "View all",
@@ -142,7 +142,7 @@
       },
       {
         "title": "Stable Supply",
-        "description": "A large warehouse in Vung Tau with high stock availability — fast delivery across the region and nearby provinces."
+        "description": "A warehouse in Vung Tau stocking commonly used products — fast delivery in the area and shipping to other provinces."
       },
       {
         "title": "Competitive Pricing",
@@ -166,24 +166,6 @@
       }
     ],
     "learnMore": "Learn more",
-    "testimonialsTitle": "What Our Customers Say",
-    "testimonials": [
-      {
-        "quote": "Phuc Tho recommended exactly the right hydraulic oil for our workshop's press machines — they now run much more stably and the oil change cycle is longer than before.",
-        "name": "Mr. Minh",
-        "role": "Workshop Manager, Dong Xuyen Industrial Park"
-      },
-      {
-        "quote": "Bulk orders are always delivered on time with full documentation. Working with Phuc Tho gives real peace of mind about product origin.",
-        "name": "Ms. Hang",
-        "role": "Procurement Lead, Shipping Company"
-      },
-      {
-        "quote": "When our air compressor had an issue, Phuc Tho's technicians checked the oil and resolved it the same day. Truly dedicated service.",
-        "name": "Mr. Tuan",
-        "role": "Plant Maintenance Manager, Phu My Industrial Park"
-      }
-    ],
     "serviceAreasTitle": "Service Area",
     "serviceAreasSubtitle": "Supplying lubricants to factories and plants across industrial parks in Ba Ria - Vung Tau and Ho Chi Minh City",
     "serviceAreas": [
@@ -203,10 +185,10 @@
   },
   "about": {
     "metaTitle": "About Us",
-    "metaDescription": "Nearly 30 years of experience supplying high-quality industrial lubricants, serving thousands of businesses in Ho Chi Minh City.",
+    "metaDescription": "Nearly 30 years supplying genuine industrial lubricants to businesses in Vung Tau and nearby industrial parks.",
     "since": "Since {foundedYear}",
     "title": "About {fullName}",
-    "intro": "Nearly 30 years of experience supplying high-quality industrial lubricants, serving thousands of businesses in Ho Chi Minh City.",
+    "intro": "Nearly 30 years supplying genuine industrial lubricants to businesses in Vung Tau and nearby industrial parks.",
     "missionCards": [
       {
         "title": "Our Mission",
@@ -214,7 +196,7 @@
       },
       {
         "title": "Vision",
-        "description": "To become the leading trusted partner in industrial lubricant supply."
+        "description": "To be a reliable industrial lubricant supplier for businesses in the region."
       },
       {
         "title": "Core Values",
@@ -226,13 +208,13 @@
       },
       {
         "title": "Facilities",
-        "description": "A modern, large-scale warehouse system with massive storage capacity."
+        "description": "A warehouse in Vung Tau stocking commonly used products for fast delivery."
       }
     ],
     "journeyTitle": "Our Journey",
-    "journeyDescription": "Since {foundedYear}, {name} has proudly been a leading industrial lubricant distributor in Ho Chi Minh City. With nearly 30 years of experience, we have partnered with thousands of businesses in oil & gas, seaport, and maritime industries, helping optimize equipment performance.",
+    "journeyDescription": "Since {foundedYear}, {name} has distributed genuine industrial lubricants in Vung Tau (Ho Chi Minh City). For nearly 30 years we have worked with businesses in oil & gas, ports, shipping and manufacturing, helping them choose the right oil and get the best from their equipment.",
     "yearFounded": "Year founded",
-    "customersTrust": "Trusted customers",
+    "genuineBrands": "Genuine brands",
     "shellPartnerTitle": "Shell lubricants distribution partner",
     "shellPartnerBody": "{name} is a regional distribution partner within the network of C.L Market Development Services JSC, the master distributor appointed by Shell Vietnam for the B2B industrial segment. Under C.L's letter of confirmation, {name} has been appointed to reach, advise, quote, supply and support business customers for Shell lubricants since 23 June 2026.",
     "shellPartnerArea": "Service area: Vung Tau, Tam Thang, Rach Dua, Phuoc Thang, Ba Ria, Long Huong and Tam Long wards; Long Son, Long Dien, Long Hai, Dat Do, Phuoc Hai, Xuyen Moc, Ho Tram, Binh Chau, Hoa Hiep, Hoa Hoi and Bau Lam communes; and Con Dao special zone (Ho Chi Minh City). For Mobil, Total and Castrol, {name} supplies genuine products.",
@@ -241,14 +223,14 @@
     "taxCodeLabel": "Tax ID",
     "registeredAddressLabel": "Registered office",
     "commitmentTitle": "{name}'s Commitment",
-    "commitmentSubtitle": "With an experienced technical team and modern warehouse facilities",
+    "commitmentSubtitle": "With an experienced technical team and stock on hand in Vung Tau",
     "commitments": [
-      { "title": "100% Quality", "description": "Genuine products, strictly inspected and stored" },
+      { "title": "100% Quality", "description": "Genuine products, stored as the manufacturer recommends" },
       { "title": "Optimal Solutions", "description": "Technical optimization for each industry, boosting equipment performance" },
-      { "title": "Professional Service", "description": "Fast, professional, dedicated — 24/7 support" },
+      { "title": "Professional Service", "description": "Fast, professional and dedicated" },
       { "title": "Expert Team", "description": "Experienced technicians providing in-depth consulting" },
-      { "title": "Modern Warehousing", "description": "A modern warehouse system ensuring the best product quality" },
-      { "title": "Fast Delivery", "description": "A wide distribution network delivering right to your door" }
+      { "title": "Warehouse in Vung Tau", "description": "Common products in stock, stored as the manufacturer recommends" },
+      { "title": "Fast Delivery", "description": "Door-to-door in Vung Tau – Ba Ria, shipping to other provinces" }
     ],
     "industriesTitle": "Industries We Serve",
     "industriesSubtitle": "Partnering with businesses across many industries"
@@ -283,8 +265,8 @@
       },
       {
         "title": "Product Quality Assurance",
-        "description": "Quality is our top priority. Every lubricant product undergoes strict quality control from raw materials to the final product. We provide quality certifications, test reports, and ensure products meet or exceed international and local industry standards.",
-        "benefits": "Peace of mind on product quality, standards compliance, reduced operational risk, and enhanced brand reputation."
+        "description": "Phuc Tho only distributes genuine products with a clear origin. On request we supply the manufacturer's technical data sheet (TDS), safety data sheet (MSDS), certificate of origin (CO) and batch certificate of analysis (COA). Goods are stored as the manufacturer recommends, so their quality is unchanged on delivery.",
+        "benefits": "Confidence in origin and quality, complete documents for audits and supplier assessments, and lower operating risk."
       }
     ],
     "benefitsLabel": "Key benefits:",
@@ -292,8 +274,8 @@
     "additionalServicesSubtitle": "Comprehensive support services for customers",
     "additionalServices": [
       { "title": "Technical Consulting", "description": "An experienced technical team ready to advise on optimal lubrication solutions for each industry and specific application." },
-      { "title": "Fast Delivery", "description": "A wide distribution network ensuring fast, door-to-door delivery across the region and nearby provinces." },
-      { "title": "Dedicated After-Sales Support", "description": "24/7 customer care, ready to answer any questions and provide technical support when needed." },
+      { "title": "Fast Delivery", "description": "Door-to-door delivery in the Vung Tau – Ba Ria area; shipping to other provinces by carrier." },
+      { "title": "Dedicated After-Sales Support", "description": "After-sales care, answers and technical support by phone, Zalo and email during business hours." },
       { "title": "Lubricant Analysis", "description": "Periodic lubricant sample analysis service to track machinery condition and predict maintenance needs." }
     ],
     "processTitle": "Our Process",
@@ -307,11 +289,11 @@
     "commitmentSectionTitle": "Our Service Commitment",
     "commitmentSectionText": "We believe our customers' success is Phuc Tho's success. Let us partner with you on your journey toward sustainable, efficient operations.",
     "commitmentItems": [
-      "100% genuine lubricants — meeting international ISO standards",
+      "100% genuine lubricants — with TDS, MSDS, CO and COA",
       "Technical consulting for every industrial application",
       "Periodic oil analysis — timely maintenance forecasting",
-      "Fast delivery — serving the entire region and beyond",
-      "24/7 technical support — answering all product and application questions"
+      "Fast delivery — door-to-door in Vung Tau – Ba Ria, shipping to other provinces",
+      "Technical support during business hours — answers on products and applications"
     ],
     "contactCta": "Contact us"
   },

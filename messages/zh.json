@@ -1,7 +1,7 @@
 {
   "meta": {
-    "tagline": "胡志明市领先的工业润滑油分销商",
-    "description": "自{foundedYear}年起，{name}一直是胡志明市领先的工业润滑油分销商，服务于石油天然气、港口和海运等行业的企业。"
+    "tagline": "头顿正品工业润滑油供应商",
+    "description": "自{foundedYear}年起，{name}在胡志明市头顿供应正品 Shell、Mobil、Total 和 Castrol 工业润滑油，服务于石油天然气、港口、航运和制造业企业。"
   },
   "nav": {
     "home": "首页",
@@ -21,7 +21,7 @@
     "english": "英语"
   },
   "footer": {
-    "tagline": "自{foundedYear}年起，{name}一直是胡志明市领先的工业润滑油分销商。",
+    "tagline": "自{foundedYear}年起，{name}为头顿及周边工业区的企业供应正品工业润滑油。",
     "quickLinks": "快速链接",
     "contact": "联系方式",
     "workingHours": "营业时间",
@@ -64,7 +64,7 @@
     "showingCount": "共 {count} 个产品"
   },
   "brands": {
-    "shell": "全球领先的润滑油品牌，拥有 Tellus、Rimula、Omala、Gadus 等系列——为工业和运输提供全面的润滑解决方案。",
+    "shell": "全球润滑油品牌，拥有 Tellus、Rimula、Omala、Gadus 等系列——为工业和运输提供全面的润滑解决方案。",
     "mobil": "来自埃克森美孚（ExxonMobil）的先进润滑技术：Mobil DTE、Delvac、SHC、Mobilgrease——为重型工业设备带来卓越性能。",
     "total": "来自法国的 TotalEnergies 润滑油：Rubia、Azolla、Carter——欧洲品质，价格具有竞争力，适用于各个行业。",
     "castrol": "拥有 120 多年历史的英国润滑油品牌：Hyspin、Alpha、Vecton、Magnatec——为工业发动机和机械提供最佳保护。"
@@ -111,21 +111,21 @@
   },
   "home": {
     "heroImagePlaceholder": "[ 福寿产品/仓库图片 ]",
-    "heroIntro1": "自{foundedYear}年起，{name}一直是胡志明市领先的工业润滑油分销商。凭借近 30 年的经验，我们已与石油天然气、港口和海运行业的数千家企业合作。",
+    "heroIntro1": "自{foundedYear}年起，{name}在胡志明市头顿分销正品工业润滑油。近 30 年来，我们为石油天然气、港口、航运和制造业企业供应润滑油。",
     "heroIntro2": "我们的使命是提供全面的润滑解决方案——不仅提供优质产品，还提供深入的技术咨询和贴心的售后支持。",
     "highlights": [
-      "100% 正品，严格检验",
+      "100% 正品，CO 和 COA 文件齐全",
       "为各行业提供最佳技术方案",
       "快速、专业、贴心的服务"
     ],
     "viewProducts": "查看产品",
     "contactCta": "联系我们",
     "whyUsTitle": "为什么选择{name}？",
-    "brandsTitle": "知名品牌正品润滑油",
+    "brandsTitle": "正品润滑油品牌",
     "brandsSubtitle": "正品 Shell、Mobil、Total 和 Castrol 润滑油。就 Shell 而言，{name}是 C.L 分销网络中的区域分销合作伙伴，C.L 为 Shell 越南指定的总分销商。",
     "viewBrandProducts": "查看 {brand} 产品",
     "galleryTitle": "图片集",
-    "gallerySubtitle": "了解{name}工业润滑油的生产、储存和配送流程",
+    "gallerySubtitle": "{name}的仓库、储存和配送实况",
     "featuredTitle": "精选产品",
     "featuredSubtitle": "探索{name}的优质工业润滑油产品系列。",
     "viewAll": "查看全部",
@@ -142,7 +142,7 @@
       },
       {
         "title": "供应稳定",
-        "description": "头顿大型仓库，库存充足——快速配送至本地区及周边省份。"
+        "description": "头顿仓库常备常用产品——本地区快速配送，并可发货至其他省份。"
       },
       {
         "title": "价格优势",
@@ -166,24 +166,6 @@
       }
     ],
     "learnMore": "了解更多",
-    "testimonialsTitle": "客户评价",
-    "testimonials": [
-      {
-        "quote": "福寿为我们车间的压力机推荐了完全合适的液压油——机器运行稳定得多，换油周期也比以前更长。",
-        "name": "Minh 先生",
-        "role": "车间主管，Dong Xuyen 工业区"
-      },
-      {
-        "quote": "大宗订单总是按时交付，文件齐全。与福寿合作，对产品来源十分放心。",
-        "name": "Hang 女士",
-        "role": "采购主管，航运公司"
-      },
-      {
-        "quote": "我们的空压机出现问题时，福寿的技术人员检查了油品并在当天解决。服务非常贴心。",
-        "name": "Tuan 先生",
-        "role": "工厂维护经理，Phu My 工业区"
-      }
-    ],
     "serviceAreasTitle": "服务区域",
     "serviceAreasSubtitle": "为巴地头顿和胡志明市各工业区的工厂和企业供应润滑油",
     "serviceAreas": [
@@ -203,10 +185,10 @@
   },
   "about": {
     "metaTitle": "关于我们",
-    "metaDescription": "近 30 年优质工业润滑油供应经验，服务胡志明市数千家企业。",
+    "metaDescription": "近 30 年来为头顿及周边工业区的企业供应正品工业润滑油。",
     "since": "始于{foundedYear}年",
     "title": "关于{fullName}",
-    "intro": "近 30 年优质工业润滑油供应经验，服务胡志明市数千家企业。",
+    "intro": "近 30 年来为头顿及周边工业区的企业供应正品工业润滑油。",
     "missionCards": [
       {
         "title": "我们的使命",
@@ -214,7 +196,7 @@
       },
       {
         "title": "愿景",
-        "description": "成为工业润滑油供应领域领先的可信赖合作伙伴。"
+        "description": "成为本地区企业值得信赖的工业润滑油供应商。"
       },
       {
         "title": "核心价值观",
@@ -226,13 +208,13 @@
       },
       {
         "title": "设施",
-        "description": "现代化的大型仓储系统，储存能力强大。"
+        "description": "头顿仓库常备常用产品，可快速交货。"
       }
     ],
     "journeyTitle": "发展历程",
-    "journeyDescription": "自{foundedYear}年起，{name}一直是胡志明市领先的工业润滑油分销商。凭借近 30 年的经验，我们已与石油天然气、港口和海运行业的数千家企业合作，帮助优化设备性能。",
+    "journeyDescription": "自{foundedYear}年起，{name}在胡志明市头顿分销正品工业润滑油。近 30 年来，我们与石油天然气、港口、航运和制造业企业合作，帮助客户选对油品，充分发挥设备性能。",
     "yearFounded": "成立年份",
-    "customersTrust": "信赖我们的客户",
+    "genuineBrands": "正品品牌",
     "shellPartnerTitle": "Shell 润滑油分销合作伙伴",
     "shellPartnerBody": "{name}是 C.L 市场开发服务股份公司（C.L Market Development Services JSC）分销网络中的区域分销合作伙伴；C.L 是 Shell 越南为 B2B 工业领域指定的总分销商。根据 C.L 的确认函，自 2026 年 6 月 23 日起，{name}获委任为企业客户提供 Shell 润滑油的开发、咨询、报价、供货和支持服务。",
     "shellPartnerArea": "服务区域：Vung Tau、Tam Thang、Rach Dua、Phuoc Thang、Ba Ria、Long Huong 和 Tam Long 坊；Long Son、Long Dien、Long Hai、Dat Do、Phuoc Hai、Xuyen Moc、Ho Tram、Binh Chau、Hoa Hiep、Hoa Hoi 和 Bau Lam 社；以及 Con Dao 特区（胡志明市）。对于 Mobil、Total 和 Castrol，{name}供应正品。",
@@ -241,14 +223,14 @@
     "taxCodeLabel": "税号",
     "registeredAddressLabel": "注册地址",
     "commitmentTitle": "{name}的承诺",
-    "commitmentSubtitle": "拥有经验丰富的技术团队和现代化仓储设施",
+    "commitmentSubtitle": "拥有经验丰富的技术团队，头顿仓库常备库存",
     "commitments": [
-      { "title": "100% 品质", "description": "正品，严格检验和储存" },
+      { "title": "100% 品质", "description": "正品，按制造商要求储存" },
       { "title": "最佳方案", "description": "针对各行业进行技术优化，提升设备性能" },
-      { "title": "专业服务", "description": "快速、专业、贴心——24/7 支持" },
+      { "title": "专业服务", "description": "快速、专业、贴心" },
       { "title": "专家团队", "description": "经验丰富的技术人员提供深入咨询" },
-      { "title": "现代化仓储", "description": "现代化仓储系统，确保最佳产品质量" },
-      { "title": "快速配送", "description": "广泛的配送网络，送货上门" }
+      { "title": "头顿仓库", "description": "常用产品有现货，按制造商要求储存" },
+      { "title": "快速配送", "description": "头顿–巴地地区送货上门，可发货至其他省份" }
     ],
     "industriesTitle": "服务行业",
     "industriesSubtitle": "与众多行业的企业合作"
@@ -283,8 +265,8 @@
       },
       {
         "title": "产品质量保证",
-        "description": "质量是我们的首要任务。每一款润滑油产品从原材料到成品都经过严格的质量控制。我们提供质量认证和检测报告，确保产品达到或超过国际及当地行业标准。",
-        "benefits": "产品质量有保障，符合标准，降低运营风险，提升品牌声誉。"
+        "description": "福寿只分销来源清晰的正品。应要求，我们提供制造商的技术数据表（TDS）、安全数据表（MSDS）、原产地证书（CO）和批次分析证书（COA）。货物按制造商要求储存，确保交货时品质不变。",
+        "benefits": "对来源和质量放心，文件齐全，便于审核和供应商评估，降低运营风险。"
       }
     ],
     "benefitsLabel": "主要优势：",
@@ -292,8 +274,8 @@
     "additionalServicesSubtitle": "为客户提供全面的支持服务",
     "additionalServices": [
       { "title": "技术咨询", "description": "经验丰富的技术团队随时为各行业和具体应用提供最佳润滑解决方案建议。" },
-      { "title": "快速配送", "description": "广泛的配送网络，确保快速送货上门，覆盖本地区及周边省份。" },
-      { "title": "贴心售后支持", "description": "24/7 客户关怀，随时解答任何问题，并在需要时提供技术支持。" },
+      { "title": "快速配送", "description": "头顿–巴地地区送货上门；其他省份通过承运商发货。" },
+      { "title": "贴心售后支持", "description": "售后关怀，营业时间内通过电话、Zalo 和电子邮件解答问题并提供技术支持。" },
       { "title": "润滑油分析", "description": "定期润滑油样品分析服务，跟踪机械状态并预测维护需求。" }
     ],
     "processTitle": "服务流程",
@@ -307,11 +289,11 @@
     "commitmentSectionTitle": "我们的服务承诺",
     "commitmentSectionText": "我们相信，客户的成功就是福寿的成功。让我们与您携手，迈向可持续、高效的运营。",
     "commitmentItems": [
-      "100% 正品润滑油——符合国际 ISO 标准",
+      "100% 正品润滑油——TDS、MSDS、CO、COA 齐全",
       "为各类工业应用提供技术咨询",
       "定期油品分析——及时预测维护需求",
-      "快速配送——服务整个地区及更远区域",
-      "24/7 技术支持——解答所有产品和应用问题"
+      "快速配送——头顿–巴地送货上门，可发货至其他省份",
+      "营业时间内技术支持——解答产品和应用问题"
     ],
     "contactCta": "联系我们"
   },

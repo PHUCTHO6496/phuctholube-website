@@ -1,7 +1,7 @@
 {
   "meta": {
-    "tagline": "Nhà Phân Phối Dầu Nhớt Công Nghiệp Uy Tín Hàng Đầu Hồ Chí Minh",
-    "description": "Từ năm {foundedYear}, {name} là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh, đồng hành cùng doanh nghiệp trong lĩnh vực dầu khí, cảng biển và hàng hải."
+    "tagline": "Phân Phối Dầu Nhớt Công Nghiệp Chính Hãng Tại Vũng Tàu",
+    "description": "Từ năm {foundedYear}, {name} phân phối dầu nhớt công nghiệp chính hãng Shell, Mobil, Total, Castrol tại Vũng Tàu (TP. Hồ Chí Minh), phục vụ doanh nghiệp trong lĩnh vực dầu khí, cảng biển, hàng hải và sản xuất."
   },
   "nav": {
     "home": "Trang chủ",
@@ -21,7 +21,7 @@
     "english": "Tiếng Anh"
   },
   "footer": {
-    "tagline": "Từ năm {foundedYear}, {name} tự hào là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh.",
+    "tagline": "Từ năm {foundedYear}, {name} phân phối dầu nhớt công nghiệp chính hãng cho doanh nghiệp tại Vũng Tàu và các khu công nghiệp lân cận.",
     "quickLinks": "Liên kết nhanh",
     "contact": "Liên hệ",
     "workingHours": "Giờ làm việc",
@@ -64,7 +64,7 @@
     "showingCount": "Hiển thị {count} sản phẩm"
   },
   "brands": {
-    "shell": "Thương hiệu dầu nhớt hàng đầu thế giới với các dòng Tellus, Rimula, Omala, Gadus — giải pháp bôi trơn toàn diện cho công nghiệp và vận tải.",
+    "shell": "Thương hiệu dầu nhớt toàn cầu với các dòng Tellus, Rimula, Omala, Gadus — giải pháp bôi trơn toàn diện cho công nghiệp và vận tải.",
     "mobil": "Công nghệ bôi trơn tiên tiến từ ExxonMobil: Mobil DTE, Delvac, SHC, Mobilgrease — hiệu suất vượt trội cho thiết bị công nghiệp nặng.",
     "total": "Dầu nhớt TotalEnergies từ Pháp: Rubia, Azolla, Carter — chất lượng châu Âu với giá thành cạnh tranh cho mọi ngành công nghiệp.",
     "castrol": "Thương hiệu dầu nhớt Anh Quốc hơn 120 năm: Hyspin, Alpha, Vecton, Magnatec — bảo vệ tối ưu cho động cơ và máy móc công nghiệp."
@@ -111,10 +111,10 @@
   },
   "home": {
     "heroImagePlaceholder": "[ Ảnh sản phẩm / kho hàng Phúc Thọ ]",
-    "heroIntro1": "Từ năm {foundedYear}, {name} tự hào là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh. Với gần 30 năm kinh nghiệm, chúng tôi đã đồng hành cùng hàng nghìn doanh nghiệp trong các lĩnh vực: dầu khí, cảng biển và hàng hải.",
+    "heroIntro1": "Từ năm {foundedYear}, {name} phân phối dầu nhớt công nghiệp chính hãng tại Vũng Tàu (TP. Hồ Chí Minh). Gần 30 năm qua, chúng tôi cung cấp dầu nhớt cho các doanh nghiệp trong lĩnh vực dầu khí, cảng biển, hàng hải và sản xuất.",
     "heroIntro2": "Sứ mệnh của chúng tôi là cung cấp giải pháp bôi trơn toàn diện – không chỉ sản phẩm chất lượng cao, mà còn dịch vụ tư vấn kỹ thuật chuyên sâu và hỗ trợ hậu mãi tận tâm.",
     "highlights": [
-      "100% sản phẩm chính hãng, được kiểm định nghiêm ngặt",
+      "100% sản phẩm chính hãng, đủ chứng từ CO, COA",
       "Giải pháp kỹ thuật tối ưu cho mọi ngành công nghiệp",
       "Dịch vụ nhanh chóng – chuyên nghiệp – tận tâm"
     ],
@@ -125,7 +125,7 @@
     "brandsSubtitle": "Dầu nhớt chính hãng Shell, Mobil, Total, Castrol. Riêng Shell, {name} là đối tác phân phối khu vực thuộc hệ thống của C.L — Nhà phân phối tổng được Shell Việt Nam bổ nhiệm.",
     "viewBrandProducts": "Xem sản phẩm {brand}",
     "galleryTitle": "Thư viện hình ảnh",
-    "gallerySubtitle": "Khám phá quy trình sản xuất, lưu trữ và phân phối dầu nhớt công nghiệp của {name}",
+    "gallerySubtitle": "Hình ảnh kho hàng, bảo quản và giao nhận dầu nhớt của {name}",
     "featuredTitle": "Sản phẩm nổi bật",
     "featuredSubtitle": "Khám phá các dòng sản phẩm dầu nhớt công nghiệp chất lượng cao của {name}.",
     "viewAll": "Xem tất cả",
@@ -142,7 +142,7 @@
       },
       {
         "title": "Nguồn cung ổn định",
-        "description": "Kho hàng lớn tại Vũng Tàu, sẵn hàng số lượng lớn — giao nhanh trong khu vực và các tỉnh lân cận."
+        "description": "Kho hàng tại Vũng Tàu, sẵn hàng các mã thông dụng — giao nhanh trong khu vực và gửi hàng đi các tỉnh."
       },
       {
         "title": "Giá cạnh tranh",
@@ -166,24 +166,6 @@
       }
     ],
     "learnMore": "Tìm hiểu thêm",
-    "testimonialsTitle": "Khách hàng nói về chúng tôi",
-    "testimonials": [
-      {
-        "quote": "Phúc Thọ tư vấn đúng loại dầu thủy lực cho dàn máy ép của xưởng, chạy ổn định hẳn và chu kỳ thay dầu dài hơn trước.",
-        "name": "Anh Minh",
-        "role": "Quản lý xưởng cơ khí, KCN Đông Xuyên"
-      },
-      {
-        "quote": "Đặt hàng số lượng lớn luôn được giao đúng hẹn, chứng từ đầy đủ. Làm việc với Phúc Thọ rất yên tâm về nguồn gốc hàng hóa.",
-        "name": "Chị Hằng",
-        "role": "Phụ trách mua hàng, công ty vận tải biển"
-      },
-      {
-        "quote": "Khi máy nén khí gặp sự cố, kỹ thuật của Phúc Thọ hỗ trợ kiểm tra dầu và xử lý ngay trong ngày. Dịch vụ rất tận tâm.",
-        "name": "Anh Tuấn",
-        "role": "Trưởng bảo trì nhà máy, KCN Phú Mỹ"
-      }
-    ],
     "serviceAreasTitle": "Khu vực phục vụ",
     "serviceAreasSubtitle": "Cung cấp dầu nhớt cho các nhà máy, xí nghiệp tại các khu công nghiệp trong khu vực Bà Rịa - Vũng Tàu và TP. Hồ Chí Minh",
     "serviceAreas": [
@@ -203,10 +185,10 @@
   },
   "about": {
     "metaTitle": "Về chúng tôi",
-    "metaDescription": "Gần 30 năm kinh nghiệm cung cấp dầu nhớt công nghiệp chất lượng cao, đồng hành cùng hàng nghìn doanh nghiệp tại Hồ Chí Minh.",
+    "metaDescription": "Gần 30 năm cung cấp dầu nhớt công nghiệp chính hãng cho doanh nghiệp tại Vũng Tàu và các khu công nghiệp lân cận.",
     "since": "Từ năm {foundedYear}",
     "title": "Về {fullName}",
-    "intro": "Gần 30 năm kinh nghiệm cung cấp dầu nhớt công nghiệp chất lượng cao, đồng hành cùng hàng nghìn doanh nghiệp tại Hồ Chí Minh.",
+    "intro": "Gần 30 năm cung cấp dầu nhớt công nghiệp chính hãng cho doanh nghiệp tại Vũng Tàu và các khu công nghiệp lân cận.",
     "missionCards": [
       {
         "title": "Sứ mệnh của chúng tôi",
@@ -214,7 +196,7 @@
       },
       {
         "title": "Tầm nhìn",
-        "description": "Trở thành đối tác tin cậy hàng đầu trong lĩnh vực cung cấp dầu nhớt công nghiệp."
+        "description": "Trở thành đối tác cung cấp dầu nhớt công nghiệp đáng tin cậy của các doanh nghiệp trong khu vực."
       },
       {
         "title": "Giá trị cốt lõi",
@@ -226,13 +208,13 @@
       },
       {
         "title": "Cơ sở vật chất",
-        "description": "Hệ thống kho bãi hiện đại, quy mô lớn với công suất lưu trữ khổng lồ."
+        "description": "Kho hàng tại Vũng Tàu, sẵn hàng các mã thông dụng để giao nhanh cho khách hàng."
       }
     ],
     "journeyTitle": "Hành trình phát triển",
-    "journeyDescription": "Từ năm {foundedYear}, {name} tự hào là nhà phân phối dầu nhớt công nghiệp uy tín hàng đầu tại Hồ Chí Minh. Với gần 30 năm kinh nghiệm, chúng tôi đã đồng hành cùng hàng nghìn doanh nghiệp trong các lĩnh vực: dầu khí, cảng biển và hàng hải, giúp tối ưu hiệu suất thiết bị.",
+    "journeyDescription": "Từ năm {foundedYear}, {name} phân phối dầu nhớt công nghiệp chính hãng tại Vũng Tàu (TP. Hồ Chí Minh). Gần 30 năm qua, chúng tôi đồng hành cùng các doanh nghiệp trong lĩnh vực dầu khí, cảng biển, hàng hải và sản xuất, giúp chọn đúng dầu và khai thác tốt hiệu suất thiết bị.",
     "yearFounded": "Năm thành lập",
-    "customersTrust": "Khách hàng tin tưởng",
+    "genuineBrands": "Thương hiệu chính hãng",
     "shellPartnerTitle": "Đối tác phân phối dầu nhờn Shell",
     "shellPartnerBody": "{name} là Đối tác phân phối khu vực thuộc hệ thống phân phối của Công ty CP Dịch vụ Phát triển Thị trường C.L — Nhà phân phối tổng (Master Distributor) được Shell Việt Nam bổ nhiệm cho ngành hàng công nghiệp B2B. Theo văn bản xác nhận của C.L, {name} được chỉ định tiếp cận, tư vấn, chào bán, cung ứng và hỗ trợ khách hàng doanh nghiệp đối với sản phẩm dầu nhờn Shell kể từ ngày 23/06/2026.",
     "shellPartnerArea": "Khu vực phụ trách: các phường Vũng Tàu, Tam Thắng, Rạch Dừa, Phước Thắng, Bà Rịa, Long Hương, Tam Long; các xã Long Sơn, Long Điền, Long Hải, Đất Đỏ, Phước Hải, Xuyên Mộc, Hồ Tràm, Bình Châu, Hòa Hiệp, Hòa Hội, Bàu Lâm và Đặc khu Côn Đảo (TP. Hồ Chí Minh). Với các thương hiệu Mobil, Total và Castrol, {name} cung cấp sản phẩm chính hãng.",
@@ -241,14 +223,14 @@
     "taxCodeLabel": "Mã số thuế",
     "registeredAddressLabel": "Trụ sở",
     "commitmentTitle": "Cam kết của {name}",
-    "commitmentSubtitle": "Với đội ngũ kỹ thuật viên giàu kinh nghiệm và hệ thống kho bãi hiện đại",
+    "commitmentSubtitle": "Với đội ngũ kỹ thuật giàu kinh nghiệm và kho hàng sẵn tại Vũng Tàu",
     "commitments": [
-      { "title": "Chất lượng 100%", "description": "Sản phẩm chính hãng, kiểm định và bảo quản nghiêm ngặt" },
+      { "title": "Chất lượng 100%", "description": "Sản phẩm chính hãng, bảo quản đúng hướng dẫn của nhà sản xuất" },
       { "title": "Giải pháp tối ưu", "description": "Kỹ thuật tối ưu cho từng ngành nghề, tăng hiệu suất thiết bị" },
-      { "title": "Dịch vụ chuyên nghiệp", "description": "Nhanh chóng - chuyên nghiệp - tận tâm, hỗ trợ 24/7" },
+      { "title": "Dịch vụ chuyên nghiệp", "description": "Nhanh chóng - chuyên nghiệp - tận tâm" },
       { "title": "Đội ngũ chuyên gia", "description": "Kỹ thuật viên giàu kinh nghiệm, tư vấn chuyên sâu" },
-      { "title": "Kho bãi hiện đại", "description": "Hệ thống kho bãi hiện đại, đảm bảo chất lượng tốt nhất" },
-      { "title": "Giao hàng nhanh", "description": "Mạng lưới phân phối rộng khắp, giao hàng tận nơi" }
+      { "title": "Kho hàng tại Vũng Tàu", "description": "Sẵn hàng các mã thông dụng, bảo quản đúng hướng dẫn của hãng" },
+      { "title": "Giao hàng nhanh", "description": "Giao tận nơi tại Vũng Tàu – Bà Rịa, gửi hàng đi các tỉnh" }
     ],
     "industriesTitle": "Ngành nghề phục vụ",
     "industriesSubtitle": "Đồng hành cùng các doanh nghiệp trong nhiều lĩnh vực"
@@ -283,8 +265,8 @@
       },
       {
         "title": "Đảm bảo chất lượng sản phẩm",
-        "description": "Chất lượng là ưu tiên hàng đầu của chúng tôi. Mọi sản phẩm dầu nhớt đều trải qua quy trình kiểm định chất lượng nghiêm ngặt từ khâu nguyên liệu đầu vào đến sản phẩm cuối cùng. Chúng tôi cung cấp các chứng nhận chất lượng, báo cáo thử nghiệm và đảm bảo sản phẩm đáp ứng hoặc vượt các tiêu chuẩn ngành quốc tế và địa phương.",
-        "benefits": "Yên tâm về chất lượng sản phẩm, tuân thủ các tiêu chuẩn, giảm thiểu rủi ro vận hành, tăng cường uy tín thương hiệu."
+        "description": "Phúc Thọ chỉ phân phối sản phẩm chính hãng có nguồn gốc rõ ràng. Theo yêu cầu, chúng tôi cung cấp bảng thông số kỹ thuật (TDS), phiếu an toàn hóa chất (MSDS), chứng nhận xuất xứ (CO) và phiếu kết quả phân tích lô hàng (COA) của nhà sản xuất. Hàng được bảo quản đúng hướng dẫn của hãng để giữ nguyên chất lượng đến khi giao.",
+        "benefits": "Yên tâm về nguồn gốc và chất lượng, đủ hồ sơ cho kiểm tra và đánh giá nhà cung cấp, giảm thiểu rủi ro vận hành."
       }
     ],
     "benefitsLabel": "Lợi ích chính:",
@@ -292,8 +274,8 @@
     "additionalServicesSubtitle": "Các dịch vụ hỗ trợ toàn diện cho khách hàng",
     "additionalServices": [
       { "title": "Tư vấn kỹ thuật chuyên sâu", "description": "Đội ngũ kỹ thuật viên giàu kinh nghiệm sẵn sàng tư vấn giải pháp bôi trơn tối ưu cho từng ngành nghề và ứng dụng cụ thể." },
-      { "title": "Giao hàng nhanh chóng", "description": "Hệ thống phân phối rộng khắp, đảm bảo giao hàng nhanh chóng đến tận nơi trong khu vực và các tỉnh lân cận." },
-      { "title": "Hỗ trợ hậu mãi tận tâm", "description": "Dịch vụ chăm sóc khách hàng 24/7, sẵn sàng giải đáp mọi thắc mắc và hỗ trợ kỹ thuật khi cần thiết." },
+      { "title": "Giao hàng nhanh chóng", "description": "Giao hàng tận nơi trong khu vực Vũng Tàu – Bà Rịa; gửi hàng đi các tỉnh qua đơn vị vận chuyển." },
+      { "title": "Hỗ trợ hậu mãi tận tâm", "description": "Chăm sóc khách hàng sau bán hàng, giải đáp thắc mắc và hỗ trợ kỹ thuật qua điện thoại, Zalo và email trong giờ làm việc." },
       { "title": "Phân tích dầu nhớt", "description": "Dịch vụ phân tích mẫu dầu nhớt định kỳ, giúp theo dõi tình trạng máy móc và dự đoán bảo trì kịp thời." }
     ],
     "processTitle": "Quy trình làm việc",
@@ -307,11 +289,11 @@
     "commitmentSectionTitle": "Cam kết dịch vụ",
     "commitmentSectionText": "Chúng tôi tin rằng, hiệu quả của khách hàng chính là thành công của Phúc Thọ. Hãy để chúng tôi đồng hành cùng bạn trên hành trình vận hành bền vững và hiệu quả.",
     "commitmentItems": [
-      "Dầu nhớt chính hãng 100% - đạt tiêu chuẩn quốc tế ISO",
+      "Dầu nhớt chính hãng 100% - đầy đủ TDS, MSDS, CO, COA",
       "Tư vấn kỹ thuật chuyên sâu cho từng ứng dụng công nghiệp",
       "Phân tích dầu định kỳ - dự báo bảo trì máy móc kịp thời",
-      "Giao hàng nhanh chóng - phục vụ toàn khu vực và lân cận",
-      "Hỗ trợ kỹ thuật 24/7 - giải đáp mọi thắc mắc về sản phẩm và ứng dụng"
+      "Giao hàng nhanh chóng - tận nơi tại Vũng Tàu – Bà Rịa, gửi hàng đi các tỉnh",
+      "Hỗ trợ kỹ thuật trong giờ làm việc - giải đáp thắc mắc về sản phẩm và ứng dụng"
     ],
     "contactCta": "Liên hệ tư vấn"
   },
