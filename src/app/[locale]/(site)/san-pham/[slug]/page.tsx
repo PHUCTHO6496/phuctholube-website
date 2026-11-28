@@ -229,7 +229,10 @@ export default async function ProductDetailPage({
             </div>
           )}
 
-          <ProductQuoteActions product={product} packagings={packagings}>
+          <ProductQuoteActions
+            product={{ id: product.id, slug: product.slug, name: product.name, brand: product.brand }}
+            packagings={packagings}
+          >
             <a
               href="tel:0786060496"
               className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
@@ -266,15 +269,33 @@ export default async function ProductDetailPage({
                 {t("specifications")}
               </h2>
               <dl className="mt-3 divide-y divide-slate-200 rounded-lg border border-slate-200">
-                {specRows.map((spec) => (
-                  <div
-                    key={spec.key}
-                    className="flex justify-between gap-4 px-4 py-2.5 text-sm"
-                  >
-                    <dt className="text-slate-500">{spec.label}</dt>
-                    <dd className="font-medium text-slate-900">{spec.value}</dd>
-                  </div>
-                ))}
+                {specRows.map((spec) => {
+                  // Lists (approvals, standards) are "a; b; c" — show them as
+                  // chips under the label instead of squeezing the label.
+                  const items = spec.value.split(/;\s+/);
+                  return items.length > 2 ? (
+                    <div key={spec.key} className="px-4 py-2.5 text-sm">
+                      <dt className="text-slate-500">{spec.label}</dt>
+                      <dd className="mt-2">
+                        <ul className="flex flex-wrap gap-1.5">
+                          {items.map((item) => (
+                            <li
+                              key={item}
+                              className="rounded bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700"
+                            >
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </dd>
+                    </div>
+                  ) : (
+                    <div key={spec.key} className="flex justify-between gap-4 px-4 py-2.5 text-sm">
+                      <dt className="max-w-[55%] shrink-0 text-slate-500">{spec.label}</dt>
+                      <dd className="min-w-0 text-right font-medium text-slate-900">{spec.value}</dd>
+                    </div>
+                  );
+                })}
               </dl>
             </div>
           )}

@@ -362,7 +362,8 @@
     "noEquivalents": "Chưa tìm thấy sản phẩm tương đương từ hãng khác trong danh mục này (cấp độ nhớt {grade}).",
     "suggestionCount": "Gợi ý {count} sản phẩm tương đương — cùng danh mục {category}, cấp độ nhớt {grade}",
     "tableTitle": "Bảng quy đổi sản phẩm tương đương",
-    "tableIntro": "Sản phẩm cùng danh mục và cùng cấp độ nhớt giữa các thương hiệu. Bảng chỉ mang tính tham khảo — vui lòng liên hệ đội ngũ kỹ thuật Phúc Thọ để xác nhận trước khi thay thế dầu đang dùng.",
+    "tableIntro": "Sản phẩm cùng danh mục, cùng cấp độ nhớt và cùng nhóm dầu gốc giữa các thương hiệu — dầu gốc khoáng, tổng hợp PAO và tổng hợp PAG không được xếp chung vì không thay thế trực tiếp cho nhau. Bảng chỉ mang tính tham khảo — vui lòng liên hệ đội ngũ kỹ thuật Phúc Thọ để xác nhận trước khi thay thế dầu đang dùng.",
+    "family": {"mineral": "Gốc khoáng", "synthetic": "Tổng hợp (PAO/GTL)", "pag": "Tổng hợp PAG", "water-glycol": "Nước – glycol", "unknown": "Chưa phân loại dầu gốc"},
     "gradeColumn": "Cấp độ nhớt",
     "disclaimer": "* Kết quả gợi ý dựa trên cùng danh mục sản phẩm và cấp độ nhớt tương tự, chỉ mang tính tham khảo ban đầu — không phải xác nhận thay thế chính thức. Vui lòng liên hệ đội ngũ kỹ thuật Phúc Thọ để được tư vấn và xác nhận trước khi thay đổi sản phẩm đang sử dụng."
   },

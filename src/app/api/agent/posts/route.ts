@@ -31,7 +31,8 @@ type AgentPostInput = z.infer<typeof agentPostSchema>;
 // ("...-26112026", "...-v2"), leaving several posts competing for the same
 // search. A new post must have a stable slug; to revise a topic, POST again
 // with the existing post's slug (that updates it in place).
-const DATED_SLUG = /-(\d{8}|v\d+)$/;
+// "-v2" style suffixes only: product codes like "...-gadus-s2-v220" are fine.
+const DATED_SLUG = /-(\d{8}|v\d{1,2})$/;
 
 // The site speaks for Phúc Thọ only. Võ Lan is a separate company (a reseller
 // of Phúc Thọ), so posts must not send visitors there or sign as its team.
@@ -112,7 +113,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Nội dung không hợp lệ", details: issues }, { status: 422 });
   }
 
-  const existing = await prisma.blogPost.findUnique({ where: { slug } });
+  let existing = await prisma.blogPost.findUnique({ where: { slug } });
+
+  // A post merged into another or renamed: update the post that now holds
+  // the topic instead of recreating the old URL as a duplicate.
+  if (!existing) {
+    const moved = await prisma.redirect.findUnique({ where: { fromPath: `/tin-tuc/${slug}` } });
+    const movedSlug = moved?.toPath.match(/^\/tin-tuc\/([^/]+)$/)?.[1];
+    if (movedSlug) existing = await prisma.blogPost.findUnique({ where: { slug: movedSlug } });
+  }
 
   if (!existing) {
     if (DATED_SLUG.test(slug)) {

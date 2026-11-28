@@ -6,7 +6,14 @@ import { EquivalentFinder, type EquivalentProduct } from "@/components/site/Equi
 import { EquivalentTable, type EquivalentSection } from "@/components/site/EquivalentTable";
 import { BRANDS } from "@/lib/constants";
 import { localized } from "@/lib/localized";
-import { listingPreference, normalizeGrade, productBaseName } from "@/lib/product-name";
+import {
+  baseOilFamily,
+  listingPreference,
+  usesBaseOilFamily,
+  normalizeGrade,
+  productBaseName,
+  type BaseOilFamily,
+} from "@/lib/product-name";
 import { localeAlternates } from "@/lib/seo";
 
 const getEquivalentFinderProducts = unstable_cache(
@@ -19,11 +26,12 @@ const getEquivalentFinderProducts = unstable_cache(
         slug: true,
         name: true,
         brand: true,
-        price: true,
         shortDescription: true,
         shortDescriptionEn: true,
         categoryId: true,
         viscosityGrade: true,
+        // Base oil as transcribed from the TDS, when we have it.
+        specs: { where: { label: "Loại dầu gốc" }, take: 1, select: { value: true } },
         category: { select: { name: true, nameEn: true } },
         images: { take: 1, orderBy: { sortOrder: "asc" }, select: { url: true } },
       },
@@ -52,21 +60,27 @@ function gradeOrder(a: string, b: string) {
   return a.localeCompare(b, "en", { numeric: true });
 }
 
+const FAMILY_ORDER: (BaseOilFamily | null)[] = ["mineral", "synthetic", "pag", "water-glycol", null];
+
 /**
- * Category -> grade -> brand -> listings, keeping only grades that more
- * than one brand offers (otherwise there's nothing to cross-reference).
- * Packaging variants of one grade collapse into a single entry.
+ * Category -> grade + base-oil family -> brand -> listings, keeping only
+ * rows that more than one brand offers (otherwise there's nothing to
+ * cross-reference). Packaging variants of one grade collapse into one entry.
  */
-function buildEquivalentSections(items: EquivalentProduct[]): EquivalentSection[] {
+function buildEquivalentSections(
+  items: EquivalentProduct[],
+  familyLabel: (family: BaseOilFamily | null) => string
+): EquivalentSection[] {
   const byCategory = new Map<string, Map<string, Map<string, Map<string, EquivalentProduct>>>>();
 
   for (const p of items) {
     const grade = normalizeGrade(p.viscosityGrade);
     if (!grade || !p.brand || !BRAND_NAMES.includes(p.brand)) continue;
+    const rowKey = usesBaseOilFamily(grade) ? `${grade}|${p.baseOilFamily ?? "?"}` : grade;
     const grades = byCategory.get(p.categoryName) ?? new Map();
     byCategory.set(p.categoryName, grades);
-    const brands = grades.get(grade) ?? new Map();
-    grades.set(grade, brands);
+    const brands = grades.get(rowKey) ?? new Map();
+    grades.set(rowKey, brands);
     const listings = brands.get(p.brand) ?? new Map();
     brands.set(p.brand, listings);
 
@@ -81,9 +95,24 @@ function buildEquivalentSections(items: EquivalentProduct[]): EquivalentSection[
   for (const [category, grades] of byCategory) {
     const rows = Array.from(grades.entries())
       .filter(([, brands]) => brands.size > 1)
-      .sort(([a], [b]) => gradeOrder(a, b))
-      .map(([grade, brands]) => ({
-        grade,
+      .map(([rowKey, brands]) => {
+        const [grade, family] = rowKey.split("|");
+        return {
+          grade,
+          family: (family === undefined ? undefined : family === "?" ? null : family) as
+            | BaseOilFamily
+            | null
+            | undefined,
+          brands,
+        };
+      })
+      .sort(
+        (a, b) =>
+          gradeOrder(a.grade, b.grade) ||
+          FAMILY_ORDER.indexOf(a.family ?? null) - FAMILY_ORDER.indexOf(b.family ?? null)
+      )
+      .map(({ grade, family, brands }) => ({
+        grade: family === undefined ? grade : `${grade} · ${familyLabel(family)}`,
         byBrand: Object.fromEntries(
           Array.from(brands.entries()).map(([brand, listings]) => [
             brand,
@@ -111,13 +140,13 @@ export default async function EquivalentLookupPage() {
     slug: p.slug,
     name: p.name,
     brand: p.brand,
-    price: p.price,
     shortDescription: localized(locale, p.shortDescription, p.shortDescriptionEn),
     categoryId: p.categoryId,
     categoryName: p.category
       ? localized(locale, p.category.name, p.category.nameEn)
       : t("otherCategory"),
     viscosityGrade: p.viscosityGrade,
+    baseOilFamily: baseOilFamily(p.name, p.specs?.[0]?.value),
   }));
 
   return (
@@ -132,7 +161,7 @@ export default async function EquivalentLookupPage() {
       </div>
 
       <EquivalentTable
-        sections={buildEquivalentSections(items)}
+        sections={buildEquivalentSections(items, (family) => t(`family.${family ?? "unknown"}`))}
         brands={BRAND_NAMES}
         title={t("tableTitle")}
         intro={t("tableIntro")}

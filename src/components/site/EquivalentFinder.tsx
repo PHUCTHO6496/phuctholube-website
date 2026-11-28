@@ -5,18 +5,19 @@ import { useTranslations } from "next-intl";
 import { AlertCircle, ArrowRight, Search } from "lucide-react";
 import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
 import { Link } from "@/i18n/navigation";
-import { normalizeGrade } from "@/lib/product-name";
+import { normalizeGrade, usesBaseOilFamily, type BaseOilFamily } from "@/lib/product-name";
 
 export type EquivalentProduct = {
   id: string;
   slug: string;
   name: string;
   brand: string | null;
-  price: number | null;
   shortDescription: string | null;
   categoryId: string | null;
   categoryName: string;
   viscosityGrade: string | null;
+  /** Unknown (null) only matches unknown: never guess across base oils. */
+  baseOilFamily: BaseOilFamily | null;
 };
 
 export function EquivalentFinder({ products }: { products: EquivalentProduct[] }) {
@@ -43,6 +44,7 @@ export function EquivalentFinder({ products }: { products: EquivalentProduct[] }
         p.id !== selected.id &&
         p.categoryId === selected.categoryId &&
         normalizeGrade(p.viscosityGrade) === grade &&
+        (!usesBaseOilFamily(grade) || p.baseOilFamily === selected.baseOilFamily) &&
         p.brand !== selected.brand
     );
   }, [products, selected]);

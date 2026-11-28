@@ -362,7 +362,8 @@
     "noEquivalents": "No equivalent products from other brands found in this category (viscosity grade {grade}).",
     "suggestionCount": "{count} equivalent product suggestions — same category {category}, viscosity grade {grade}",
     "tableTitle": "Equivalent products cross-reference",
-    "tableIntro": "Products in the same category and viscosity grade across brands. For reference only — please contact the Phúc Thọ technical team to confirm before switching the oil you use.",
+    "tableIntro": "Products in the same category, viscosity grade and base-oil family across brands — mineral, PAO synthetic and PAG synthetic oils are kept apart because they are not direct replacements. For reference only — please contact the Phúc Thọ technical team to confirm before switching the oil you use.",
+    "family": {"mineral": "Mineral", "synthetic": "Synthetic (PAO/GTL)", "pag": "Synthetic PAG", "water-glycol": "Water-glycol", "unknown": "Base oil not classified"},
     "gradeColumn": "Viscosity grade",
     "disclaimer": "* Suggested results are based on matching product category and similar viscosity grade, for initial reference only — not an official replacement confirmation. Please contact the Phúc Thọ technical team for advice and confirmation before changing the product you currently use."
   },

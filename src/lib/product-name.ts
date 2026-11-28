@@ -20,6 +20,52 @@ export function productBaseName(name: string): string {
     .trim();
 }
 
+/**
+ * Base-oil family used to keep the equivalent finder honest: a PAG gear oil
+ * is not interchangeable with a mineral one of the same ISO grade (they
+ * don't even mix), and a PAO synthetic is an upgrade, not an equivalent.
+ */
+export type BaseOilFamily = "mineral" | "synthetic" | "pag" | "water-glycol";
+
+/** Free text from a "Loại dầu gốc" spec row (copied from the TDS). */
+export function baseOilFamilyFromText(text: string | null | undefined): BaseOilFamily | null {
+  if (!text) return null;
+  if (/nước|water/i.test(text) && /glycol/i.test(text)) return "water-glycol";
+  if (/\bPAG\b|polyalkylene|polyglycol/i.test(text)) return "pag";
+  if (/\bPAO\b|polyalphaolefin|GTL|tổng hợp|synthetic/i.test(text)) return "synthetic";
+  if (/khoáng|mineral/i.test(text)) return "mineral";
+  return null;
+}
+
+// Lines whose base oil is common knowledge but not stated on a spec row
+// (other brands have no TDS on the site; some Shell TDS don't say it).
+// Only lines we're sure of — anything unlisted stays unclassified.
+const BASE_OIL_BY_NAME: [RegExp, BaseOilFamily][] = [
+  [/^Shell (Omala S2 GX|Turbo T |Corena S2 P|Corena S3 R|Tonna S2 M|Tellus S2 [MV]X|Tellus Zinc Free|Morlina S2|Paper Machine Oil S3 M)/i, "mineral"],
+  [/^Mobil SHC/i, "synthetic"],
+  [/^Mobilgear 600 XP|^Mobil DTE (2\d|10 Excel)|^Mobil Rarus 4/i, "mineral"],
+  [/^Castrol Alphasyn PG/i, "pag"],
+  [/^Castrol (Alpha SP|Optigear BM|Hyspin AWS|Aircol PD|Perfecto T)/i, "mineral"],
+  [/^Castrol Aircol SN/i, "synthetic"],
+  [/^Total (Carter EP|Azolla ZS|Dacnis VS)/i, "mineral"],
+];
+
+/**
+ * Base-oil family only separates industrial oils sold by ISO VG; engine and
+ * gear oils sold by SAE grade are matched on the grade (their API/ACEA
+ * class matters more than the base stock).
+ */
+export function usesBaseOilFamily(grade: string | null | undefined): boolean {
+  return !!grade && /^\d+$/.test(grade.trim());
+}
+
+/** Spec row wins (it comes from the TDS); otherwise the name rules. */
+export function baseOilFamily(name: string, baseOilSpec?: string | null): BaseOilFamily | null {
+  const fromSpec = baseOilFamilyFromText(baseOilSpec);
+  if (fromSpec) return fromSpec;
+  return BASE_OIL_BY_NAME.find(([re]) => re.test(name))?.[1] ?? null;
+}
+
 const PACKAGING_SUFFIX = /\s*\((\d+(?:[.,]\d+)?\s*(?:L|KG))\)\s*$/i;
 
 /** "TELLUS S2 MX 68 (209L)" -> { base: "TELLUS S2 MX 68", packaging: "209L" } */

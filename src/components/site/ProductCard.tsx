@@ -8,7 +8,6 @@ export type ProductCardData = {
   slug: string;
   name: string;
   brand: string | null;
-  price: number | null;
   shortDescription: string | null;
   category: { name: string } | null;
   images?: { url: string }[];
@@ -61,7 +60,7 @@ export async function ProductCard({ product }: { product: ProductCardData }) {
         )}
       </Link>
       <AddToQuoteButton
-        product={product}
+        product={{ id: product.id, slug: product.slug, name: product.name, brand: product.brand }}
         packagings={product.packagings}
         className="mt-4"
         fullWidth

@@ -6,7 +6,8 @@ export const productCardSelect = {
   slug: true,
   name: true,
   brand: true,
-  price: true,
+  // No price: prices are hidden on the public site, and anything selected
+  // here ends up in the page payload via the client "add to quote" button.
   shortDescription: true,
   shortDescriptionEn: true,
   category: { select: { name: true, nameEn: true } },
@@ -19,7 +20,6 @@ type ProductCardRaw = {
   slug: string;
   name: string;
   brand: string | null;
-  price: number | null;
   shortDescription: string | null;
   shortDescriptionEn: string | null;
   category: { name: string; nameEn: string | null } | null;
