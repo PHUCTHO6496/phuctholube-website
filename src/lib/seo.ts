@@ -1,4 +1,11 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/constants";
+
+/** Absolute URL of `path` (Vietnamese, unprefixed) in `locale`, for JSON-LD. */
+export function localeUrl(locale: string, path: string) {
+  const prefix = locale === "en" || locale === "zh" ? `/${locale}` : "";
+  return `${SITE_URL}${prefix}${path === "/" && prefix ? "" : path}`;
+}
 
 /** hreflang code for each locale's URL prefix. */
 const HREFLANG = { en: "en", zh: "zh-Hans" } as const;

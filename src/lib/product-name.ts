@@ -20,6 +20,21 @@ export function productBaseName(name: string): string {
     .trim();
 }
 
+// Trailing grade token: ISO VG / NLGI number ("46", "1.5") or SAE grade ("15W-40", "10W").
+const GRADE_TOKEN = /^(\d+(?:\.\d+)?|\d{1,2}W(?:-?\d{2,3})?)$/i;
+
+/**
+ * Product line a grade belongs to, so the other grades can be linked:
+ * "Shell Tellus S2 MX 46" -> "Shell Tellus S2 MX", "Shell Gadus S2 V220 2"
+ * -> "Shell Gadus S2 V220". Null when the name doesn't end in a grade
+ * ("Shell Rimula R3 10W CF") — better no siblings than wrong ones.
+ */
+export function productSeries(name: string): string | null {
+  const words = splitPackaging(name).base.split(/\s+/);
+  if (words.length < 3 || !GRADE_TOKEN.test(words[words.length - 1])) return null;
+  return words.slice(0, -1).join(" ");
+}
+
 /**
  * Base-oil family used to keep the equivalent finder honest: a PAG gear oil
  * is not interchangeable with a mineral one of the same ISO grade (they

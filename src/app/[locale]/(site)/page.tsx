@@ -51,6 +51,15 @@ export default async function Home() {
     getLocale(),
   ]);
   const brand = siteNames(locale);
+  // Gallery photos are uploaded in admin without captions; the current ones
+  // have alt text in messages (home.galleryAlts), keyed by the random part of
+  // the Blob file name. Photos added later get a generic description.
+  const galleryAlt = (url: string, i: number) => {
+    const id = url.match(/-([0-9a-f]{12})\.[a-z]+$/i)?.[1];
+    return id && t.has(`galleryAlts.${id}`)
+      ? t(`galleryAlts.${id}`)
+      : t("galleryAltFallback", { name: brand.fullName, n: i + 1 });
+  };
 
   const homeStats = [
     {
@@ -218,7 +227,7 @@ export default async function Home() {
                 >
                   <Image
                     src={url}
-                    alt={`${brand.name} ${i + 1}`}
+                    alt={galleryAlt(url, i)}
                     fill
                     sizes="(min-width: 640px) 25vw, 50vw"
                     className="object-cover"

@@ -34,7 +34,7 @@ export default async function SiteLayout({
           },
         }}
       />
-      <Header settings={settings} />
+      <Header settings={{ phone: settings.phone, logoUrl: settings.logoUrl }} />
       <main className="flex-1">{children}</main>
       <Footer settings={settings} />
       <FloatingZalo zaloUrl={settings.zaloUrl} />

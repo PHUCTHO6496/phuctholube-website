@@ -4,17 +4,24 @@ import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
-import { ChevronRight, FileText } from "lucide-react";
+import { BadgeCheck, ChevronRight, FileText } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/site/ProductCard";
 import { ProductQuoteActions } from "@/components/site/ProductQuoteActions";
 import { JsonLd } from "@/components/site/JsonLd";
 import { redirectIfMoved } from "@/lib/redirects";
-import { SITE_URL } from "@/lib/constants";
+import { BRANDS, SITE } from "@/lib/constants";
 import { localized, localizedJson } from "@/lib/localized";
-import { localeAlternates } from "@/lib/seo";
+import { localeAlternates, localeUrl } from "@/lib/seo";
 import { localizeSpecValue } from "@/lib/spec-text";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
+import { documentHref } from "@/lib/documents";
+import {
+  baseOilFamily,
+  normalizeGrade,
+  productSeries,
+  usesBaseOilFamily,
+} from "@/lib/product-name";
 
 const getProduct = unstable_cache(
   async (slug: string) =>
@@ -26,6 +33,7 @@ const getProduct = unstable_cache(
         name: true,
         brand: true,
         categoryId: true,
+        viscosityGrade: true,
         shortDescription: true,
         shortDescriptionEn: true,
         shortDescriptionZh: true,
@@ -52,16 +60,32 @@ const getProduct = unstable_cache(
   { tags: ["products"], revalidate: 300 }
 );
 
-const getRelatedProducts = unstable_cache(
-  async (categoryId: string, excludeId: string) =>
+/** Every product in the category, for same-line grades, equivalents and fallbacks. */
+const getCategoryPeers = unstable_cache(
+  async (categoryId: string) =>
     prisma.product.findMany({
-      where: { published: true, categoryId, id: { not: excludeId } },
-      take: 4,
-      select: productCardSelect,
+      where: { published: true, categoryId },
+      orderBy: [{ sortOrder: "asc" }, { name: "asc" }],
+      select: {
+        ...productCardSelect,
+        viscosityGrade: true,
+        specs: { where: { label: "Loại dầu gốc" }, take: 1, select: { value: true } },
+      },
     }),
-  ["product-related"],
+  ["product-category-peers"],
   { tags: ["products"], revalidate: 300 }
 );
+
+const BRAND_NAMES: string[] = BRANDS.map((b) => b.name);
+const ISO_VG = /^\d+$/;
+
+function gradeValue(name: string) {
+  const n = Number(name.split(/\s+/).pop());
+  return Number.isNaN(n) ? Infinity : n;
+}
+
+/** Product short descriptions are phrases; drop a trailing full stop before reusing one. */
+const phrase = (s: string) => s.trim().replace(/[.。]$/, "");
 
 export async function generateMetadata({
   params,
@@ -78,12 +102,32 @@ export async function generateMetadata({
   const categoryName = product.category
     ? localized(locale, product.category.name, product.category.nameEn, product.category.nameZh)
     : t("defaultCategory");
+  // "ISO VG 46" is how buyers search for industrial oils; SAE/NLGI grades
+  // are already part of the product name.
+  const grade = product.viscosityGrade?.trim();
+  const isoVg = grade && ISO_VG.test(grade) ? ` ISO VG ${grade}` : "";
+  const shortDescription = localized(
+    locale,
+    product.shortDescription,
+    product.shortDescriptionEn,
+    product.shortDescriptionZh
+  );
+  const packagings = product.variants.map((v) => v.packaging);
+  const zh = locale === "zh";
+  const description = [
+    t("metaIntro", { name: product.name, category: categoryName, grade: isoVg }),
+    shortDescription ? t("metaUse", { uses: phrase(shortDescription) }) : null,
+    packagings.length > 0
+      ? t("metaPackaging", { packaging: packagings.join(zh ? "、" : ", ") })
+      : null,
+    t("metaTail", { phone: SITE.phoneDisplay }),
+  ]
+    .filter(Boolean)
+    .join(zh ? "" : " ");
+
   return {
-    title: `${product.name} - ${categoryName}`,
-    description:
-      localized(locale, product.shortDescription, product.shortDescriptionEn, product.shortDescriptionZh) ??
-      localized(locale, product.description, product.descriptionEn, product.descriptionZh) ??
-      undefined,
+    title: `${product.name} - ${categoryName}${isoVg}`,
+    description,
     // A product whose detailed description isn't translated yet would show
     // it in another language, so that copy stays out of the index.
     ...localeAlternates(locale, `/san-pham/${product.slug}`, {
@@ -170,10 +214,63 @@ export default async function ProductDetailPage({
       list(product.applicationTagsZh)
     ) ?? [];
 
-  const relatedRaw = product.categoryId
-    ? await getRelatedProducts(product.categoryId, product.id)
+  // Other grades of the same line, and other brands' products of the same
+  // grade and base oil — the same matching as /tra-cuu-tuong-duong, except
+  // that an unclassified base oil never counts as a match here.
+  const peers = product.categoryId ? await getCategoryPeers(product.categoryId) : [];
+  const series = productSeries(product.name);
+  const siblings = series
+    ? peers
+        .filter(
+          (p) => p.id !== product.id && p.brand === product.brand && productSeries(p.name) === series
+        )
+        .sort((a, b) => gradeValue(a.name) - gradeValue(b.name))
     : [];
-  const related = relatedRaw.map((p) => localizeProductCard(p, locale));
+  const grade = normalizeGrade(product.viscosityGrade);
+  const family = usesBaseOilFamily(grade)
+    ? baseOilFamily(product.name, product.specs.find((s) => s.label === "Loại dầu gốc")?.value)
+    : undefined;
+  const equivalents =
+    grade && product.brand && BRAND_NAMES.includes(product.brand) && family !== null
+      ? peers.filter(
+          (p) =>
+            p.brand &&
+            p.brand !== product.brand &&
+            BRAND_NAMES.includes(p.brand) &&
+            normalizeGrade(p.viscosityGrade) === grade &&
+            (family === undefined || baseOilFamily(p.name, p.specs[0]?.value) === family)
+        )
+      : [];
+  const shown = new Set([product.id, ...siblings.map((p) => p.id)]);
+  const cards = (equivalents.length > 0 ? equivalents : peers.filter((p) => !shown.has(p.id)))
+    .slice(0, 4)
+    // Only card fields go on to the card (and its client "add to quote" button).
+    .map((p) =>
+      localizeProductCard(
+        {
+          id: p.id,
+          slug: p.slug,
+          name: p.name,
+          brand: p.brand,
+          shortDescription: p.shortDescription,
+          shortDescriptionEn: p.shortDescriptionEn,
+          shortDescriptionZh: p.shortDescriptionZh,
+          category: p.category,
+          images: p.images,
+          variants: p.variants,
+        },
+        locale
+      )
+    );
+
+  const productPath = `/san-pham/${product.slug}`;
+  const isShell = product.brand === "Shell";
+  const trustItems = [
+    ...(isShell ? [{ text: t("trustShell"), href: "/ve-chung-toi#shell" }] : []),
+    { text: t("trustGenuine") },
+    { text: t("trustInvoice") },
+    { text: t("trustDelivery"), href: "/chinh-sach/giao-hang" },
+  ];
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -183,16 +280,51 @@ export default async function ProductDetailPage({
           "@type": "Product",
           name: product.name,
           description: shortDescription ?? description ?? undefined,
+          image: product.images[0]?.url,
           brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
           category: categoryName,
-          url: `${SITE_URL}/san-pham/${product.slug}`,
+          url: localeUrl(locale, productPath),
         }}
       />
-      <nav className="flex items-center gap-1 text-sm text-slate-500">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { name: t("breadcrumbHome"), item: localeUrl(locale, "/") },
+            { name: t("breadcrumbProducts"), item: localeUrl(locale, "/san-pham") },
+            ...(product.category
+              ? [
+                  {
+                    name: categoryName,
+                    item: localeUrl(locale, `/san-pham/danh-muc/${product.category.slug}`),
+                  },
+                ]
+              : []),
+            { name: product.name, item: localeUrl(locale, productPath) },
+          ].map((crumb, i) => ({ "@type": "ListItem", position: i + 1, ...crumb })),
+        }}
+      />
+      <nav className="flex flex-wrap items-center gap-1 text-sm text-slate-500">
+        <Link href="/" className="hover:text-blue-900">
+          {t("breadcrumbHome")}
+        </Link>
+        <ChevronRight className="h-4 w-4" />
         <Link href="/san-pham" className="hover:text-blue-900">
           {t("breadcrumbProducts")}
         </Link>
         <ChevronRight className="h-4 w-4" />
+        {product.category && (
+          <>
+            <Link
+              href={`/san-pham/danh-muc/${product.category.slug}`}
+              className="hover:text-blue-900"
+            >
+              {categoryName}
+            </Link>
+            <ChevronRight className="h-4 w-4" />
+          </>
+        )}
         <span className="text-slate-700">{product.name}</span>
       </nav>
 
@@ -263,6 +395,21 @@ export default async function ProductDetailPage({
             </Link>
           </ProductQuoteActions>
 
+          <ul className="mt-6 space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-4">
+            {trustItems.map((item) => (
+              <li key={item.text} className="flex items-start gap-2 text-sm text-slate-700">
+                <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
+                {item.href ? (
+                  <Link href={item.href} className="hover:text-blue-900 hover:underline">
+                    {item.text}
+                  </Link>
+                ) : (
+                  item.text
+                )}
+              </li>
+            ))}
+          </ul>
+
           {useCases.length > 0 && (
             <div className="mt-8">
               <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
@@ -273,6 +420,26 @@ export default async function ProductDetailPage({
                   <li key={u} className="flex items-start gap-2 text-sm text-slate-700">
                     <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-500" />
                     {u}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {siblings.length > 0 && series && (
+            <div className="mt-8">
+              <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+                {t("sameSeries", { series })}
+              </h2>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {siblings.map((p) => (
+                  <li key={p.id}>
+                    <Link
+                      href={`/san-pham/${p.slug}`}
+                      className="inline-block rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-blue-900 hover:text-blue-900"
+                    >
+                      {p.name}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -322,27 +489,29 @@ export default async function ProductDetailPage({
                 {t("technicalDocuments")}
               </h2>
               <div className="mt-3 flex flex-wrap gap-3">
-                {product.tdsUrl && (
-                  <a
-                    href={product.tdsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-blue-900 hover:text-blue-900"
-                  >
-                    <FileText className="h-4 w-4" />
-                    {t("tds")}
-                  </a>
-                )}
-                {product.msdsUrl && (
-                  <a
-                    href={product.msdsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-blue-900 hover:text-blue-900"
-                  >
-                    <FileText className="h-4 w-4" />
-                    {t("msds")}
-                  </a>
+                {(
+                  [
+                    ["tds", product.tdsUrl],
+                    ["msds", product.msdsUrl],
+                  ] as const
+                ).map(([kind, url]) =>
+                  url ? (
+                    <a
+                      key={kind}
+                      href={documentHref(kind, product.slug, url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-start gap-2 rounded-md border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition-colors hover:border-blue-900 hover:text-blue-900"
+                    >
+                      <FileText className="mt-0.5 h-4 w-4 shrink-0" />
+                      <span>
+                        {t(kind)}
+                        <span className="block text-xs font-normal text-slate-500">
+                          {t("documentFile", { name: product.name })}
+                        </span>
+                      </span>
+                    </a>
+                  ) : null
                 )}
               </div>
             </div>
@@ -357,11 +526,24 @@ export default async function ProductDetailPage({
         </div>
       )}
 
-      {related.length > 0 && (
+      {cards.length > 0 && (
         <div className="mt-14 border-t border-slate-200 pt-10">
-          <h2 className="text-xl font-bold text-slate-900">{t("relatedProducts")}</h2>
+          <h2 className="text-xl font-bold text-slate-900">
+            {equivalents.length > 0 ? t("equivalents") : t("relatedProducts")}
+          </h2>
+          {equivalents.length > 0 && (
+            <p className="mt-2 max-w-3xl text-sm text-slate-600">
+              {t("equivalentsNote")}{" "}
+              <Link
+                href="/tra-cuu-tuong-duong"
+                className="font-semibold text-blue-900 hover:text-amber-600"
+              >
+                {t("equivalentsLink")}
+              </Link>
+            </p>
+          )}
           <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {related.map((p) => (
+            {cards.map((p) => (
               <ProductCard key={p.slug} product={p} />
             ))}
           </div>

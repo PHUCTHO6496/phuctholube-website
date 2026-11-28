@@ -100,7 +100,8 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      <section className="border-b border-slate-200 bg-white">
+      {/* Linked from Shell product pages as /ve-chung-toi#shell. */}
+      <section id="shell" className="scroll-mt-20 border-b border-slate-200 bg-white">
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 py-14 sm:px-6 lg:grid-cols-5 lg:px-8">
           <div className="lg:col-span-3">
             <h2 className="text-2xl font-bold text-slate-900">{t("shellPartnerTitle")}</h2>

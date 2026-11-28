@@ -12,7 +12,10 @@ import { QuoteCartIndicator } from "@/components/site/QuoteCartIndicator";
 import { LanguageSwitcher } from "@/components/site/LanguageSwitcher";
 import type { SiteSettingsData } from "@/lib/settings";
 
-export function Header({ settings }: { settings: SiteSettingsData }) {
+// Client component: only pass the fields it shows. Everything in its props
+// ends up in the page HTML — the whole settings object once exposed the
+// handbook PDF that visitors are meant to request with their contact details.
+export function Header({ settings }: { settings: Pick<SiteSettingsData, "phone" | "logoUrl"> }) {
   const pathname = usePathname();
   const locale = useLocale();
   const brand = siteNames(locale);
