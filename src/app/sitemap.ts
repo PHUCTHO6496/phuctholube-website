@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/db";
 import { BRANDS, SITE_URL } from "@/lib/constants";
+import { POLICIES } from "@/lib/policies";
 
 // Otherwise the sitemap is frozen at build time and posts/products added
 // through the admin or the agent API stay out of it until the next deploy.
@@ -30,6 +31,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/dich-vu`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE_URL}/tin-tuc`, lastModified: now, changeFrequency: "weekly", priority: 0.7 },
     { url: `${SITE_URL}/lien-he`, lastModified: now, changeFrequency: "yearly", priority: 0.5 },
+    ...POLICIES.map((p) => ({
+      url: `${SITE_URL}/chinh-sach/${p.slug}`,
+      changeFrequency: "yearly" as const,
+      priority: 0.3,
+    })),
   ];
 
   const productUrls: MetadataRoute.Sitemap = products.map((p) => ({

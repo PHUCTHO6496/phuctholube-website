@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
 import { NAV_ITEMS, SITE } from "@/lib/constants";
+import { POLICIES } from "@/lib/policies";
 import { formatPhoneDisplay } from "@/lib/format";
 import { FacebookIcon, LinkedinIcon } from "@/components/site/SocialIcons";
 import type { SiteSettingsData } from "@/lib/settings";
@@ -142,7 +143,20 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
           </div>
         </div>
 
-        <div className="mt-10 space-y-1 border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
+        <ul className="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 border-t border-slate-800 pt-6 text-sm">
+          {POLICIES.map((p) => (
+            <li key={p.slug}>
+              <Link
+                href={`/chinh-sach/${p.slug}`}
+                className="text-slate-400 transition-colors hover:text-amber-400"
+              >
+                {locale === "en" ? p.titleEn : p.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-6 space-y-1 text-center text-xs text-slate-500">
           <p>
             {t("legalInfo", {
               legalName: SITE.legalName,
