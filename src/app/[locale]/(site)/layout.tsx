@@ -4,14 +4,15 @@ import { FloatingZalo } from "@/components/site/FloatingZalo";
 import { LeadGuidePopup } from "@/components/site/LeadGuidePopup";
 import { JsonLd } from "@/components/site/JsonLd";
 import { getSiteSettings } from "@/lib/settings";
-import { SITE, SITE_URL } from "@/lib/constants";
+import { getLocale } from "next-intl/server";
+import { SITE, SITE_URL, siteNames } from "@/lib/constants";
 
 export default async function SiteLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await getSiteSettings();
+  const [settings, locale] = await Promise.all([getSiteSettings(), getLocale()]);
 
   return (
     <>
@@ -19,7 +20,7 @@ export default async function SiteLayout({
         data={{
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
-          name: SITE.fullName,
+          name: siteNames(locale).fullName,
           legalName: SITE.legalName,
           taxID: SITE.taxCode,
           url: SITE_URL,

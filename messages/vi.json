@@ -389,6 +389,14 @@
     "sending": "Đang gửi...",
     "submit": "Gửi yêu cầu báo giá"
   },
+  "blog": {
+    "title": "Tin tức và bài viết",
+    "description": "Cập nhật thông tin mới nhất về dầu nhớt công nghiệp, hướng dẫn sử dụng và kiến thức chuyên ngành.",
+    "showing": "Hiển thị {count} bài viết",
+    "breadcrumb": "Tin tức",
+    "backToAll": "← Xem tất cả bài viết",
+    "vietnameseOnly": ""
+  },
   "quoteSuccess": {
     "metaTitle": "Gửi yêu cầu báo giá thành công",
     "title": "Gửi yêu cầu báo giá thành công!",

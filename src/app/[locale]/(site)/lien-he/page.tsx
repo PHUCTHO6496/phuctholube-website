@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
 import { localeAlternates } from "@/lib/seo";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import { SITE } from "@/lib/constants";
+import { SITE, localizedAddress, siteNames } from "@/lib/constants";
 import { getSiteSettings } from "@/lib/settings";
 import { formatPhoneDisplay } from "@/lib/format";
 import { localizedHours } from "@/lib/localized";
@@ -39,7 +39,7 @@ export default async function ContactPage() {
       <div className="max-w-2xl">
         <h1 className="text-3xl font-extrabold text-slate-900">{t("title")}</h1>
         <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          {t("intro", { name: SITE.name })}
+          {t("intro", { name: siteNames(locale).name })}
         </p>
       </div>
 
@@ -56,7 +56,7 @@ export default async function ContactPage() {
           <ul className="mt-4 space-y-4 text-sm">
             <li className="flex gap-3">
               <MapPin className="h-5 w-5 shrink-0 text-amber-500" />
-              <span className="text-slate-600">{settings.address}</span>
+              <span className="text-slate-600">{localizedAddress(settings.address, locale)}</span>
             </li>
             <li className="flex gap-3">
               <Phone className="h-5 w-5 shrink-0 text-amber-500" />

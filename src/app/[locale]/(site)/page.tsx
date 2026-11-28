@@ -15,7 +15,7 @@ import {
   BadgePercent,
   Quote,
 } from "lucide-react";
-import { BRANDS, SITE } from "@/lib/constants";
+import { BRANDS, SITE, localizedAddress, siteNames } from "@/lib/constants";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/site/ProductCard";
 import { getSiteSettings } from "@/lib/settings";
@@ -51,6 +51,7 @@ export default async function Home() {
     getTranslations("brands"),
     getLocale(),
   ]);
+  const brand = siteNames(locale);
 
   const homeStats = [
     {
@@ -84,13 +85,13 @@ export default async function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8 lg:py-24">
           <div>
             <p className="text-sm font-semibold uppercase tracking-widest text-amber-400">
-              {SITE.fullName}
+              {brand.fullName}
             </p>
             <h1 className="mt-3 text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
               {tMeta("tagline")}
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-slate-300">
-              {t("heroIntro1", { foundedYear: SITE.foundedYear, name: SITE.name })}
+              {t("heroIntro1", { foundedYear: SITE.foundedYear, name: brand.name })}
             </p>
             <p className="mt-3 max-w-xl text-base leading-relaxed text-slate-300">
               {t("heroIntro2")}
@@ -126,7 +127,7 @@ export default async function Home() {
             {settings.heroImageUrl ? (
               <Image
                 src={settings.heroImageUrl}
-                alt={SITE.fullName}
+                alt={brand.fullName}
                 fill
                 sizes="(min-width: 1024px) 640px, 100vw"
                 priority
@@ -145,7 +146,7 @@ export default async function Home() {
       <section className="border-b border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <h2 className="text-center text-2xl font-bold text-slate-900 sm:text-3xl">
-            {t("whyUsTitle", { name: SITE.name })}
+            {t("whyUsTitle", { name: brand.name })}
           </h2>
           <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3">
             {homeStats.map((stat) => (
@@ -170,7 +171,7 @@ export default async function Home() {
               {t("brandsTitle")}
             </h2>
             <p className="mt-2 text-sm text-slate-600">
-              {t("brandsSubtitle", { name: SITE.name })}
+              {t("brandsSubtitle", { name: brand.name })}
             </p>
           </div>
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -208,7 +209,7 @@ export default async function Home() {
                 {t("galleryTitle")}
               </h2>
               <p className="mt-2 text-sm text-slate-600">
-                {t("gallerySubtitle", { name: SITE.name })}
+                {t("gallerySubtitle", { name: brand.name })}
               </p>
             </div>
             <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
@@ -219,7 +220,7 @@ export default async function Home() {
                 >
                   <Image
                     src={url}
-                    alt={`${SITE.name} ${i + 1}`}
+                    alt={`${brand.name} ${i + 1}`}
                     fill
                     sizes="(min-width: 640px) 25vw, 50vw"
                     className="object-cover"
@@ -240,7 +241,7 @@ export default async function Home() {
                 {t("featuredTitle")}
               </h2>
               <p className="mt-2 max-w-xl text-sm text-slate-600">
-                {t("featuredSubtitle", { name: SITE.name })}
+                {t("featuredSubtitle", { name: brand.name })}
               </p>
             </div>
             <Link
@@ -265,7 +266,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
-              {t("whyChooseTitle", { name: SITE.name })}
+              {t("whyChooseTitle", { name: brand.name })}
             </h2>
             <p className="mt-2 text-sm text-slate-600">{t("whyChooseSubtitle")}</p>
           </div>
@@ -382,7 +383,7 @@ export default async function Home() {
             <div className="flex flex-col items-center text-center">
               <MapPin className="h-8 w-8 text-amber-500" />
               <p className="mt-3 text-sm font-semibold text-slate-900">{t("address")}</p>
-              <p className="mt-1 text-sm text-slate-600">{settings.address}</p>
+              <p className="mt-1 text-sm text-slate-600">{localizedAddress(settings.address, locale)}</p>
             </div>
             <div className="flex flex-col items-center text-center">
               <Phone className="h-8 w-8 text-amber-500" />

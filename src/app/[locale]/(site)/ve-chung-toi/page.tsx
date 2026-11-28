@@ -5,7 +5,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { localeAlternates } from "@/lib/seo";
 import { Target, Eye, Gem, HeartHandshake, Warehouse } from "lucide-react";
 import { prisma } from "@/lib/db";
-import { SITE } from "@/lib/constants";
+import { SITE, localizedAddress, siteNames } from "@/lib/constants";
 import { localized } from "@/lib/localized";
 
 const MISSION_ICONS = [Target, Eye, Gem, HeartHandshake, Warehouse];
@@ -34,6 +34,7 @@ export default async function AboutPage() {
     getTranslations("about"),
     getLocale(),
   ]);
+  const brand = siteNames(locale);
 
   const industries = await getIndustriesList();
 
@@ -48,7 +49,7 @@ export default async function AboutPage() {
             {t("since", { foundedYear: SITE.foundedYear })}
           </p>
           <h1 className="mt-3 text-3xl font-extrabold sm:text-4xl">
-            {t("title", { fullName: SITE.fullName })}
+            {t("title", { fullName: brand.fullName })}
           </h1>
           <p className="mt-4 text-base leading-relaxed text-slate-300">{t("intro")}</p>
         </div>
@@ -82,7 +83,7 @@ export default async function AboutPage() {
         <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-slate-900">{t("journeyTitle")}</h2>
           <p className="mt-3 max-w-3xl text-sm leading-relaxed text-slate-600">
-            {t("journeyDescription", { foundedYear: SITE.foundedYear, name: SITE.name })}
+            {t("journeyDescription", { foundedYear: SITE.foundedYear, name: brand.name })}
           </p>
           <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-2 sm:max-w-md">
             <div>
@@ -104,10 +105,10 @@ export default async function AboutPage() {
           <div className="lg:col-span-3">
             <h2 className="text-2xl font-bold text-slate-900">{t("shellPartnerTitle")}</h2>
             <p className="mt-3 text-sm leading-relaxed text-slate-600">
-              {t("shellPartnerBody", { name: SITE.name })}
+              {t("shellPartnerBody", { name: brand.name })}
             </p>
             <p className="mt-3 text-sm leading-relaxed text-slate-600">
-              {t("shellPartnerArea", { name: SITE.name })}
+              {t("shellPartnerArea", { name: brand.name })}
             </p>
           </div>
           <div className="rounded-xl border border-slate-200 bg-slate-50 p-6 lg:col-span-2">
@@ -123,7 +124,7 @@ export default async function AboutPage() {
               </div>
               <div>
                 <dt className="text-slate-500">{t("registeredAddressLabel")}</dt>
-                <dd className="font-semibold text-slate-900">{SITE.registeredAddress}</dd>
+                <dd className="font-semibold text-slate-900">{localizedAddress(SITE.registeredAddress, locale)}</dd>
               </div>
             </dl>
           </div>
@@ -133,7 +134,7 @@ export default async function AboutPage() {
       <section className="bg-white">
         <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <h2 className="text-2xl font-bold text-slate-900">
-            {t("commitmentTitle", { name: SITE.name })}
+            {t("commitmentTitle", { name: brand.name })}
           </h2>
           <p className="mt-2 text-sm text-slate-600">{t("commitmentSubtitle")}</p>
           <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

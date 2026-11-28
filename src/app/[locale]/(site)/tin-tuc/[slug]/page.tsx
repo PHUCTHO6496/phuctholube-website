@@ -3,7 +3,7 @@ import Image from "next/image";
 import { unstable_cache } from "next/cache";
 import { Link } from "@/i18n/navigation";
 import { notFound } from "next/navigation";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { ChevronRight } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { JsonLd } from "@/components/site/JsonLd";
@@ -93,7 +93,10 @@ export default async function BlogDetailPage({
     notFound();
   }
 
-  const contentHtml = await linkProductMentions(post.contentHtml);
+  const [contentHtml, t] = await Promise.all([
+    linkProductMentions(post.contentHtml),
+    getTranslations("blog"),
+  ]);
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
@@ -112,13 +115,19 @@ export default async function BlogDetailPage({
       />
       <nav className="flex items-center gap-1 text-sm text-slate-500">
         <Link href="/tin-tuc" className="hover:text-blue-900">
-          Tin tức
+          {t("breadcrumb")}
         </Link>
         <ChevronRight className="h-4 w-4" />
         <span className="line-clamp-1 text-slate-700">{post.title}</span>
       </nav>
 
-      <h1 className="mt-4 text-2xl font-extrabold text-slate-900 sm:text-3xl">
+      {t("vietnameseOnly") && (
+        <p className="mt-4 rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-900">
+          {t("vietnameseOnly")}
+        </p>
+      )}
+
+      <h1 lang="vi" className="mt-4 text-2xl font-extrabold text-slate-900 sm:text-3xl">
         {post.title}
       </h1>
       <p className="mt-3 text-sm text-slate-500">
@@ -140,6 +149,7 @@ export default async function BlogDetailPage({
       )}
 
       <div
+        lang="vi"
         className="prose prose-slate mt-8 max-w-none prose-p:leading-relaxed prose-p:text-slate-700"
         dangerouslySetInnerHTML={{ __html: contentHtml }}
       />
@@ -149,7 +159,7 @@ export default async function BlogDetailPage({
           href="/tin-tuc"
           className="text-sm font-semibold text-blue-900 hover:text-amber-600"
         >
-          ← Xem tất cả bài viết
+          {t("backToAll")}
         </Link>
       </div>
     </article>

@@ -5,7 +5,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 import { Menu, X, Phone, Globe } from "lucide-react";
-import { NAV_ITEMS, SITE } from "@/lib/constants";
+import { NAV_ITEMS, SITE, siteNames } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { formatPhoneDisplay } from "@/lib/format";
 import { QuoteCartIndicator } from "@/components/site/QuoteCartIndicator";
@@ -14,6 +14,7 @@ import type { SiteSettingsData } from "@/lib/settings";
 export function Header({ settings }: { settings: SiteSettingsData }) {
   const pathname = usePathname();
   const locale = useLocale();
+  const brand = siteNames(locale);
   const t = useTranslations("nav");
   const [open, setOpen] = useState(false);
   const phoneDisplay = formatPhoneDisplay(settings.phone);
@@ -29,7 +30,7 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
             <span className="relative block h-10 w-10 shrink-0">
               <Image
                 src={settings.logoUrl}
-                alt={SITE.fullName}
+                alt={brand.fullName}
                 fill
                 sizes="40px"
                 priority
@@ -43,7 +44,7 @@ export function Header({ settings }: { settings: SiteSettingsData }) {
           )}
           <span className="leading-tight">
             <span className="block text-base font-bold text-blue-900">
-              {SITE.fullName}
+              {brand.fullName}
             </span>
             <span className="block text-xs text-slate-500">
               {locale === "vi" ? `Từ ${SITE.foundedYear}` : `Since ${SITE.foundedYear}`}

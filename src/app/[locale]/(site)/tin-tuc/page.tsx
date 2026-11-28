@@ -1,17 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { unstable_cache } from "next/cache";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/db";
 import { localeAlternates } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
+  const [locale, t] = await Promise.all([getLocale(), getTranslations("blog")]);
   return {
-    title: "Tin tức và bài viết",
-    description:
-      "Cập nhật thông tin mới nhất về dầu nhớt công nghiệp, hướng dẫn sử dụng và kiến thức chuyên ngành.",
+    title: t("title"),
+    description: t("description"),
     // Blog posts are Vietnamese-only.
     ...localeAlternates(locale, "/tin-tuc", false),
   };
@@ -42,25 +41,23 @@ const getPublishedPosts = unstable_cache(
 );
 
 export default async function BlogListPage() {
-  const posts = await getPublishedPosts();
+  const [posts, t] = await Promise.all([getPublishedPosts(), getTranslations("blog")]);
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="max-w-2xl">
-        <h1 className="text-3xl font-extrabold text-slate-900">
-          Tin tức và bài viết
-        </h1>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600">
-          Cập nhật thông tin mới nhất về dầu nhớt công nghiệp, hướng dẫn sử
-          dụng và kiến thức chuyên ngành.
-        </p>
+        <h1 className="text-3xl font-extrabold text-slate-900">{t("title")}</h1>
+        <p className="mt-2 text-sm leading-relaxed text-slate-600">{t("description")}</p>
+        {t("vietnameseOnly") && (
+          <p className="mt-4 rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            {t("vietnameseOnly")}
+          </p>
+        )}
       </div>
 
-      <p className="mt-6 text-sm text-slate-500">
-        Hiển thị {posts.length} bài viết
-      </p>
+      <p className="mt-6 text-sm text-slate-500">{t("showing", { count: posts.length })}</p>
 
-      <div className="mt-6 divide-y divide-slate-200">
+      <div lang="vi" className="mt-6 divide-y divide-slate-200">
         {posts.map((post) => (
           <Link
             key={post.slug}

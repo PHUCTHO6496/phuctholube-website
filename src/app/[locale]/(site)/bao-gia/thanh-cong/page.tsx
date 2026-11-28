@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Link } from "@/i18n/navigation";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { CheckCircle2 } from "lucide-react";
-import { SITE } from "@/lib/constants";
+import { SITE, siteNames } from "@/lib/constants";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("quoteSuccess");
@@ -10,7 +10,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function QuoteSuccessPage() {
-  const t = await getTranslations("quoteSuccess");
+  const [t, locale] = await Promise.all([getTranslations("quoteSuccess"), getLocale()]);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-24 text-center sm:px-6 lg:px-8">
@@ -20,7 +20,7 @@ export default async function QuoteSuccessPage() {
       </h1>
       <p className="mt-3 text-sm leading-relaxed text-slate-600">
         {t.rich("description", {
-          name: SITE.name,
+          name: siteNames(locale).name,
           phoneDisplay: SITE.phoneDisplay,
           phone: (chunks) => (
             <a href={`tel:${SITE.phone}`} className="font-semibold text-blue-900">

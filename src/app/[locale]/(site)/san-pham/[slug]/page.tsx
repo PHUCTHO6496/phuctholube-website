@@ -13,6 +13,7 @@ import { redirectIfMoved } from "@/lib/redirects";
 import { SITE_URL } from "@/lib/constants";
 import { localized, localizedJson } from "@/lib/localized";
 import { localeAlternates } from "@/lib/seo";
+import { localizeSpecValue } from "@/lib/spec-text";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
 
 const getProduct = unstable_cache(
@@ -123,7 +124,7 @@ export default async function ProductDetailPage({
       .map((s) => ({
       key: s.id,
       label: localized(locale, s.label, s.labelEn ?? SPEC_LABELS_EN[s.label]),
-      value: s.value,
+      value: localizeSpecValue(s.value, locale),
     })),
     ...(packagings.length > 0
       ? [{ key: "packaging", label: t("packaging"), value: packagings.join(" · ") }]

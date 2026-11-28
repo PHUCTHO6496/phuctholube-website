@@ -24,6 +24,41 @@ export const SITE = {
   ],
 } as const;
 
+/**
+ * Brand names as shown to visitors. "Dầu Nhớt" means "Lubricants"; English
+ * pages use an unaccented, translated form readers can pronounce and search.
+ */
+export function siteNames(locale: string) {
+  return locale === "en"
+    ? { name: "Phuc Tho", fullName: "Phuc Tho Lubricants" }
+    : { name: SITE.name, fullName: SITE.fullName };
+}
+
+function stripAccents(s: string) {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D");
+}
+
+/**
+ * Vietnamese address -> conventional English form for English pages:
+ * "95 Xô Viết Nghệ Tĩnh, Phường Vũng Tàu, Thành Phố Hồ Chí Minh" ->
+ * "95 Xo Viet Nghe Tinh, Vung Tau Ward, Ho Chi Minh City".
+ */
+export function localizedAddress(address: string, locale: string) {
+  if (locale !== "en") return address;
+  return address
+    .split(",")
+    .map((part) => {
+      const p = part.trim();
+      if (/^(thành phố|tp\.?)\s*hồ chí minh$/i.test(p)) return "Ho Chi Minh City";
+      const ward = p.match(/^phường\s+(.+)$/i);
+      if (ward) return `${stripAccents(ward[1])} Ward`;
+      const commune = p.match(/^xã\s+(.+)$/i);
+      if (commune) return `${stripAccents(commune[1])} Commune`;
+      return stripAccents(p);
+    })
+    .join(", ");
+}
+
 export const NAV_ITEMS = [
   { id: "home", href: "/", viOnly: false },
   { id: "products", href: "/san-pham", viOnly: false },

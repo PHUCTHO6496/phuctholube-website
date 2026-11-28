@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import { getLocale, getTranslations } from "next-intl/server";
 import "./globals.css";
-import { SITE, SITE_URL } from "@/lib/constants";
+import { SITE, SITE_URL, siteNames } from "@/lib/constants";
 import { getSiteSettings } from "@/lib/settings";
 
 const beVietnamPro = Be_Vietnam_Pro({
@@ -18,23 +18,24 @@ export async function generateMetadata(): Promise<Metadata> {
     getTranslations("meta"),
   ]);
 
-  const title = `${SITE.fullName} - ${t("tagline")}`;
+  const brand = siteNames(locale);
+  const title = `${brand.fullName} - ${t("tagline")}`;
   const description = t("description", {
     foundedYear: SITE.foundedYear,
-    name: SITE.name,
+    name: brand.name,
   });
 
   return {
     metadataBase: new URL(SITE_URL),
     title: {
-      template: `%s | ${SITE.fullName}`,
+      template: `%s | ${brand.fullName}`,
       default: title,
     },
     description,
     openGraph: {
       type: "website",
       locale: locale === "en" ? "en_US" : "vi_VN",
-      siteName: SITE.fullName,
+      siteName: brand.fullName,
       title,
       description,
     },

@@ -8,12 +8,13 @@ import { BRANDS } from "@/lib/constants";
 import { ProductCard } from "@/components/site/ProductCard";
 import { ProductFilterBar } from "@/components/site/ProductFilterBar";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
+import { localized } from "@/lib/localized";
 
 const getCategoriesList = unstable_cache(
   async () =>
     prisma.productCategory.findMany({
       orderBy: { sortOrder: "asc" },
-      select: { name: true, slug: true },
+      select: { name: true, nameEn: true, slug: true },
     }),
   ["products-page-categories"],
   { tags: ["categories"], revalidate: 300 }
@@ -80,7 +81,9 @@ export default async function ProductsPage({
   const filtered = (
     q
       ? products.filter((p) =>
-          `${p.name} ${p.shortDescription ?? ""}`.toLocaleLowerCase(locale).includes(q)
+          `${p.name} ${p.shortDescription ?? ""} ${p.shortDescriptionEn ?? ""}`
+            .toLocaleLowerCase(locale)
+            .includes(q)
         )
       : products
   ).map((p) => localizeProductCard(p, locale));
@@ -113,14 +116,17 @@ export default async function ProductsPage({
             href={`/san-pham/danh-muc/${c.slug}`}
             className="rounded-full border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-blue-900 hover:text-blue-900"
           >
-            {c.name}
+            {localized(locale, c.name, c.nameEn)}
           </Link>
         ))}
       </div>
 
       <div className="mt-6">
         <ProductFilterBar
-          categories={categories.map((c) => ({ value: c.slug, label: c.name }))}
+          categories={categories.map((c) => ({
+            value: c.slug,
+            label: localized(locale, c.name, c.nameEn),
+          }))}
           brands={brandRows
             .filter((b): b is { brand: string } => !!b.brand)
             .map((b) => ({ value: b.brand, label: b.brand }))}

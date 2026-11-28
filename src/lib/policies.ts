@@ -1,5 +1,5 @@
-// Customer-facing policies linked from the footer. Vietnamese only (the
-// /en copies are noindex). Figures (delivery times, fees, return windows,
+// Customer-facing policies linked from the footer. English versions live in
+// ./policies-en.ts and must be kept in step with this file. Figures (delivery times, fees, return windows,
 // payment terms) were confirmed by the owner on 2026-11-28. When drafting a
 // change, wrap unconfirmed values in double square brackets: the policy page
 // highlights them so they can't go live unnoticed.

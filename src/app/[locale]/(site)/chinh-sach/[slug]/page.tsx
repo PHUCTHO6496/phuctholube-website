@@ -2,14 +2,60 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { SITE } from "@/lib/constants";
+import { SITE, localizedAddress } from "@/lib/constants";
 import { formatPhoneDisplay } from "@/lib/format";
 import { getSiteSettings } from "@/lib/settings";
-import { POLICIES, getPolicy } from "@/lib/policies";
+import { POLICIES, getPolicy, type Policy } from "@/lib/policies";
+import { POLICIES_EN } from "@/lib/policies-en";
 import { localeAlternates } from "@/lib/seo";
 
 export function generateStaticParams() {
   return POLICIES.map((p) => ({ slug: p.slug }));
+}
+
+const CHROME = {
+  vi: {
+    updated: "Cập nhật lần cuối",
+    contact: "Liên hệ",
+    taxCode: "Mã số thuế",
+    registered: "Trụ sở",
+    office: "Văn phòng",
+    hotline: "Hotline",
+    others: "Các chính sách khác",
+    prevails: "",
+  },
+  en: {
+    updated: "Last updated",
+    contact: "Contact",
+    taxCode: "Tax code",
+    registered: "Registered office",
+    office: "Office",
+    hotline: "Phone",
+    others: "Other policies",
+    prevails:
+      "This English version is provided for convenience. If it differs from the Vietnamese version, the Vietnamese version prevails.",
+  },
+};
+
+/** The policy text for a locale: English from policies-en, Vietnamese as written. */
+function contentFor(policy: Policy, locale: string) {
+  const en = locale === "en" ? POLICIES_EN[policy.slug] : undefined;
+  return {
+    title: en ? policy.titleEn : policy.title,
+    description: en?.description ?? policy.description,
+    intro: en ? en.intro : policy.intro,
+    sections: en?.sections ?? policy.sections,
+  };
+}
+
+// "01/12/2026" -> "1 December 2026" for English readers (DD/MM is ambiguous).
+function formatUpdated(date: string, locale: string) {
+  if (locale !== "en") return date;
+  const m = date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (!m) return date;
+  return new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(
+    new Date(Date.UTC(Number(m[3]), Number(m[2]) - 1, Number(m[1])))
+  );
 }
 
 export async function generateMetadata({
@@ -20,11 +66,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const policy = getPolicy(slug);
   if (!policy) return {};
+  const locale = await getLocale();
+  const content = contentFor(policy, locale);
   return {
-    title: policy.title,
-    description: policy.description,
-    // Policies are written in Vietnamese only.
-    ...localeAlternates(await getLocale(), `/chinh-sach/${policy.slug}`, false),
+    title: content.title,
+    description: content.description,
+    ...localeAlternates(locale, `/chinh-sach/${policy.slug}`, !!POLICIES_EN[policy.slug]),
   };
 }
 
@@ -54,22 +101,29 @@ export default async function PolicyPage({
   const { slug } = await params;
   const policy = getPolicy(slug);
   if (!policy) notFound();
-  const settings = await getSiteSettings();
+  const [settings, locale] = await Promise.all([getSiteSettings(), getLocale()]);
+  const content = contentFor(policy, locale);
+  const c = locale === "en" ? CHROME.en : CHROME.vi;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-extrabold text-slate-900">{policy.title}</h1>
+      <h1 className="text-3xl font-extrabold text-slate-900">{content.title}</h1>
       <p className="mt-2 text-sm text-slate-500">
-        Cập nhật lần cuối: <Text>{policy.updated}</Text>
+        {c.updated}: <Text>{formatUpdated(policy.updated, locale)}</Text>
       </p>
-      {policy.intro && (
+      {c.prevails && (
+        <p className="mt-4 rounded-md bg-slate-50 px-4 py-3 text-xs leading-relaxed text-slate-600">
+          {c.prevails}
+        </p>
+      )}
+      {content.intro && (
         <p className="mt-6 text-sm leading-relaxed text-slate-700">
-          <Text>{policy.intro}</Text>
+          <Text>{content.intro}</Text>
         </p>
       )}
 
       <div className="mt-8 space-y-8">
-        {policy.sections.map((section) => (
+        {content.sections.map((section) => (
           <section key={section.heading}>
             <h2 className="text-lg font-bold text-slate-900">{section.heading}</h2>
             <div className="mt-3 space-y-3 text-sm leading-relaxed text-slate-700">
@@ -93,13 +147,19 @@ export default async function PolicyPage({
         ))}
 
         <section className="rounded-xl border border-slate-200 bg-slate-50 p-6 text-sm leading-relaxed text-slate-700">
-          <h2 className="text-lg font-bold text-slate-900">Liên hệ</h2>
+          <h2 className="text-lg font-bold text-slate-900">{c.contact}</h2>
           <p className="mt-3 font-semibold text-slate-900">{SITE.legalName}</p>
-          <p>Mã số thuế: {SITE.taxCode}</p>
-          <p>Trụ sở: {SITE.registeredAddress}</p>
-          <p>Văn phòng: {settings.address}</p>
           <p>
-            Hotline:{" "}
+            {c.taxCode}: {SITE.taxCode}
+          </p>
+          <p>
+            {c.registered}: {localizedAddress(SITE.registeredAddress, locale)}
+          </p>
+          <p>
+            {c.office}: {localizedAddress(settings.address, locale)}
+          </p>
+          <p>
+            {c.hotline}:{" "}
             <a href={`tel:${settings.phone}`} className="font-semibold text-blue-900 hover:underline">
               {formatPhoneDisplay(settings.phone)}
             </a>{" "}
@@ -112,12 +172,12 @@ export default async function PolicyPage({
       </div>
 
       <nav className="mt-12 border-t border-slate-200 pt-6 text-sm">
-        <p className="font-semibold text-slate-900">Các chính sách khác</p>
+        <p className="font-semibold text-slate-900">{c.others}</p>
         <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-2">
           {POLICIES.filter((p) => p.slug !== policy.slug).map((p) => (
             <li key={p.slug}>
               <Link href={`/chinh-sach/${p.slug}`} className="text-blue-900 hover:text-amber-600">
-                {p.title}
+                {locale === "en" ? p.titleEn : p.title}
               </Link>
             </li>
           ))}

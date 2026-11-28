@@ -23,9 +23,9 @@
     "tagline": "Since {foundedYear}, {name} has proudly been a leading industrial lubricant distributor in Ho Chi Minh City.",
     "quickLinks": "Quick Links",
     "contact": "Contact",
-    "workingHours": "Working Hours",
+    "workingHours": "Business Hours",
     "days": {
-      "monFri": "Mon - Fri",
+      "monFri": "Mon – Fri",
       "sat": "Saturday",
       "sun": "Sunday"
     },
@@ -37,7 +37,7 @@
   },
   "addToQuote": {
     "add": "Add to quote cart",
-    "added": "Added to cart"
+    "added": "Added to quote cart"
   },
   "productCard": {
     "packaging": "Packaging",
@@ -52,14 +52,14 @@
   },
   "productsPage": {
     "title": "Industrial Lubricants",
-    "metaDescription": "The full Phúc Thọ catalog of industrial lubricants: hydraulic oils, engine oils, gear oils, and greases from Shell, Mobil, Total, and Castrol.",
-    "description": "High-quality industrial lubricants for every industry. 100% genuine Shell, Mobil, Total, and Castrol products — strictly inspected and stored.",
+    "metaDescription": "The full Phuc Tho catalog of industrial lubricants: hydraulic oils, engine oils, gear oils, and greases from Shell, Mobil, Total, and Castrol.",
+    "description": "High-quality industrial lubricants for every industry. 100% genuine Shell, Mobil, Total, and Castrol products, inspected and stored to strict standards.",
     "showingCount": "Showing {count} products",
     "noResults": "No matching products found. Please try a different keyword or filter."
   },
   "categoryPage": {
     "breadcrumbProducts": "Products",
-    "defaultDescription": "Genuine {name} products from Phúc Thọ.",
+    "defaultDescription": "Genuine {name} products from Phuc Tho.",
     "showingCount": "Showing {count} products"
   },
   "brands": {
@@ -78,11 +78,11 @@
   },
   "industriesPage": {
     "title": "Industries We Serve",
-    "metaDescription": "Phúc Thọ supplies high-quality industrial lubricants across many industries: oil & gas, maritime, manufacturing, transportation, and construction.",
+    "metaDescription": "Phuc Tho supplies high-quality industrial lubricants across many industries: oil & gas, maritime, manufacturing, transportation, and construction.",
     "description": "We supply high-quality industrial lubricants across a wide range of industries, from automotive to heavy industry.",
     "viewDetail": "View details",
     "statIndustries": "Industries served",
-    "statProducts": "Quality products",
+    "statProducts": "Products",
     "statYears": "Years of experience"
   },
   "industryDetail": {
@@ -109,7 +109,7 @@
     "relatedProducts": "Related Products"
   },
   "home": {
-    "heroImagePlaceholder": "[ Phúc Thọ product / warehouse image ]",
+    "heroImagePlaceholder": "[ Phuc Tho product / warehouse image ]",
     "heroIntro1": "Since {foundedYear}, {name} has proudly been a leading industrial lubricant distributor in Ho Chi Minh City. With nearly 30 years of experience, we have partnered with thousands of businesses in the oil & gas, seaport, and maritime industries.",
     "heroIntro2": "Our mission is to provide comprehensive lubrication solutions — not just high-quality products, but also in-depth technical consulting and dedicated after-sales support.",
     "highlights": [
@@ -129,7 +129,7 @@
     "featuredSubtitle": "Discover {name}'s high-quality industrial lubricant product lines.",
     "viewAll": "View all",
     "whyChooseTitle": "Why Businesses Choose {name}",
-    "whyChooseSubtitle": "4 core commitments behind our nearly 30 years of reputation",
+    "whyChooseSubtitle": "Four commitments behind nearly 30 years in business",
     "trustValues": [
       {
         "title": "Guaranteed Quality",
@@ -153,10 +153,10 @@
     "homeServices": [
       {
         "title": "Lubricant Product Consulting",
-        "description": "In-depth support to help you choose the lubricant products best suited to your needs."
+        "description": "Expert help choosing the lubricants best suited to your equipment and operating conditions."
       },
       {
-        "title": "In-Depth Technical Support",
+        "title": "Technical Support",
         "description": "Answers and technical support for lubricant applications and related issues."
       },
       {
@@ -168,17 +168,17 @@
     "testimonialsTitle": "What Our Customers Say",
     "testimonials": [
       {
-        "quote": "Phúc Thọ recommended exactly the right hydraulic oil for our workshop's press machines — they now run much more stably and the oil change cycle is longer than before.",
+        "quote": "Phuc Tho recommended exactly the right hydraulic oil for our workshop's press machines — they now run much more stably and the oil change cycle is longer than before.",
         "name": "Mr. Minh",
         "role": "Workshop Manager, Dong Xuyen Industrial Park"
       },
       {
-        "quote": "Bulk orders are always delivered on time with full documentation. Working with Phúc Thọ gives real peace of mind about product origin.",
+        "quote": "Bulk orders are always delivered on time with full documentation. Working with Phuc Tho gives real peace of mind about product origin.",
         "name": "Ms. Hang",
         "role": "Procurement Lead, Shipping Company"
       },
       {
-        "quote": "When our air compressor had an issue, Phúc Thọ's technicians checked the oil and resolved it the same day. Truly dedicated service.",
+        "quote": "When our air compressor had an issue, Phuc Tho's technicians checked the oil and resolved it the same day. Truly dedicated service.",
         "name": "Mr. Tuan",
         "role": "Plant Maintenance Manager, Phu My Industrial Park"
       }
@@ -238,7 +238,7 @@
     "customersTrust": "Trusted customers",
     "shellPartnerTitle": "Shell lubricants distribution partner",
     "shellPartnerBody": "{name} is a regional distribution partner within the network of C.L Market Development Services JSC, the master distributor appointed by Shell Vietnam for the B2B industrial segment. Under C.L's letter of confirmation, {name} has been appointed to reach, advise, quote, supply and support business customers for Shell lubricants since 23 June 2026.",
-    "shellPartnerArea": "Service area: Vũng Tàu, Tam Thắng, Rạch Dừa, Phước Thắng, Bà Rịa, Long Hương and Tam Long wards; Long Sơn, Long Điền, Long Hải, Đất Đỏ, Phước Hải, Xuyên Mộc, Hồ Tràm, Bình Châu, Hòa Hiệp, Hòa Hội and Bàu Lâm communes; and Côn Đảo special zone (Ho Chi Minh City). For Mobil, Total and Castrol, {name} supplies genuine products.",
+    "shellPartnerArea": "Service area: Vung Tau, Tam Thang, Rach Dua, Phuoc Thang, Ba Ria, Long Huong and Tam Long wards; Long Son, Long Dien, Long Hai, Dat Do, Phuoc Hai, Xuyen Moc, Ho Tram, Binh Chau, Hoa Hiep, Hoa Hoi and Bau Lam communes; and Con Dao special zone (Ho Chi Minh City). For Mobil, Total and Castrol, {name} supplies genuine products.",
     "companyInfoTitle": "Company information",
     "legalNameLabel": "Legal name",
     "taxCodeLabel": "Tax ID",
@@ -262,7 +262,7 @@
     "title": "Our Services",
     "intro": "Comprehensive lubrication solutions with professional service, from technical consulting to dedicated after-sales support.",
     "coreServicesTitle": "Core Services",
-    "coreServicesSubtitle": "Phúc Thọ's core services",
+    "coreServicesSubtitle": "What we offer",
     "coreServices": [
       {
         "title": "Lubricant Product Consulting",
@@ -270,7 +270,7 @@
         "benefits": "Optimized equipment performance, extended machinery life, reduced maintenance costs, and compliance with industry standards."
       },
       {
-        "title": "In-Depth Technical Support",
+        "title": "Technical Support",
         "description": "We provide comprehensive technical support, including answering questions about product properties, proper usage guidance, lubrication-related issue analysis, and remediation solutions. Our experienced engineers are ready to help by phone, email, or on-site.",
         "benefits": "Fast problem resolution, improved lubrication knowledge, optimized operating processes, and reduced downtime."
       },
@@ -294,7 +294,7 @@
     "additionalServicesTitle": "Additional Services",
     "additionalServicesSubtitle": "Comprehensive support services for customers",
     "additionalServices": [
-      { "title": "In-Depth Technical Consulting", "description": "An experienced technical team ready to advise on optimal lubrication solutions for each industry and specific application." },
+      { "title": "Technical Consulting", "description": "An experienced technical team ready to advise on optimal lubrication solutions for each industry and specific application." },
       { "title": "Fast Delivery", "description": "A wide distribution network ensuring fast, door-to-door delivery across the region and nearby provinces." },
       { "title": "Dedicated After-Sales Support", "description": "24/7 customer care, ready to answer any questions and provide technical support when needed." },
       { "title": "Lubricant Analysis", "description": "Periodic lubricant sample analysis service to track machinery condition and predict maintenance needs." }
@@ -308,10 +308,10 @@
       { "step": "04", "title": "Support & Follow-Up", "description": "Technical support and periodic performance follow-up" }
     ],
     "commitmentSectionTitle": "Our Service Commitment",
-    "commitmentSectionText": "We believe our customers' success is Phúc Thọ's success. Let us partner with you on your journey toward sustainable, efficient operations.",
+    "commitmentSectionText": "We believe our customers' success is Phuc Tho's success. Let us partner with you on your journey toward sustainable, efficient operations.",
     "commitmentItems": [
       "100% genuine lubricants — meeting international ISO standards",
-      "In-depth technical consulting for every industrial application",
+      "Technical consulting for every industrial application",
       "Periodic oil analysis — timely maintenance forecasting",
       "Fast delivery — serving the entire region and beyond",
       "24/7 technical support — answering all product and application questions"
@@ -320,12 +320,12 @@
   },
   "contact": {
     "metaTitle": "Contact",
-    "metaDescription": "Contact Phúc Thọ for advice on the right industrial lubricant products for your business.",
+    "metaDescription": "Contact Phuc Tho for advice on the right industrial lubricant products for your business.",
     "title": "Contact",
     "intro": "Contact {name} for advice on the right industrial lubricant products for your business.",
     "sendMessage": "Send a Message",
     "contactInfo": "Contact Information",
-    "mapTitle": "Phúc Thọ map"
+    "mapTitle": "Office location map"
   },
   "contactForm": {
     "name": "Full name *",
@@ -362,17 +362,17 @@
     "noEquivalents": "No equivalent products from other brands found in this category (viscosity grade {grade}).",
     "suggestionCount": "{count} equivalent product suggestions — same category {category}, viscosity grade {grade}",
     "tableTitle": "Equivalent products cross-reference",
-    "tableIntro": "Products in the same category, viscosity grade and base-oil family across brands — mineral, PAO synthetic and PAG synthetic oils are kept apart because they are not direct replacements. For reference only — please contact the Phúc Thọ technical team to confirm before switching the oil you use.",
+    "tableIntro": "Products in the same category, viscosity grade and base-oil family across brands — mineral, PAO synthetic and PAG synthetic oils are kept apart because they are not direct replacements. For reference only — please contact the Phuc Tho technical team to confirm before switching the oil you use.",
     "family": {"mineral": "Mineral", "synthetic": "Synthetic (PAO/GTL)", "pag": "Synthetic PAG", "water-glycol": "Water-glycol", "unknown": "Base oil not classified"},
     "gradeColumn": "Viscosity grade",
-    "disclaimer": "* Suggested results are based on matching product category and similar viscosity grade, for initial reference only — not an official replacement confirmation. Please contact the Phúc Thọ technical team for advice and confirmation before changing the product you currently use."
+    "disclaimer": "* Suggested results are based on matching product category and similar viscosity grade, for initial reference only — not an official replacement confirmation. Please contact the Phuc Tho technical team for advice and confirmation before changing the product you currently use."
   },
   "quoteCartPage": {
     "packaging": "Packaging",
     "packagingLabel": "Packaging for {name}",
     "choosePackaging": "-- Choose packaging --",
     "emptyTitle": "Your quote cart is empty",
-    "emptyDescription": "Add the products you're interested in to your quote cart to request pricing advice.",
+    "emptyDescription": "Add the products you're interested in to your quote cart to request a quotation.",
     "viewProducts": "View products",
     "title": "Quote Cart",
     "description": "Review your product list and fill in your details to submit a quote request.",
@@ -388,6 +388,14 @@
     "emptyCartError": "Your quote cart is empty. Please add products before submitting a request.",
     "sending": "Sending...",
     "submit": "Submit quote request"
+  },
+  "blog": {
+    "title": "News & Articles",
+    "description": "Technical articles on industrial lubricants: selection, storage, oil analysis and equipment care.",
+    "showing": "Showing {count} articles",
+    "breadcrumb": "News",
+    "backToAll": "← All articles",
+    "vietnameseOnly": "Our articles are currently published in Vietnamese only."
   },
   "quoteSuccess": {
     "metaTitle": "Quote Request Sent Successfully",

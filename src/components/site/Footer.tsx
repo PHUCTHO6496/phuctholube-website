@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
-import { NAV_ITEMS, SITE } from "@/lib/constants";
+import { NAV_ITEMS, SITE, localizedAddress, siteNames } from "@/lib/constants";
 import { POLICIES } from "@/lib/policies";
 import { formatPhoneDisplay } from "@/lib/format";
 import { FacebookIcon, LinkedinIcon } from "@/components/site/SocialIcons";
@@ -15,6 +15,7 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
     getTranslations("nav"),
     getLocale(),
   ]);
+  const brand = siteNames(locale);
 
   const navItems = NAV_ITEMS.filter((item) => !item.viOnly || locale === "vi");
 
@@ -34,7 +35,7 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
                 <span className="relative block h-10 w-10 shrink-0">
                   <Image
                     src={settings.logoUrl}
-                    alt={SITE.fullName}
+                    alt={brand.fullName}
                     fill
                     sizes="40px"
                     className="rounded-md object-contain"
@@ -46,11 +47,11 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
                 </span>
               )}
               <span className="text-base font-bold text-white">
-                {SITE.fullName}
+                {brand.fullName}
               </span>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
-              {t("tagline", { foundedYear: SITE.foundedYear, name: SITE.name })}
+              {t("tagline", { foundedYear: SITE.foundedYear, name: brand.name })}
             </p>
             {(settings.facebookUrl || settings.linkedinUrl) && (
               <div className="mt-5 flex items-center gap-3">
@@ -105,7 +106,7 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
             <ul className="mt-4 space-y-3 text-sm text-slate-400">
               <li className="flex gap-2">
                 <MapPin className="h-5 w-5 shrink-0 text-amber-400" />
-                <span>{settings.address}</span>
+                <span>{localizedAddress(settings.address, locale)}</span>
               </li>
               <li className="flex gap-2">
                 <Phone className="h-5 w-5 shrink-0 text-amber-400" />
@@ -161,10 +162,10 @@ export async function Footer({ settings }: { settings: SiteSettingsData }) {
             {t("legalInfo", {
               legalName: SITE.legalName,
               taxCode: SITE.taxCode,
-              address: SITE.registeredAddress,
+              address: localizedAddress(SITE.registeredAddress, locale),
             })}
           </p>
-          <p>{t("copyright", { year: new Date().getFullYear(), fullName: SITE.fullName })}</p>
+          <p>{t("copyright", { year: new Date().getFullYear(), fullName: brand.fullName })}</p>
         </div>
       </div>
     </footer>
