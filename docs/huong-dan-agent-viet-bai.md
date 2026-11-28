@@ -52,7 +52,19 @@ Chỉ dùng số liệu có trong TDS/MSDS của hãng, kèm phiên bản và ng
 - Lấy slug sản phẩm từ `GET /api/agent/products`.
 - Cuối bài có 1 đoạn kêu gọi gửi yêu cầu báo giá cho đúng sản phẩm đó.
 
-## 6. Nên viết gì
+## 6. Cập nhật giá và tồn kho sản phẩm (`/api/agent/products`)
+
+Mỗi cấp độ nhớt giờ chỉ có **một trang sản phẩm**, chia nhiều quy cách (xô 20L, phuy 209L, 18KG, 180KG…). Mỗi quy cách có giá và tồn kho riêng.
+
+- `GET /api/agent/products` trả về `variants` cho từng sản phẩm, gồm `packaging`, `price`, `stock`, `legacySlug`.
+- Cập nhật giá/tồn kho của một quy cách, dùng một trong hai cách:
+  - gửi slug sản phẩm kèm `"packaging": "209L"`, ví dụ `{"slug": "shell-tellus-s2-mx-68", "packaging": "209L", "price": ...}`;
+  - hoặc gửi slug cũ của quy cách đó (`legacySlug`, ví dụ `shell-tellus-s2-mx-68-209l`). Với slug cũ, API chỉ nhận `price` và `stock`.
+- Sản phẩm có nhiều quy cách mà gửi giá **không kèm** `packaging` sẽ bị từ chối.
+- Thêm quy cách mới: gửi `name` có đuôi quy cách, ví dụ `"TELLUS S2 MX 68 (1L)"`, hoặc gửi trường `packaging`. API tự gắn quy cách vào trang của cấp độ nhớt đó, không tạo trang mới.
+- Các trường mô tả (`description`, `tdsUrl`…) gửi với slug của trang sản phẩm, không gửi với slug cũ của quy cách.
+
+## 7. Nên viết gì
 
 Ưu tiên ít bài nhưng chất lượng (khoảng 1–2 bài/tuần), về chủ đề **chưa có bài**. Ví dụ:
 

@@ -4,6 +4,8 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { SITE_URL } from "@/lib/constants";
 import { isAuthorizedAgent, unauthorizedResponse } from "@/lib/agent-auth";
+import { slugify } from "@/lib/utils";
+import { splitPackaging, tidyProductName } from "@/lib/product-name";
 
 // Sanity check against gross pricing mistakes (typos, decimal errors) coming
 // from an automated caller. Legitimate large price changes still go through
@@ -25,6 +27,9 @@ const agentProductSchema = z.strictObject({
   shortDescription: z.string().trim().optional(),
   description: z.string().trim().optional(),
   viscosityGrade: z.string().trim().optional(),
+  // Which packaging price/stock refer to, for products sold in several
+  // (xô 20L, phuy 209L). Also read from a "(209L)" suffix in `name`.
+  packaging: z.string().trim().min(1).optional(),
   tdsUrl: z.string().trim().optional(),
   msdsUrl: z.string().trim().optional(),
   featured: z.boolean().optional(),
@@ -56,6 +61,13 @@ export async function GET(request: NextRequest) {
       featured: true,
       updatedAt: true,
       category: { select: { name: true } },
+      // One page per grade: each packaging has its own price/stock.
+      // legacySlug is the slug the packaging had as a separate listing and
+      // still works for price/stock updates.
+      variants: {
+        orderBy: { sortOrder: "asc" },
+        select: { packaging: true, price: true, stock: true, legacySlug: true },
+      },
     },
   });
 
@@ -83,11 +95,82 @@ export async function POST(request: NextRequest) {
   const data = parsed.data;
 
   const existing = await prisma.product.findUnique({ where: { slug: data.slug } });
+  if (existing) return updateProduct(existing, data);
 
-  if (!existing) {
-    return createProduct(data);
+  // Slug of a packaging that used to be its own listing (before 20L/209L
+  // were merged into one page): update that packaging.
+  const variant = await prisma.productVariant.findUnique({
+    where: { legacySlug: data.slug },
+    include: { product: { select: { id: true, slug: true } } },
+  });
+  if (variant) return updateVariant(variant, data);
+
+  // Renamed/merged product: follow the redirect instead of re-creating it.
+  const moved = await prisma.redirect.findUnique({ where: { fromPath: `/san-pham/${data.slug}` } });
+  const movedSlug = moved?.toPath.match(/^\/san-pham\/([^/]+)$/)?.[1];
+  if (movedSlug) {
+    const target = await prisma.product.findUnique({ where: { slug: movedSlug } });
+    if (target) return updateProduct(target, data);
   }
-  return updateProduct(existing, data);
+
+  return createProduct(data);
+}
+
+function revalidateProduct(slug: string) {
+  revalidateTag("products", "seconds");
+  revalidatePath("/admin/san-pham");
+  revalidatePath(`/san-pham/${slug}`);
+  revalidatePath("/san-pham");
+  revalidatePath("/");
+}
+
+function priceChangeError(current: number | null, requested: number | null | undefined) {
+  if (requested === undefined || requested === null || !current) return null;
+  const changeRatio = Math.abs(requested - current) / current;
+  if (changeRatio <= MAX_PRICE_CHANGE_RATIO) return null;
+  return NextResponse.json(
+    {
+      error: `Giá mới (${requested}) chênh lệch ${Math.round(changeRatio * 100)}% so với giá hiện tại (${current}), vượt giới hạn ${MAX_PRICE_CHANGE_RATIO * 100}% cho mỗi lần cập nhật qua agent. Nếu đây là thay đổi có chủ đích, vui lòng cập nhật thủ công qua trang quản trị.`,
+      currentPrice: current,
+      requestedPrice: requested,
+    },
+    { status: 409 }
+  );
+}
+
+// Only price and stock belong to a packaging; everything else describes the
+// product page shared by all packagings and must be sent with its slug.
+const VARIANT_FIELDS = new Set(["slug", "price", "stock", "packaging"]);
+
+async function updateVariant(
+  variant: { id: string; packaging: string; price: number | null; product: { id: string; slug: string } },
+  data: AgentProductInput
+) {
+  const rejected = priceChangeError(variant.price, data.price);
+  if (rejected) return rejected;
+
+  const updateData: { price?: number | null; stock?: number | null } = {};
+  if (data.price !== undefined) updateData.price = data.price;
+  if (data.stock !== undefined) updateData.stock = data.stock;
+  if (Object.keys(updateData).length > 0) {
+    await prisma.productVariant.update({ where: { id: variant.id }, data: updateData });
+  }
+  revalidateProduct(variant.product.slug);
+
+  const ignored = Object.keys(data).filter((k) => !VARIANT_FIELDS.has(k));
+  return NextResponse.json({
+    ok: true,
+    id: variant.product.id,
+    slug: variant.product.slug,
+    packaging: variant.packaging,
+    url: `${SITE_URL}/san-pham/${variant.product.slug}`,
+    ...(ignored.length > 0
+      ? {
+          ignored,
+          note: `"${data.slug}" là một quy cách (${variant.packaging}) của sản phẩm "${variant.product.slug}"; chỉ cập nhật price/stock. Gửi các trường khác với slug "${variant.product.slug}".`,
+        }
+      : {}),
+  });
 }
 
 type AgentProductInput = z.infer<typeof agentProductSchema>;
@@ -132,6 +215,10 @@ async function createProduct(data: AgentProductInput) {
 
   const categoryResult = await resolveCategoryId(data.category);
   if ("error" in categoryResult) return categoryResult.error;
+
+  const split = splitPackaging(data.name!);
+  const packaging = data.packaging ?? split.packaging;
+  if (packaging) return createPackaging(data, packaging, split.base, categoryResult.id);
 
   try {
     const created = await prisma.product.create({
@@ -182,27 +269,129 @@ async function createProduct(data: AgentProductInput) {
   }
 }
 
-async function updateProduct(
-  existing: { id: string; slug: string; price: number | null },
-  data: AgentProductInput
+/**
+ * A product sold in several packagings is one page with one variant per
+ * packaging. A new packaging joins the existing page for its grade; a new
+ * grade gets a page with this as its first packaging.
+ */
+async function createPackaging(
+  data: AgentProductInput,
+  packaging: string,
+  baseName: string,
+  categoryId: string | null
 ) {
-  if (data.price !== undefined && data.price !== null && existing.price) {
-    const changeRatio = Math.abs(data.price - existing.price) / existing.price;
-    if (changeRatio > MAX_PRICE_CHANGE_RATIO) {
+  const name = tidyProductName(baseName, data.brand);
+  const productSlug = slugify(name);
+  const legacySlug = data.slug === productSlug ? null : data.slug;
+
+  const parent = await prisma.product.findUnique({
+    where: { slug: productSlug },
+    include: { variants: { select: { packaging: true } } },
+  });
+
+  if (parent) {
+    if (parent.variants.some((v) => v.packaging.toUpperCase() === packaging.toUpperCase())) {
       return NextResponse.json(
         {
-          error: `Giá mới (${data.price}) chênh lệch ${Math.round(changeRatio * 100)}% so với giá hiện tại (${existing.price}), vượt giới hạn ${MAX_PRICE_CHANGE_RATIO * 100}% cho mỗi lần cập nhật qua agent. Nếu đây là thay đổi có chủ đích, vui lòng cập nhật thủ công qua trang quản trị.`,
-          currentPrice: existing.price,
-          requestedPrice: data.price,
+          error: `Sản phẩm "${productSlug}" đã có quy cách ${packaging}. Cập nhật giá/tồn kho bằng slug "${productSlug}" kèm "packaging": "${packaging}".`,
         },
         { status: 409 }
       );
     }
+    await prisma.productVariant.create({
+      data: {
+        productId: parent.id,
+        packaging,
+        price: data.price ?? null,
+        stock: data.stock ?? null,
+        legacySlug,
+        sortOrder: parent.variants.length,
+      },
+    });
+    revalidateProduct(parent.slug);
+    return NextResponse.json(
+      { ok: true, id: parent.id, slug: parent.slug, packaging, url: `${SITE_URL}/san-pham/${parent.slug}` },
+      { status: 201 }
+    );
+  }
+
+  const created = await prisma.product.create({
+    data: {
+      name,
+      slug: productSlug,
+      brand: data.brand!,
+      categoryId,
+      shortDescription: data.shortDescription || null,
+      description: data.description || null,
+      viscosityGrade: data.viscosityGrade || null,
+      tdsUrl: data.tdsUrl || null,
+      msdsUrl: data.msdsUrl || null,
+      featured: data.featured ?? false,
+      published: data.published ?? true,
+      variants: {
+        create: { packaging, price: data.price ?? null, stock: data.stock ?? null, legacySlug },
+      },
+      images: data.images
+        ? {
+            create: data.images.map((img, i) => ({ url: img.url, alt: img.alt || null, sortOrder: i })),
+          }
+        : undefined,
+    },
+  });
+  revalidateProduct(created.slug);
+  return NextResponse.json(
+    { ok: true, id: created.id, slug: created.slug, packaging, url: `${SITE_URL}/san-pham/${created.slug}` },
+    { status: 201 }
+  );
+}
+
+async function updateProduct(
+  existing: { id: string; slug: string; price: number | null },
+  data: AgentProductInput
+) {
+  const variants = await prisma.productVariant.findMany({
+    where: { productId: existing.id },
+    orderBy: { sortOrder: "asc" },
+    select: { id: true, packaging: true, price: true },
+  });
+
+  // Price and stock of a multi-packaging product belong to one packaging.
+  if (variants.length > 0 && (data.price !== undefined || data.stock !== undefined)) {
+    const target = data.packaging
+      ? variants.find((v) => v.packaging.toUpperCase() === data.packaging!.toUpperCase())
+      : variants.length === 1
+        ? variants[0]
+        : undefined;
+    if (!target) {
+      return NextResponse.json(
+        {
+          error: data.packaging
+            ? `Sản phẩm "${existing.slug}" không có quy cách ${data.packaging}.`
+            : `Sản phẩm "${existing.slug}" có nhiều quy cách; cần gửi kèm "packaging" để cập nhật giá/tồn kho.`,
+          packagings: variants.map((v) => v.packaging),
+        },
+        { status: 422 }
+      );
+    }
+    const rejected = priceChangeError(target.price, data.price);
+    if (rejected) return rejected;
+    await prisma.productVariant.update({
+      where: { id: target.id },
+      data: {
+        ...(data.price !== undefined ? { price: data.price } : {}),
+        ...(data.stock !== undefined ? { stock: data.stock } : {}),
+      },
+    });
+  } else {
+    const rejected = priceChangeError(existing.price, data.price);
+    if (rejected) return rejected;
   }
 
   const updateData: Record<string, unknown> = {};
-  if (data.price !== undefined) updateData.price = data.price;
-  if (data.stock !== undefined) updateData.stock = data.stock;
+  if (variants.length === 0) {
+    if (data.price !== undefined) updateData.price = data.price;
+    if (data.stock !== undefined) updateData.stock = data.stock;
+  }
   if (data.shortDescription !== undefined) updateData.shortDescription = data.shortDescription || null;
   if (data.description !== undefined) updateData.description = data.description || null;
   if (data.viscosityGrade !== undefined) updateData.viscosityGrade = data.viscosityGrade || null;

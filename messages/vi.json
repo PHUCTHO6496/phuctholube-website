@@ -40,6 +40,7 @@
     "added": "Đã thêm vào giỏ"
   },
   "productCard": {
+    "packaging": "Quy cách",
     "imagePlaceholder": "Ảnh sản phẩm",
     "defaultCategory": "Sản phẩm"
   },
@@ -93,6 +94,8 @@
     "contactCta": "Liên hệ tư vấn"
   },
   "productDetail": {
+    "packaging": "Quy cách",
+    "packagingHint": "Chọn quy cách cần báo giá — hoặc chọn sau trong giỏ báo giá.",
     "breadcrumbProducts": "Sản phẩm",
     "defaultCategory": "Sản phẩm",
     "callCta": "Gọi tư vấn",
@@ -364,6 +367,9 @@
     "disclaimer": "* Kết quả gợi ý dựa trên cùng danh mục sản phẩm và cấp độ nhớt tương tự, chỉ mang tính tham khảo ban đầu — không phải xác nhận thay thế chính thức. Vui lòng liên hệ đội ngũ kỹ thuật Phúc Thọ để được tư vấn và xác nhận trước khi thay đổi sản phẩm đang sử dụng."
   },
   "quoteCartPage": {
+    "packaging": "Quy cách",
+    "packagingLabel": "Quy cách cho {name}",
+    "choosePackaging": "-- Chọn quy cách --",
     "emptyTitle": "Giỏ báo giá đang trống",
     "emptyDescription": "Hãy thêm sản phẩm bạn quan tâm vào giỏ báo giá để gửi yêu cầu tư vấn giá.",
     "viewProducts": "Xem sản phẩm",

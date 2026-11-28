@@ -10,6 +10,7 @@ import { JsonLd } from "@/components/site/JsonLd";
 import { SITE_URL } from "@/lib/constants";
 import { localeAlternates } from "@/lib/seo";
 import { linkProductMentions } from "@/lib/product-links";
+import { redirectIfMoved } from "@/lib/redirects";
 
 const getPost = unstable_cache(
   async (slug: string) =>
@@ -87,7 +88,10 @@ export default async function BlogDetailPage({
 }) {
   const { slug } = await params;
   const post = await getPost(slug);
-  if (!post) notFound();
+  if (!post) {
+    await redirectIfMoved(await getLocale(), `/tin-tuc/${slug}`);
+    notFound();
+  }
 
   const contentHtml = await linkProductMentions(post.contentHtml);
 

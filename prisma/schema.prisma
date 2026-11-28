@@ -61,9 +61,37 @@ model Product {
   industries         Industry[]
   images             ProductImage[]
   specs              ProductSpec[]
+  variants           ProductVariant[]
   quoteItems         QuoteRequestItem[]
   createdAt          DateTime           @default(now())
   updatedAt          DateTime           @updatedAt
+}
+
+/// One packaging of a product (xô 20L, phuy 209L...). Products sold in a
+/// single, unspecified packaging have none and use Product.price/stock.
+model ProductVariant {
+  id         String  @id @default(cuid())
+  packaging  String
+  price      Int?
+  stock      Int?
+  /// Slug of the separate listing this packaging used to have before 20L
+  /// and 209L were merged into one page. The agent API still updates price
+  /// and stock by that slug.
+  legacySlug String? @unique
+  sortOrder  Int     @default(0)
+  productId  String
+  product    Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, packaging])
+}
+
+/// Permanent (308) redirect for a public path that moved, e.g. a product
+/// merged into another or renamed.
+model Redirect {
+  id        String   @id @default(cuid())
+  fromPath  String   @unique
+  toPath    String
+  createdAt DateTime @default(now())
 }
 
 model ProductImage {

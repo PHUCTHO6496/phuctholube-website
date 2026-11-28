@@ -42,7 +42,17 @@ export type ProductFormInitialData = {
   industryIds: string[];
   images: { url: string; alt: string }[];
   specs: { label: string; labelEn: string; value: string }[];
+  /** Packagings with their own price; stock/legacySlug are read-only here. */
+  variants: {
+    id?: string;
+    packaging: string;
+    price: string;
+    stock?: number | null;
+    legacySlug?: string | null;
+  }[];
 };
+
+type VariantRow = ProductFormInitialData["variants"][number];
 
 const EMPTY_FORM: ProductFormInitialData = {
   name: "",
@@ -66,6 +76,7 @@ const EMPTY_FORM: ProductFormInitialData = {
   industryIds: [],
   images: [],
   specs: [],
+  variants: [],
 };
 
 export function ProductForm({
@@ -125,6 +136,21 @@ export function ProductForm({
     setForm((f) => ({ ...f, specs: f.specs.filter((_, i) => i !== index) }));
   }
 
+  function updateVariant(index: number, patch: Partial<VariantRow>) {
+    setForm((f) => ({
+      ...f,
+      variants: f.variants.map((v, i) => (i === index ? { ...v, ...patch } : v)),
+    }));
+  }
+
+  function addVariant() {
+    setForm((f) => ({ ...f, variants: [...f.variants, { packaging: "", price: "" }] }));
+  }
+
+  function removeVariant(index: number) {
+    setForm((f) => ({ ...f, variants: f.variants.filter((_, i) => i !== index) }));
+  }
+
   function addImage(url: string) {
     setForm((f) => ({ ...f, images: [...f.images, { url, alt: "" }] }));
   }
@@ -162,6 +188,13 @@ export function ProductForm({
       specs: form.specs
         .filter((s) => s.label && s.value)
         .map((s) => ({ label: s.label, labelEn: s.labelEn || undefined, value: s.value })),
+      variants: form.variants
+        .filter((v) => v.packaging.trim())
+        .map((v) => ({
+          id: v.id,
+          packaging: v.packaging.trim(),
+          price: v.price ? Number(v.price) : null,
+        })),
     };
 
     const result = isEdit
@@ -226,8 +259,14 @@ export function ProductForm({
               type="number"
               value={form.price}
               onChange={(e) => updateField("price", e.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+              disabled={form.variants.length > 0}
+              className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none disabled:bg-slate-50 disabled:text-slate-400"
             />
+            {form.variants.length > 0 && (
+              <p className="mt-1 text-xs text-slate-400">
+                Sản phẩm có quy cách: nhập giá theo từng quy cách ở mục “Quy cách &amp; giá”.
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-slate-700">
@@ -397,6 +436,65 @@ export function ProductForm({
               {ind.name}
             </label>
           ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-slate-200 bg-white p-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+            Quy cách &amp; giá
+          </h2>
+          <button
+            type="button"
+            onClick={addVariant}
+            className="inline-flex items-center gap-1 text-sm font-semibold text-blue-900 hover:text-amber-600"
+          >
+            <Plus className="h-4 w-4" /> Thêm quy cách
+          </button>
+        </div>
+        <p className="mt-1 text-xs text-slate-400">
+          Mỗi quy cách (vd: 20L, 209L, 18KG) có giá riêng và hiện thành nút chọn trên trang sản
+          phẩm. Tồn kho được cập nhật tự động qua agent.
+        </p>
+        <div className="mt-4 space-y-3">
+          {form.variants.map((v, i) => (
+            <div key={v.id ?? `new-${i}`} className="flex flex-wrap items-center gap-3">
+              <input
+                type="text"
+                placeholder="Quy cách (vd: 209L)"
+                value={v.packaging}
+                onChange={(e) => updateVariant(i, { packaging: e.target.value })}
+                className="w-40 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+              />
+              <input
+                type="number"
+                placeholder="Giá (VNĐ)"
+                value={v.price}
+                onChange={(e) => updateVariant(i, { price: e.target.value })}
+                className="w-48 rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-blue-600 focus:outline-none"
+              />
+              {v.stock !== undefined && v.stock !== null && (
+                <span className="text-xs text-slate-500">Tồn kho: {v.stock}</span>
+              )}
+              {v.legacySlug && (
+                <span className="text-xs text-slate-400" title="Mã agent dùng để cập nhật giá/tồn kho">
+                  {v.legacySlug}
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={() => removeVariant(i)}
+                className="ml-auto rounded-md p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
+                aria-label={`Xóa quy cách ${v.packaging}`}
+              >
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </div>
+          ))}
+          {form.variants.length === 0 && (
+            <p className="text-sm text-slate-400">Không chia quy cách (dùng ô Giá chung ở trên).</p>
+          )}
+          {errors.variants && <p className="text-xs text-red-600">{errors.variants[0]}</p>}
         </div>
       </div>
 

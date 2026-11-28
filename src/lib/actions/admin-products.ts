@@ -4,6 +4,13 @@ import { z } from "zod";
 import { revalidatePath, updateTag } from "next/cache";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
+import { recordMove } from "@/lib/redirects";
+
+const variantSchema = z.object({
+  id: z.string().optional(),
+  packaging: z.string().trim().min(1, "Vui lòng nhập quy cách"),
+  price: z.number().int().nonnegative().nullable(),
+});
 
 const productSchema = z.object({
   name: z.string().trim().min(2, "Vui lòng nhập tên sản phẩm"),
@@ -31,6 +38,10 @@ const productSchema = z.object({
   industryIds: z.array(z.string()),
   images: z.array(z.object({ url: z.string(), alt: z.string().optional() })),
   specs: z.array(z.object({ label: z.string(), labelEn: z.string().optional(), value: z.string() })),
+  variants: z.array(variantSchema).refine(
+    (variants) => new Set(variants.map((v) => v.packaging.toUpperCase())).size === variants.length,
+    "Mỗi quy cách chỉ được nhập một lần"
+  ),
 });
 
 export type ProductInput = z.infer<typeof productSchema>;
@@ -58,7 +69,8 @@ export async function createProduct(input: ProductInput): Promise<ProductActionR
       name: data.name,
       slug: data.slug,
       brand: data.brand || null,
-      price: data.price ?? null,
+      // With packagings, prices live on each variant.
+        price: data.variants.length > 0 ? null : (data.price ?? null),
       tdsUrl: data.tdsUrl || null,
       msdsUrl: data.msdsUrl || null,
       viscosityGrade: data.viscosityGrade || null,
@@ -89,6 +101,13 @@ export async function createProduct(input: ProductInput): Promise<ProductActionR
           sortOrder: i,
         })),
       },
+      variants: {
+        create: data.variants.map((v, i) => ({
+          packaging: v.packaging,
+          price: v.price,
+          sortOrder: i,
+        })),
+      },
     },
   });
 
@@ -113,7 +132,25 @@ export async function updateProduct(
   });
   if (existingSlug) return { ok: false, errors: { slug: ["Slug này đã được sử dụng"] } };
 
+  const previous = await prisma.product.findUnique({ where: { id }, select: { slug: true } });
+  if (!previous) return { ok: false, errors: { name: ["Sản phẩm không còn tồn tại"] } };
+
+  // Variants are updated in place (not recreated) so the stock and legacy
+  // slug the agent API keeps in sync survive an edit in the admin.
+  const keptIds = data.variants.flatMap((v) => (v.id ? [v.id] : []));
+
   await prisma.$transaction([
+    prisma.productVariant.deleteMany({ where: { productId: id, id: { notIn: keptIds } } }),
+    ...data.variants.map((v, i) =>
+      v.id
+        ? prisma.productVariant.update({
+            where: { id: v.id, productId: id },
+            data: { packaging: v.packaging, price: v.price, sortOrder: i },
+          })
+        : prisma.productVariant.create({
+            data: { productId: id, packaging: v.packaging, price: v.price, sortOrder: i },
+          })
+    ),
     prisma.productImage.deleteMany({ where: { productId: id } }),
     prisma.productSpec.deleteMany({ where: { productId: id } }),
     prisma.product.update({
@@ -122,7 +159,8 @@ export async function updateProduct(
         name: data.name,
         slug: data.slug,
         brand: data.brand || null,
-        price: data.price ?? null,
+        // With packagings, prices live on each variant.
+        price: data.variants.length > 0 ? null : (data.price ?? null),
         tdsUrl: data.tdsUrl || null,
         msdsUrl: data.msdsUrl || null,
       viscosityGrade: data.viscosityGrade || null,
@@ -156,6 +194,12 @@ export async function updateProduct(
       },
     }),
   ]);
+
+  if (previous.slug !== data.slug) {
+    // Keep the old URL working (links, search results, quote emails).
+    await recordMove(prisma, `/san-pham/${previous.slug}`, `/san-pham/${data.slug}`);
+    updateTag("redirects");
+  }
 
   updateTag("products");
   revalidatePath("/admin/san-pham");

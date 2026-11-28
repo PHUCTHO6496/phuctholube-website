@@ -7,8 +7,9 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { ChevronRight, FileText } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { ProductCard } from "@/components/site/ProductCard";
-import { AddToQuoteButton } from "@/components/site/AddToQuoteButton";
+import { ProductQuoteActions } from "@/components/site/ProductQuoteActions";
 import { JsonLd } from "@/components/site/JsonLd";
+import { redirectIfMoved } from "@/lib/redirects";
 import { SITE_URL } from "@/lib/constants";
 import { localized, localizedJson } from "@/lib/localized";
 import { localeAlternates } from "@/lib/seo";
@@ -36,6 +37,8 @@ const getProduct = unstable_cache(
         msdsUrl: true,
         category: true,
         specs: { orderBy: { sortOrder: "asc" } },
+        // Packaging names only: prices stay off the public site.
+        variants: { orderBy: { sortOrder: "asc" }, select: { packaging: true } },
         industries: true,
         images: { orderBy: { sortOrder: "asc" } },
       },
@@ -106,7 +109,26 @@ export default async function ProductDetailPage({
     getTranslations("productDetail"),
     getTranslations("productCard"),
   ]);
-  if (!product) notFound();
+  if (!product) {
+    // Listings merged in the 20L/209L consolidation keep their old URLs.
+    await redirectIfMoved(locale, `/san-pham/${slug}`);
+    notFound();
+  }
+
+  const packagings = product.variants.map((v) => v.packaging);
+  const specRows = [
+    ...product.specs
+      // A free-text "Quy cách" row is superseded by the packaging variants.
+      .filter((s) => packagings.length === 0 || s.label !== "Quy cách")
+      .map((s) => ({
+      key: s.id,
+      label: localized(locale, s.label, s.labelEn ?? SPEC_LABELS_EN[s.label]),
+      value: s.value,
+    })),
+    ...(packagings.length > 0
+      ? [{ key: "packaging", label: t("packaging"), value: packagings.join(" · ") }]
+      : []),
+  ];
 
   const shortDescription = localized(
     locale,
@@ -207,8 +229,7 @@ export default async function ProductDetailPage({
             </div>
           )}
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
-            <AddToQuoteButton product={product} variant="filled" />
+          <ProductQuoteActions product={product} packagings={packagings}>
             <a
               href="tel:0786060496"
               className="inline-flex items-center gap-2 rounded-md border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
@@ -221,7 +242,7 @@ export default async function ProductDetailPage({
             >
               {t("viewQuoteCart")}
             </Link>
-          </div>
+          </ProductQuoteActions>
 
           {useCases.length > 0 && (
             <div className="mt-8">
@@ -239,20 +260,18 @@ export default async function ProductDetailPage({
             </div>
           )}
 
-          {product.specs.length > 0 && (
+          {specRows.length > 0 && (
             <div className="mt-8">
               <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
                 {t("specifications")}
               </h2>
               <dl className="mt-3 divide-y divide-slate-200 rounded-lg border border-slate-200">
-                {product.specs.map((spec) => (
+                {specRows.map((spec) => (
                   <div
-                    key={spec.id}
+                    key={spec.key}
                     className="flex justify-between gap-4 px-4 py-2.5 text-sm"
                   >
-                    <dt className="text-slate-500">
-                      {localized(locale, spec.label, spec.labelEn ?? SPEC_LABELS_EN[spec.label])}
-                    </dt>
+                    <dt className="text-slate-500">{spec.label}</dt>
                     <dd className="font-medium text-slate-900">{spec.value}</dd>
                   </div>
                 ))}

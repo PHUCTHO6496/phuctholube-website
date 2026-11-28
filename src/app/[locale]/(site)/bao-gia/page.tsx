@@ -10,7 +10,7 @@ import { submitQuoteRequest } from "@/lib/actions/quotes";
 
 export default function QuoteCartPage() {
   const router = useRouter();
-  const { items, removeItem, updateQuantity, clear } = useQuoteCart();
+  const { items, removeItem, updateQuantity, updatePackaging, clear } = useQuoteCart();
   const [pending, startTransition] = useTransition();
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [formError, setFormError] = useState<string | null>(null);
@@ -36,11 +36,14 @@ export default function QuoteCartPage() {
         email: String(formData.get("email") ?? ""),
         address: String(formData.get("address") ?? ""),
         note: String(formData.get("note") ?? ""),
-        items: items.map((item) => ({
-          productId: item.productId,
-          productName: item.brand ? `${item.name} (${item.brand})` : item.name,
-          quantity: item.quantity,
-        })),
+        items: items.map((item) => {
+          const name = item.packaging ? `${item.name} — ${item.packaging}` : item.name;
+          return {
+            productId: item.productId,
+            productName: item.brand ? `${name} (${item.brand})` : name,
+            quantity: item.quantity,
+          };
+        }),
       });
 
       if (!result.ok) {
@@ -80,25 +83,46 @@ export default function QuoteCartPage() {
         <div className="lg:col-span-3">
           <div className="divide-y divide-slate-200 rounded-xl border border-slate-200">
             {items.map((item) => (
-              <div key={item.productId} className="flex items-center gap-4 p-4">
-                <div className="flex-1">
+              <div key={item.key} className="flex flex-wrap items-center gap-4 p-4">
+                <div className="min-w-0 flex-1">
                   <p className="text-sm font-semibold text-slate-900">
                     {item.name}
                   </p>
                   {item.brand && (
                     <p className="text-xs text-slate-500">{item.brand}</p>
                   )}
+                  {item.packagings && item.packagings.length > 1 ? (
+                    <select
+                      value={item.packaging ?? ""}
+                      onChange={(e) => updatePackaging(item.key, e.target.value)}
+                      aria-label={t("packagingLabel", { name: item.name })}
+                      className="mt-2 rounded-md border border-slate-300 px-2 py-1 text-sm focus:border-blue-600 focus:outline-none"
+                    >
+                      <option value="">{t("choosePackaging")}</option>
+                      {item.packagings.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    item.packaging && (
+                      <p className="mt-1 text-xs text-slate-500">
+                        {t("packaging")}: <span className="font-semibold text-slate-700">{item.packaging}</span>
+                      </p>
+                    )
+                  )}
                 </div>
                 <input
                   type="text"
                   value={item.quantity}
-                  onChange={(e) => updateQuantity(item.productId, e.target.value)}
+                  onChange={(e) => updateQuantity(item.key, e.target.value)}
                   className="w-24 rounded-md border border-slate-300 px-2 py-1.5 text-sm focus:border-blue-600 focus:outline-none"
                   aria-label={t("quantityLabel", { name: item.name })}
                 />
                 <button
                   type="button"
-                  onClick={() => removeItem(item.productId)}
+                  onClick={() => removeItem(item.key)}
                   className="rounded-md p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
                   aria-label={t("removeLabel", { name: item.name })}
                 >

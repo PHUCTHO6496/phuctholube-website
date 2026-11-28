@@ -16,8 +16,8 @@ export default async function AdminProductsPage({
     where: q
       ? {
           OR: [
-            { name: { contains: q } },
-            { brand: { contains: q } },
+            { name: { contains: q, mode: "insensitive" } },
+            { brand: { contains: q, mode: "insensitive" } },
           ],
         }
       : undefined,
@@ -28,6 +28,7 @@ export default async function AdminProductsPage({
       slug: true,
       brand: true,
       price: true,
+      variants: { orderBy: { sortOrder: "asc" }, select: { packaging: true, price: true } },
       published: true,
       featured: true,
       category: { select: { name: true } },
@@ -82,7 +83,16 @@ export default async function AdminProductsPage({
                 <td className="px-4 py-3 text-slate-600">
                   {p.category?.name ?? "-"}
                 </td>
-                <td className="px-4 py-3 text-slate-600">{formatVND(p.price)}</td>
+                <td className="px-4 py-3 text-slate-600">
+                  {p.variants.length === 0
+                    ? formatVND(p.price)
+                    : p.variants.map((v) => (
+                        <p key={v.packaging} className="whitespace-nowrap">
+                          <span className="text-xs text-slate-400">{v.packaging}:</span>{" "}
+                          {formatVND(v.price)}
+                        </p>
+                      ))}
+                </td>
                 <td className="px-4 py-3">
                   <span
                     className={

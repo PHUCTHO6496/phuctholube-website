@@ -15,11 +15,17 @@ export type QuoteProduct = {
 
 export function AddToQuoteButton({
   product,
+  packaging,
+  packagings,
   className,
   fullWidth,
   variant = "outline",
 }: {
   product: QuoteProduct;
+  /** Packaging chosen on the product page, if any. */
+  packaging?: string;
+  /** Packagings the product comes in; offered again on the quote page. */
+  packagings?: string[];
   className?: string;
   fullWidth?: boolean;
   variant?: "outline" | "filled";
@@ -36,6 +42,8 @@ export function AddToQuoteButton({
       slug: product.slug,
       name: product.name,
       brand: product.brand,
+      packaging: packaging ?? (packagings?.length === 1 ? packagings[0] : undefined),
+      packagings: packagings?.length ? packagings : undefined,
     });
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);

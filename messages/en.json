@@ -40,6 +40,7 @@
     "added": "Added to cart"
   },
   "productCard": {
+    "packaging": "Packaging",
     "imagePlaceholder": "Product image",
     "defaultCategory": "Product"
   },
@@ -93,6 +94,8 @@
     "contactCta": "Contact us"
   },
   "productDetail": {
+    "packaging": "Packaging",
+    "packagingHint": "Choose the packaging to quote — or pick it later in the quote cart.",
     "breadcrumbProducts": "Products",
     "defaultCategory": "Product",
     "callCta": "Call for advice",
@@ -364,6 +367,9 @@
     "disclaimer": "* Suggested results are based on matching product category and similar viscosity grade, for initial reference only — not an official replacement confirmation. Please contact the Phúc Thọ technical team for advice and confirmation before changing the product you currently use."
   },
   "quoteCartPage": {
+    "packaging": "Packaging",
+    "packagingLabel": "Packaging for {name}",
+    "choosePackaging": "-- Choose packaging --",
     "emptyTitle": "Your quote cart is empty",
     "emptyDescription": "Add the products you're interested in to your quote cart to request pricing advice.",
     "viewProducts": "View products",

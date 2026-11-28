@@ -12,6 +12,7 @@ export type ProductCardData = {
   shortDescription: string | null;
   category: { name: string } | null;
   images?: { url: string }[];
+  packagings?: string[];
 };
 
 export async function ProductCard({ product }: { product: ProductCardData }) {
@@ -52,9 +53,16 @@ export async function ProductCard({ product }: { product: ProductCardData }) {
             {product.shortDescription}
           </p>
         )}
+        {product.packagings && product.packagings.length > 0 && (
+          <p className="mt-2 text-xs text-slate-500">
+            {t("packaging")}:{" "}
+            <span className="font-semibold text-slate-700">{product.packagings.join(" · ")}</span>
+          </p>
+        )}
       </Link>
       <AddToQuoteButton
         product={product}
+        packagings={product.packagings}
         className="mt-4"
         fullWidth
       />

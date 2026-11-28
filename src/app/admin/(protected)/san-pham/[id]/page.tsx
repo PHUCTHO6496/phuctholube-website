@@ -15,6 +15,7 @@ export default async function EditProductPage({
       include: {
         images: { orderBy: { sortOrder: "asc" } },
         specs: { orderBy: { sortOrder: "asc" } },
+        variants: { orderBy: { sortOrder: "asc" } },
         industries: { select: { id: true } },
       },
     }),
@@ -53,6 +54,13 @@ export default async function EditProductPage({
     industryIds: product.industries.map((i) => i.id),
     images: product.images.map((img) => ({ url: img.url, alt: img.alt ?? "" })),
     specs: product.specs.map((s) => ({ label: s.label, labelEn: s.labelEn ?? "", value: s.value })),
+    variants: product.variants.map((v) => ({
+      id: v.id,
+      packaging: v.packaging,
+      price: v.price?.toString() ?? "",
+      stock: v.stock,
+      legacySlug: v.legacySlug,
+    })),
   };
 
   return (
