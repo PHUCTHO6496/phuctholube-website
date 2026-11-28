@@ -14,7 +14,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ServicesPage() {
-  const t = await getTranslations("services");
+  const [t, tCalc] = await Promise.all([
+    getTranslations("services"),
+    getTranslations("costCalculator"),
+  ]);
 
   const coreServices = t.raw("coreServices") as {
     title: string;
@@ -96,6 +99,21 @@ export default async function ServicesPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="bg-slate-50">
+        <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <h2 className="text-xl font-bold text-slate-900">{tCalc("servicesCtaTitle")}</h2>
+            <p className="mt-1 text-sm leading-relaxed text-slate-600">{tCalc("servicesCtaText")}</p>
+          </div>
+          <Link
+            href="/tinh-chi-phi-dau-nhot"
+            className="inline-flex shrink-0 items-center justify-center rounded-md bg-amber-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-amber-600"
+          >
+            {tCalc("servicesCtaButton")}
+          </Link>
         </div>
       </section>
 

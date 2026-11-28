@@ -17,6 +17,7 @@ import { localeAlternates, localeUrl } from "@/lib/seo";
 import { localizeSpecValue } from "@/lib/spec-text";
 import { productCardSelect, localizeProductCard } from "@/lib/product-card-data";
 import { documentHref } from "@/lib/documents";
+import { kindForCategory } from "@/lib/cost-calculator";
 import {
   baseOilFamily,
   normalizeGrade,
@@ -155,11 +156,12 @@ export default async function ProductDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [product, locale, t, tProductCard] = await Promise.all([
+  const [product, locale, t, tProductCard, tCalc] = await Promise.all([
     getProduct(slug),
     getLocale(),
     getTranslations("productDetail"),
     getTranslations("productCard"),
+    getTranslations("costCalculator"),
   ]);
   if (!product) {
     // Listings merged in the 20L/209L consolidation keep their old URLs.
@@ -410,6 +412,15 @@ export default async function ProductDetailPage({
               </li>
             ))}
           </ul>
+
+          {kindForCategory(product.category?.slug) && (
+            <Link
+              href={`/tinh-chi-phi-dau-nhot?sp=${product.slug}`}
+              className="mt-4 inline-block text-sm font-semibold text-blue-900 hover:text-amber-600"
+            >
+              {tCalc("productCta")}
+            </Link>
+          )}
 
           {useCases.length > 0 && (
             <div className="mt-8">
